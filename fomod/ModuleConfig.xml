@@ -10,9 +10,7 @@
 					<plugins order="Explicit">
 						<plugin name="Lite">
 							<description>Select if you want the Lite Version of Simple Minimap.&#13;&#10;
- - Slim and Efficient
- - NPC/Creatures Icons
- - Door Icons
+ - NPC, Creature, Door, Quest Icons
  - Limited Configuration</description>
 							<files>
 								<folder source="Main Files\Lite" destination="" priority="0" />
@@ -24,9 +22,9 @@
 						<plugin name="Full">
 							<description>Select if you want the Full Version of Simple Minimap.&#13;&#10;
  - Full Icon Suite
- - ySI - Sorting Icon Integration
  - KEYWORDs Support
- - In Depth Configuration</description>
+ - In Depth Configuration
+ - REQUIRES: ySI - Sorting Icons</description>
 							<files>
 								<folder source="Main Files\Full" destination="" priority="0" />
 							</files>
