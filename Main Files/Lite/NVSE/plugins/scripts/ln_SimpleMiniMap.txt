@@ -1,0 +1,184 @@
+; Simple Minimap - Stentorious + xConfused
+
+; On game restart
+if eval Goo1.AuxVarGetFlt "*MiniMap_Init" 0 == 0
+	Goo1.AuxVarSetFlt "*MiniMap_Init" 1 0
+
+	; Aux Vars
+	; "*MiniMap_INI"
+	; 0: ySI installation flag
+	; 1: Default interior zoom
+	; 2: Default exterior zoom
+	; 3: Location text mode
+	; 4: Actor icon mode
+	; 5: Actor corpses mode
+	; 6: Item icons bitmask
+	; 7: Vendor icon mode
+	; "*MiniMap_Travel"
+	; 0: Currently fast traveling flag
+	; 1: Last world space
+	; "*MiniMap_Icons"		Icon refs
+	; "*MiniMap_Markers"	Quest marker refs
+	; "*MiniMap_Custom"		Custom marker ref
+
+	; Check for requirements
+	if eval GetNVSEVersion > 5 && GetNVSERevision > 2 && GetNVSEBeta > 2
+	else
+		MessageBoxEx "Simple MiniMap missing requirement!%rInstall xNVSE 6.3.3+."
+		return
+	endif
+	if eval GetPluginVersion "JohnnyGuitarNVSE" < 390
+		MessageBoxEx "Simple MiniMap missing requirement!%rInstall latest JohnnyGuitar NVSE plugin."
+		return
+	endif
+	if eval GetPluginVersion "ShowOffNVSE Plugin" < 145
+		MessageBoxEx "Simple MiniMap missing requirement!%rInstall latest ShowOff NVSE plugin."
+		return
+	endif
+	if eval GetPluginVersion "UI Organizer Plugin" < 230
+		MessageBoxEx "Simple MiniMap missing requirement!%rInstall latest User Interface Organizer plugin."
+		return
+	endif
+	Goo1.AuxVarSetFlt "*MiniMap_Init" 1 1
+
+	; Load key binds
+	int iTemp = GetINIFloat_Cached "KeyBinds:iMapVisibility" "Stentorious\SimpleMiniMap.ini"
+	if iTemp > 0
+		SetOnKeyDownEventHandler (CompileScript "SimpleMiniMap\KeyToggle.gek") 1 iTemp
+	endif
+	iTemp = GetINIFloat_Cached "KeyBinds:iMapRotation" "Stentorious\SimpleMiniMap.ini"
+	if iTemp > 0
+		SetOnKeyDownEventHandler (CompileScript "SimpleMiniMap\KeyRotation.gek") 1 iTemp
+	endif
+	iTemp = GetINIFloat_Cached "KeyBinds:iMapZoomIn" "Stentorious\SimpleMiniMap.ini"
+	if iTemp > 0
+		SetOnKeyDownEventHandler (CompileScript "SimpleMiniMap\KeyZoomIn.gek") 1 iTemp
+	endif
+	iTemp = GetINIFloat_Cached "KeyBinds:iMapZoomOut" "Stentorious\SimpleMiniMap.ini"
+	if iTemp > 0
+		SetOnKeyDownEventHandler (CompileScript "SimpleMiniMap\KeyZoomOut.gek") 1 iTemp
+	endif
+
+	; Load map settings
+	SetUIFloatAlt "HUDMainMenu\SimpleMiniMap\_corner" (GetINIFloat_Cached "Map:iPosition" "Stentorious\SimpleMiniMap.ini")
+	SetUIFloatAlt "HUDMainMenu\SimpleMiniMap\_x" (GetINIFloat_Cached "Map:fOffsetX" "Stentorious\SimpleMiniMap.ini")
+	SetUIFloatAlt "HUDMainMenu\SimpleMiniMap\_y" (GetINIFloat_Cached "Map:fOffsetY" "Stentorious\SimpleMiniMap.ini")
+	SetUIFloatAlt "HUDMainMenu\SimpleMiniMap\_TileScale" (GetINIFloat_Cached "Map:fSize" "Stentorious\SimpleMiniMap.ini")
+	Goo1.AuxVarSetFlt "*MiniMap_INI" (GetMaxOf 0.5 (GetMinOf 1.5 (GetINIFloat_Cached "Map:fInteriorZoom" "Stentorious\SimpleMiniMap.ini"))) 0
+	Goo1.AuxVarSetFlt "*MiniMap_INI" (GetMaxOf 0.5 (GetMinOf 1.5 (GetINIFloat_Cached "Map:fExteriorZoom" "Stentorious\SimpleMiniMap.ini"))) 1
+	; Compass rose cross
+	if eval GetINIFloat_Cached "Map:bCompassRose" "Stentorious\SimpleMiniMap.ini"
+		SetUIFloatAlt "HUDMainMenu\SimpleMiniMap\Headline_HC\visible" 1
+		SetUIFloatAlt "HUDMainMenu\SimpleMiniMap\Headline_VC\visible" 1
+	endif
+	; Cardinal direction text
+	SetUIFloatAlt "HUDMainMenu\SimpleMiniMap\NorthText\visible" (eval GetINIFloat_Cached "Map:bNorthText" "Stentorious\SimpleMiniMap.ini")
+	SetUIFloatAlt "HUDMainMenu\SimpleMiniMap\SouthText\visible" (eval GetINIFloat_Cached "Map:bSouthText" "Stentorious\SimpleMiniMap.ini")
+	SetUIFloatAlt "HUDMainMenu\SimpleMiniMap\EastText\visible" (eval GetINIFloat_Cached "Map:bEastText" "Stentorious\SimpleMiniMap.ini")
+	SetUIFloatAlt "HUDMainMenu\SimpleMiniMap\WestText\visible" (eval GetINIFloat_Cached "Map:bWestText" "Stentorious\SimpleMiniMap.ini")
+	; Scan animation
+	if eval GetINIFloat_Cached "Map:bScanEffect" "Stentorious\SimpleMiniMap.ini"
+		SetUIFloatAlt "HUDMainMenu\SimpleMiniMap\Scan\visible" 1
+		iTemp = GetUIFloatAlt "HUDMainMenu\SimpleMiniMap\_width"
+		SetUIFloatGradual "HUDMainMenu\SimpleMiniMap\Scan\brightness" 153 255 1 2
+		SetUIFloatGradual "HUDMainMenu\SimpleMiniMap\Scan\y" (iTemp * -2) (iTemp * 3) 10 3
+	endif
+	; Combat indicator
+	if eval (GetINIFloat_Cached "Map:bCombatIndicator" "Stentorious\SimpleMiniMap.ini") == 0
+		SetUIFloatAlt "HUDMainMenu\SimpleMiniMap\_systemcolor" 1
+	endif
+	; Default rotation mode
+	SetUIFloatAlt "HUDMainMenu\SimpleMiniMap\_RotationMode" (eval GetINIFloat_Cached "Map:iRotationMode" "Stentorious\SimpleMiniMap.ini")
+	; Location text
+	iTemp = GetINIFloat_Cached "Map:iLocationText" "Stentorious\SimpleMiniMap.ini"
+	Goo1.AuxVarSetFlt "*MiniMap_INI" iTemp 2
+	if iTemp > 0
+		SetUIFloatAlt "HUDMainMenu\SimpleMiniMap\LocationText\visible" 1
+	endif
+
+	; Load icon settings
+	SetUIFloatAlt "HUDMainMenu\SimpleMiniMap\_IconScale" (GetINIFloat_Cached "Icons:fSize" "Stentorious\SimpleMiniMap.ini")
+	SetUIFloatAlt "HUDMainMenu\SimpleMiniMap\_Drop" (GetINIFloat_Cached "Icons:bDropShadow" "Stentorious\SimpleMiniMap.ini")
+	SetUIFloatAlt "HUDMainMenu\SimpleMiniMap\_Height" (eval GetINIFloat_Cached "Icons:bHeightIndicator" "Stentorious\SimpleMiniMap.ini")
+	SetUIFloatAlt "HUDMainMenu\SimpleMiniMap\_Dist" ((GetMaxOf 5 (GetMinOf 100 (GetINIFloat_Cached "Icons:fRadius" "Stentorious\SimpleMiniMap.ini"))) * 69.99104)
+	if eval GetINIFloat_Cached "Icons:bPerceptionCalc" "Stentorious\SimpleMiniMap.ini"
+		SetUIFloatAlt "HUDMainMenu\SimpleMiniMap\_DistMode" 1
+		SetOnActorValueChangeEventHandler 1 ({int iAVCode, float fOldValue, float fNewValue} => SetUIFloatAlt "HUDMainMenu\SimpleMiniMap\_PlrAV6" (GetMaxOf 1 (GetMinOf 10 (Player.GetAV Perception)))) 0 6
+	endif
+	SetUIFloatAlt "HUDMainMenu\SimpleMiniMap\_Fade" (eval GetINIFloat_Cached "Icons:bFadeAlpha" "Stentorious\SimpleMiniMap.ini")
+
+	; Actor settings
+	if eval GetINIFloat_Cached "Actors:bHostileColor" "Stentorious\SimpleMiniMap.ini"
+		SetUIFloatAlt "HUDMainMenu\SimpleMiniMap\_Color2" 2
+	endif
+	Goo1.AuxVarSetFlt "*MiniMap_INI" (GetMaxOf 0 (GetMinOf 3 (GetINIFloat_Cached "Actors:iMode" "Stentorious\SimpleMiniMap.ini"))) 3
+	Goo1.AuxVarSetFlt "*MiniMap_INI" (eval GetINIFloat_Cached "Actors:bHideEmptyCorpses" "Stentorious\SimpleMiniMap.ini") 4
+
+	; Marker alpha pulse
+	SetUIFloatGradual "HUDMainMenu\SimpleMiniMap\_AlphaPulse" -1.5 0.75 3 2
+
+	; Color mode (EXPERIMENTAL)
+	SetUIFloatAlt "HUDMainMenu\SimpleMiniMap\_ColorMode" (eval GetINIFloat_Cached "Developer:bColorRender" "Stentorious\SimpleMiniMap.ini")
+
+	CloseFileSO "Stentorious\SimpleMiniMap.ini" 0
+
+	; Add custom quest marker template
+	AddTileFromTemplate "HUDMainMenu\SimpleMiniMap|MiniMap_Marker_Template|CustomMarker"
+	SetUIFloatAlt "HUDMainMenu\SimpleMiniMap\CustomMarker\depth" 200
+	SetUIStringAlt "HUDMainMenu\SimpleMiniMap\CustomMarker\filename" "Interface\Stentorious\SimpleMiniMap\MarkerPlayer.dds"
+
+	; Init event handlers
+	SetGameMainLoopCallback (CompileScript "SimpleMiniMap\MainLoop.gek") 1 15 1
+	SetGameMainLoopCallback (CompileScript "SimpleMiniMap\OnRender.gek") 1 1 1
+	SetEventHandler "OnCellExit" (CompileScript "SimpleMiniMap\CellChange.gek")
+	SetOnFastTravelEventHandler (begin Function {ref rMapMarker}
+		Goo1.AuxVarSetFlt "*MiniMap_Travel" 1
+		CallAfterFrames 0 (CompileScript "SimpleMiniMap\FastTravel.gek") 0 (Player.GPC)
+	end) 1
+
+endif
+
+; On game load
+if eval Goo1.AuxVarGetFlt "*MiniMap_Init" 1
+
+	; Reset minimap rect
+	UnloadUIComponent "HUDMainMenu\SimpleMiniMap\Icons"
+	UnloadUIComponent "HUDMainMenu\SimpleMiniMap\Markers"
+	AddTileFromTemplate "HUDMainMenu\SimpleMiniMap|MiniMap_Icon_Rect|Icons"
+	AddTileFromTemplate "HUDMainMenu\SimpleMiniMap|MiniMap_Icon_Rect|Markers"
+
+	; Update player Perception
+	SetUIFloatAlt "HUDMainMenu\SimpleMiniMap\_PlrAV6" (GetMaxOf 1 (GetMinOf 10 (Player.GetAV Perception)))
+
+	; Update cell rotation
+	SetUIFloatAlt "HUDMainMenu\SimpleMiniMap\_CellDeg" (ABS (GetCellNorthRotation (Player.GPC)))
+
+	; Default cell zoom
+	if eval GetCellFlag (Player.GPC) 0
+		SetUIFloatAlt "HUDMainMenu\SimpleMiniMap\_MapScale" (Goo1.AuxVarGetFlt "*MiniMap_INI" 0)
+		SetUIFloatAlt "HUDMainMenu\SimpleMiniMap\_Interior" 1
+	else
+		SetUIFloatAlt "HUDMainMenu\SimpleMiniMap\_MapScale" (Goo1.AuxVarGetFlt "*MiniMap_INI" 1)
+		SetUIFloatAlt "HUDMainMenu\SimpleMiniMap\_Interior" 0
+	endif
+
+	; Update render
+	SetUIFloatAlt "HUDMainMenu\SimpleMiniMap\_MapOriginX" -999999
+
+	; Update icons
+	Call (CompileScript "SimpleMiniMap\MainLoop.gek")
+
+	; Update worldspace cache
+	Goo1.AuxVarSetFlt "*MiniMap_Travel" 0 0
+	Goo1.AuxVarSetRef "*MiniMap_Travel" (Player.GPW) 1
+
+	; Update location name
+	iTemp = Goo1.AuxVarGetFlt "*MiniMap_INI" 2
+	if iTemp > 0
+		CallAfterFrames 0 ({} => SetUIStringAlt "HUDMainMenu\SimpleMiniMap\LocationText\string" (Player.GetLocationName))
+		if iTemp == 1
+			SetUIFloatGradual "HUDMainMenu\SimpleMiniMap\LocationText\alpha" 0 255 6 1
+		endif
+	endif
+
+endif

@@ -1,0 +1,68 @@
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://qconsulting.ca/fo3/ModConfig5.0.xsd">
+	<moduleName>Simple Minimap</moduleName>
+	<requiredInstallFiles>
+		<folder source="Required" destination="" />
+	</requiredInstallFiles>
+	<installSteps order="Explicit">
+		<installStep name="Simple Minimap">
+			<optionalFileGroups order="Explicit">
+				<group name="Version" type="SelectExactlyOne">
+					<plugins order="Explicit">
+						<plugin name="Lite">
+							<description>Select if you want the Lite Version of Simple Minimap.&#13;&#10;
+ - Slim and Efficient
+ - NPC/Creatures Icons
+ - Door Icons
+ - Limited Configuration</description>
+							<files>
+								<folder source="Main Files\Lite" destination="" priority="0" />
+							</files>
+							<typeDescriptor>
+								<type name="Optional" />
+							</typeDescriptor>
+						</plugin>
+						<plugin name="Full">
+							<description>Select if you want the Full Version of Simple Minimap.&#13;&#10;
+ - Full Icon Suite
+ - ySI - Sorting Icon Integration
+ - KEYWORDs Support
+ - In Depth Configuration</description>
+							<files>
+								<folder source="Main Files\Full" destination="" priority="0" />
+							</files>
+							<typeDescriptor>
+								<type name="Recommended" />
+							</typeDescriptor>
+						</plugin>
+					</plugins>
+				</group>
+				<group name="Icon Add-on" type="SelectExactlyOne">
+					<plugins order="Explicit">
+						<plugin name="Default">
+							<description>Install white versions of the add-on icons.&#13;&#10;
+ - Door Icon (Interior)
+ - Door Icon (Exterior)</description>
+							<files>
+								<folder source="Conditional\Icon Addon (Default)" destination="" priority="0" />
+							</files>
+							<typeDescriptor>
+								<type name="Optional"/>
+							</typeDescriptor>
+						</plugin>
+						<plugin name="Colorful">
+							<description>Install colorful versions of the add-on icons.&#13;&#10;
+ - Door Icon (Interior)
+ - Door Icon (Exterior)</description>
+							<files>
+								<folder source="Conditional\Icon Addon (Color)" destination="" priority="0" />
+							</files>
+							<typeDescriptor>
+								<type name="Optional"/>
+							</typeDescriptor>
+						</plugin>
+					</plugins>
+				</group>
+			</optionalFileGroups>
+		</installStep>
+	</installSteps>
+</config>

@@ -1,0 +1,17 @@
+<visible> 0 </visible>
+<alpha> 255 </alpha>
+<depth> 303 </depth>
+<x>
+	<copy src="me()" trait="_x" />
+	<mul src="parent()" trait="width" />
+	<sub> 11 </sub>
+</x>
+<y>
+	<copy src="me()" trait="_y" />
+	<mul src="parent()" trait="width" />
+	<sub> 9.5 </sub>
+</y>
+<zoom> 80 </zoom>
+<brightness> 204 </brightness>
+<font> 7 </font>
+<justify> &left; </justify>

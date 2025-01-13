@@ -1,0 +1,10 @@
+<fomod>
+	<Name>Simple Minimap</Name>
+	<Author>Stentorious and xConfused</Author>
+	<Version>1.0</Version>
+	<Website>https://www.nexusmods.com/newvegas/mods/88533</Website>
+	<Description>Adds a highly configurable minimap.</Description>
+	<Groups>
+		<element>User Interface</element>
+	</Groups>
+</fomod>
