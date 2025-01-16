@@ -387,11 +387,11 @@
 			</sub>
 		</systemcolor>
 		<brightness>
-			<copy> 510 </copy>
-			<sub>
-				<copy> 255 </copy>
-				<onlyif src="parent()" trait="_ColorMode" />
-			</sub>
+			<copy> 255 </copy>
+			<add>
+				<copy src="me()" trait="_brightness" />
+				<onlyifnot src="parent()" trait="_ColorMode" />
+			</add>
 		</brightness>
 		<filename> Interface\Shared\solid_black.dds </filename>
 		<_x>
@@ -426,6 +426,7 @@
 			<sub src="parent()" trait="_PlrY" />
 			<mul src="parent()" trait="_WorldScale" />
 		</_PosYOffset>
+		<_brightness> 128 </_brightness>
 	</image>
 
 	<image name="Background">

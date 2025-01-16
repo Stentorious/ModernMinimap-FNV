@@ -39,6 +39,10 @@ if eval Goo1.AuxVarGetFlt "*Minimap_Init" 0 == 0
 		MessageBoxEx "Simple Minimap missing requirement!%rInstall latest User Interface Organizer plugin."
 		return
 	endif
+	if eval GetPluginVersion "HighResLocalMaps" < 12
+		MessageBoxEx "Simple Minimap missing requirement!%rInstall High Res Local Maps."
+		return
+	endif
 	if GetPluginVersion "yUI" < 140
 		MessageBoxEx "Simple Minimap missing requirement!%rInstall latest yUI - User Ynterface plugin."
 		return
@@ -72,6 +76,8 @@ if eval Goo1.AuxVarGetFlt "*Minimap_Init" 0 == 0
 	SetUIFloatAlt "HUDMainMenu\SimpleMinimap\_x" (GetINIFloat_Cached "Map:fOffsetX" "Stentorious\SimpleMinimap.ini")
 	SetUIFloatAlt "HUDMainMenu\SimpleMinimap\_y" (GetINIFloat_Cached "Map:fOffsetY" "Stentorious\SimpleMinimap.ini")
 	SetUIFloatAlt "HUDMainMenu\SimpleMinimap\_TileScale" (GetINIFloat_Cached "Map:fSize" "Stentorious\SimpleMinimap.ini")
+	SetUIFloatAlt "HUDMainMenu\SimpleMinimap\Background\alpha" ((GetINIFloat_Cached "Map:fBackgroundAlpha" "Stentorious\SimpleMinimap.ini") * 255)
+	SetUIFloatAlt "HUDMainMenu\SimpleMinimap\MapRender\_brightness" (((GetINIFloat_Cached "Map:fRenderBrightness" "Stentorious\SimpleMinimap.ini") * 255) - 255)
 	Goo1.AuxVarSetFlt "*Minimap_INI" (GetMaxOf 0.5 (GetMinOf 1.5 (GetINIFloat_Cached "Map:fInteriorZoom" "Stentorious\SimpleMinimap.ini"))) 0
 	Goo1.AuxVarSetFlt "*Minimap_INI" (GetMaxOf 0.5 (GetMinOf 1.5 (GetINIFloat_Cached "Map:fExteriorZoom" "Stentorious\SimpleMinimap.ini"))) 1
 	; Compass rose cross
