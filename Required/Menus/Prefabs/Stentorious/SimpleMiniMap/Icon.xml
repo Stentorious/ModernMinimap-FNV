@@ -4,35 +4,35 @@
 
 <_PosX> 0 </_PosX>
 <_PosY> 0 </_PosY>
-<_PosZ> <copy src="SimpleMiniMap" trait="_PlrZ" /> </_PosZ>
+<_PosZ> <copy src="SimpleMinimap" trait="_PlrZ" /> </_PosZ>
 <_Deg> -1 </_Deg>
 <_Dist> 0 </_Dist>
 <_Hostile> 0 </_Hostile>
 <_DepthMod> 0 </_DepthMod>
 <_PosXOffset>
 	<copy src="me()" trait="_PosX" />
-	<sub src="SimpleMiniMap" trait="_PlrX" />
-	<mul src="SimpleMiniMap" trait="_WorldScale" />
+	<sub src="SimpleMinimap" trait="_PlrX" />
+	<mul src="SimpleMinimap" trait="_WorldScale" />
 </_PosXOffset>
 <_PosYOffset>
 	<copy src="me()" trait="_PosY" />
-	<sub src="SimpleMiniMap" trait="_PlrY" />
-	<mul src="SimpleMiniMap" trait="_WorldScale" />
+	<sub src="SimpleMinimap" trait="_PlrY" />
+	<mul src="SimpleMinimap" trait="_WorldScale" />
 </_PosYOffset>
 <_PosZOffset>
 	<copy src="me()" trait="_PosZ" />
-	<sub src="SimpleMiniMap" trait="_PlrZ" />
+	<sub src="SimpleMinimap" trait="_PlrZ" />
 </_PosZOffset>
 <_DegOffset>
 	<copy> 0 </copy>
 	<add>
-		<copy src="SimpleMiniMap" trait="_PlrDeg" />
-		<sub src="SimpleMiniMap" trait="_CellDeg" />
-		<onlyif src="SimpleMiniMap" trait="_RotationMode" />
+		<copy src="SimpleMinimap" trait="_PlrDeg" />
+		<sub src="SimpleMinimap" trait="_CellDeg" />
+		<onlyif src="SimpleMinimap" trait="_RotationMode" />
 	</add>
 	<add>
-		<copy src="SimpleMiniMap" trait="_CellDeg" />
-		<onlyifnot src="SimpleMiniMap" trait="_RotationMode" />
+		<copy src="SimpleMinimap" trait="_CellDeg" />
+		<onlyifnot src="SimpleMinimap" trait="_RotationMode" />
 	</add>
 	<sub src="me()" trait="_Deg" />
 	<div> 360 </div>
@@ -58,22 +58,22 @@
 	<copy> 0.5 </copy>
 	<add>
 		<copy src="me()" trait="_PosXOffset" />
-		<mul src="SimpleMiniMap" trait="_IconDegCos" />
+		<mul src="SimpleMinimap" trait="_IconDegCos" />
 	</add>
 	<sub>
 		<copy src="me()" trait="_PosYOffset" />
-		<mul src="SimpleMiniMap" trait="_IconDegSin" />
+		<mul src="SimpleMinimap" trait="_IconDegSin" />
 	</sub>
 </_x>
 <_y>
 	<copy> 0.5 </copy>
 	<sub>
 		<copy src="me()" trait="_PosXOffset" />
-		<mul src="SimpleMiniMap" trait="_IconDegSin" />
+		<mul src="SimpleMinimap" trait="_IconDegSin" />
 	</sub>
 	<sub>
 		<copy src="me()" trait="_PosYOffset" />
-		<mul src="SimpleMiniMap" trait="_IconDegCos" />
+		<mul src="SimpleMinimap" trait="_IconDegCos" />
 	</sub>
 </_y>
 <_Pulse> 0 </_Pulse>
@@ -86,18 +86,18 @@
 			<copy src="parent()" trait="_Dist" />
 			<pow> 6 </pow>
 			<div>
-				<copy src="SimpleMiniMap" trait="_DistCalc" />
+				<copy src="SimpleMinimap" trait="_DistCalc" />
 				<pow> 6 </pow>
 			</div>
 			<mul> 255 </mul>
-			<onlyif src="SimpleMiniMap" trait="_Fade" />
+			<onlyif src="SimpleMinimap" trait="_Fade" />
 		</sub>
 		<max> 0 </max>
 		<min> 255 </min>
 		<mul>
 			<copy> 1 </copy>
 			<sub>
-				<copy src="SimpleMiniMap" trait="_AlphaPulseMax" />
+				<copy src="SimpleMinimap" trait="_AlphaPulseMax" />
 				<onlyif src="parent()" trait="_Pulse" />
 			</sub>
 		</mul>
@@ -126,7 +126,7 @@
 	<systemcolor>
 		<copy> 0 </copy>
 		<add>
-			<copy src="SimpleMiniMap" trait="_Color0" />
+			<copy src="SimpleMinimap" trait="_Color0" />
 			<onlyif>
 				<copy src="parent()" trait="_Hostile" />
 				<eq> -1 </eq>
@@ -140,7 +140,7 @@
 			</onlyif>
 		</add>
 		<add>
-			<copy src="SimpleMiniMap" trait="_Color2" />
+			<copy src="SimpleMinimap" trait="_Color2" />
 			<onlyif>
 				<copy src="parent()" trait="_Hostile" />
 				<eq> 1 </eq>
@@ -154,7 +154,7 @@
 <image name="DropShadow">
 	<visible>
 		<copy src="sibling(Icon)" trait="visible" />
-		<and src="SimpleMiniMap" trait="_Drop" />
+		<and src="SimpleMinimap" trait="_Drop" />
 	</visible>
 	<alpha>
 		<copy src="sibling(Icon)" trait="alpha" />
@@ -181,7 +181,7 @@
 	<visible>
 		<copy src="parent()" trait="_Level" />
 		<gt> 0 </gt>
-		<and src="SimpleMiniMap" trait="_Height"/>
+		<and src="SimpleMinimap" trait="_Height"/>
 	</visible>
 	<alpha> <copy src="sibling(Icon)" trait="alpha" /> </alpha>
 	<x>
@@ -231,5 +231,5 @@
 	<zoom> &scale; </zoom>
 	<systemcolor> &hudmain; </systemcolor>
 	<brightness> <copy src="sibling(Icon)" trait="brightness" /> </brightness>
-	<filename> Interface\Stentorious\SimpleMiniMap\HeightIndicator.dds </filename>
+	<filename> Interface\Stentorious\SimpleMinimap\HeightIndicator.dds </filename>
 </image>

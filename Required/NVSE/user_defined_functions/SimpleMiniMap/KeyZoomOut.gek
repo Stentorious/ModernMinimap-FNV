@@ -5,14 +5,14 @@ float fScale
 begin Function {iKeyID}
 
 	if eval !MenuMode
-		fScale = GetUIFloatAlt "HUDMainMenu\SimpleMiniMap\_MapScale"
+		fScale = GetUIFloatAlt "HUDMainMenu\SimpleMinimap\_MapScale"
 		if eval fScale > 0.5
 			fScale -= 0.25
-			SetUIStringAlt "HUDMainMenu\SimpleMiniMap\InfoText\string" "%.2fx" fScale
-			SetUIFloatAlt "HUDMainMenu\SimpleMiniMap\_MapScale" fScale
-			SetUIFloatAlt "HUDMainMenu\SimpleMiniMap\_MapOriginX" -999999
+			SetUIStringAlt "HUDMainMenu\SimpleMinimap\InfoText\string" "%.2fx" fScale
+			SetUIFloatAlt "HUDMainMenu\SimpleMinimap\_MapScale" fScale
+			SetUIFloatAlt "HUDMainMenu\SimpleMinimap\_MapOriginX" -999999
 		endif
-		SetUIFloatGradual "HUDMainMenu\SimpleMiniMap\InfoText\alpha" 400 0 0.5
+		SetUIFloatGradual "HUDMainMenu\SimpleMinimap\InfoText\alpha" 400 0 0.5
 	endif
 
 end

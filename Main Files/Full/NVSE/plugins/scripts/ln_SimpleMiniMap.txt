@@ -1,11 +1,11 @@
 ; Simple Minimap - Stentorious + xConfused
 
 ; On game restart
-if eval Goo1.AuxVarGetFlt "*MiniMap_Init" 0 == 0
-	Goo1.AuxVarSetFlt "*MiniMap_Init" 1 0
+if eval Goo1.AuxVarGetFlt "*Minimap_Init" 0 == 0
+	Goo1.AuxVarSetFlt "*Minimap_Init" 1 0
 
 	; Aux Vars
-	; "*MiniMap_INI"
+	; "*Minimap_INI"
 	; 0: ySI installation flag
 	; 1: Default interior zoom
 	; 2: Default exterior zoom
@@ -14,119 +14,119 @@ if eval Goo1.AuxVarGetFlt "*MiniMap_Init" 0 == 0
 	; 5: Actor corpses mode
 	; 6: Item icons bitmask
 	; 7: Vendor icon mode
-	; "*MiniMap_Travel"
+	; "*Minimap_Travel"
 	; 0: Currently fast traveling flag
 	; 1: Last world space
-	; "*MiniMap_Icons"		Icon refs
-	; "*MiniMap_Markers"	Quest marker refs
-	; "*MiniMap_Custom"		Custom marker ref
+	; "*Minimap_Icons"		Icon refs
+	; "*Minimap_Markers"	Quest marker refs
+	; "*Minimap_Custom"		Custom marker ref
 
 	; Check for requirements
 	if eval GetNVSEVersion > 5 && GetNVSERevision > 2 && GetNVSEBeta > 2
 	else
-		MessageBoxEx "Simple MiniMap missing requirement!%rInstall xNVSE 6.3.3+."
+		MessageBoxEx "Simple Minimap missing requirement!%rInstall xNVSE 6.3.3+."
 		return
 	endif
 	if eval GetPluginVersion "JohnnyGuitarNVSE" < 390
-		MessageBoxEx "Simple MiniMap missing requirement!%rInstall latest JohnnyGuitar NVSE plugin."
+		MessageBoxEx "Simple Minimap missing requirement!%rInstall latest JohnnyGuitar NVSE plugin."
 		return
 	endif
 	if eval GetPluginVersion "ShowOffNVSE Plugin" < 145
-		MessageBoxEx "Simple MiniMap missing requirement!%rInstall latest ShowOff NVSE plugin."
+		MessageBoxEx "Simple Minimap missing requirement!%rInstall latest ShowOff NVSE plugin."
 		return
 	endif
 	if eval GetPluginVersion "UI Organizer Plugin" < 230
-		MessageBoxEx "Simple MiniMap missing requirement!%rInstall latest User Interface Organizer plugin."
+		MessageBoxEx "Simple Minimap missing requirement!%rInstall latest User Interface Organizer plugin."
 		return
 	endif
 	if GetPluginVersion "yUI" < 140
-		MessageBoxEx "Simple MiniMap missing requirement!%rInstall latest yUI - User Ynterface plugin."
+		MessageBoxEx "Simple Minimap missing requirement!%rInstall latest yUI - User Ynterface plugin."
 		return
 	endif
 	if FileExists "menus\ySI\ySI.xml" == 0
-		MessageBoxEx "Simple MiniMap missing requirement!%rInstall latest ySI - Sorting Ycons."
+		MessageBoxEx "Simple Minimap missing requirement!%rInstall latest ySI - Sorting Ycons."
 		return
 	endif
-	Goo1.AuxVarSetFlt "*MiniMap_Init" 1 1
+	Goo1.AuxVarSetFlt "*Minimap_Init" 1 1
 
 	; Load key binds
-	int iTemp = GetINIFloat_Cached "KeyBinds:iMapVisibility" "Stentorious\SimpleMiniMap.ini"
+	int iTemp = GetINIFloat_Cached "KeyBinds:iMapVisibility" "Stentorious\SimpleMinimap.ini"
 	if iTemp > 0
-		SetOnKeyDownEventHandler (CompileScript "SimpleMiniMap\KeyToggle.gek") 1 iTemp
+		SetOnKeyDownEventHandler (CompileScript "SimpleMinimap\KeyToggle.gek") 1 iTemp
 	endif
-	iTemp = GetINIFloat_Cached "KeyBinds:iMapRotation" "Stentorious\SimpleMiniMap.ini"
+	iTemp = GetINIFloat_Cached "KeyBinds:iMapRotation" "Stentorious\SimpleMinimap.ini"
 	if iTemp > 0
-		SetOnKeyDownEventHandler (CompileScript "SimpleMiniMap\KeyRotation.gek") 1 iTemp
+		SetOnKeyDownEventHandler (CompileScript "SimpleMinimap\KeyRotation.gek") 1 iTemp
 	endif
-	iTemp = GetINIFloat_Cached "KeyBinds:iMapZoomIn" "Stentorious\SimpleMiniMap.ini"
+	iTemp = GetINIFloat_Cached "KeyBinds:iMapZoomIn" "Stentorious\SimpleMinimap.ini"
 	if iTemp > 0
-		SetOnKeyDownEventHandler (CompileScript "SimpleMiniMap\KeyZoomIn.gek") 1 iTemp
+		SetOnKeyDownEventHandler (CompileScript "SimpleMinimap\KeyZoomIn.gek") 1 iTemp
 	endif
-	iTemp = GetINIFloat_Cached "KeyBinds:iMapZoomOut" "Stentorious\SimpleMiniMap.ini"
+	iTemp = GetINIFloat_Cached "KeyBinds:iMapZoomOut" "Stentorious\SimpleMinimap.ini"
 	if iTemp > 0
-		SetOnKeyDownEventHandler (CompileScript "SimpleMiniMap\KeyZoomOut.gek") 1 iTemp
+		SetOnKeyDownEventHandler (CompileScript "SimpleMinimap\KeyZoomOut.gek") 1 iTemp
 	endif
 
 	; Load map settings
-	SetUIFloatAlt "HUDMainMenu\SimpleMiniMap\_corner" (GetINIFloat_Cached "Map:iPosition" "Stentorious\SimpleMiniMap.ini")
-	SetUIFloatAlt "HUDMainMenu\SimpleMiniMap\_x" (GetINIFloat_Cached "Map:fOffsetX" "Stentorious\SimpleMiniMap.ini")
-	SetUIFloatAlt "HUDMainMenu\SimpleMiniMap\_y" (GetINIFloat_Cached "Map:fOffsetY" "Stentorious\SimpleMiniMap.ini")
-	SetUIFloatAlt "HUDMainMenu\SimpleMiniMap\_TileScale" (GetINIFloat_Cached "Map:fSize" "Stentorious\SimpleMiniMap.ini")
-	Goo1.AuxVarSetFlt "*MiniMap_INI" (GetMaxOf 0.5 (GetMinOf 1.5 (GetINIFloat_Cached "Map:fInteriorZoom" "Stentorious\SimpleMiniMap.ini"))) 0
-	Goo1.AuxVarSetFlt "*MiniMap_INI" (GetMaxOf 0.5 (GetMinOf 1.5 (GetINIFloat_Cached "Map:fExteriorZoom" "Stentorious\SimpleMiniMap.ini"))) 1
+	SetUIFloatAlt "HUDMainMenu\SimpleMinimap\_corner" (GetINIFloat_Cached "Map:iPosition" "Stentorious\SimpleMinimap.ini")
+	SetUIFloatAlt "HUDMainMenu\SimpleMinimap\_x" (GetINIFloat_Cached "Map:fOffsetX" "Stentorious\SimpleMinimap.ini")
+	SetUIFloatAlt "HUDMainMenu\SimpleMinimap\_y" (GetINIFloat_Cached "Map:fOffsetY" "Stentorious\SimpleMinimap.ini")
+	SetUIFloatAlt "HUDMainMenu\SimpleMinimap\_TileScale" (GetINIFloat_Cached "Map:fSize" "Stentorious\SimpleMinimap.ini")
+	Goo1.AuxVarSetFlt "*Minimap_INI" (GetMaxOf 0.5 (GetMinOf 1.5 (GetINIFloat_Cached "Map:fInteriorZoom" "Stentorious\SimpleMinimap.ini"))) 0
+	Goo1.AuxVarSetFlt "*Minimap_INI" (GetMaxOf 0.5 (GetMinOf 1.5 (GetINIFloat_Cached "Map:fExteriorZoom" "Stentorious\SimpleMinimap.ini"))) 1
 	; Compass rose cross
-	if eval GetINIFloat_Cached "Map:bCompassRose" "Stentorious\SimpleMiniMap.ini"
-		SetUIFloatAlt "HUDMainMenu\SimpleMiniMap\Headline_HC\visible" 1
-		SetUIFloatAlt "HUDMainMenu\SimpleMiniMap\Headline_VC\visible" 1
+	if eval GetINIFloat_Cached "Map:bCompassRose" "Stentorious\SimpleMinimap.ini"
+		SetUIFloatAlt "HUDMainMenu\SimpleMinimap\Headline_HC\visible" 1
+		SetUIFloatAlt "HUDMainMenu\SimpleMinimap\Headline_VC\visible" 1
 	endif
 	; Cardinal direction text
-	SetUIFloatAlt "HUDMainMenu\SimpleMiniMap\NorthText\visible" (eval GetINIFloat_Cached "Map:bNorthText" "Stentorious\SimpleMiniMap.ini")
-	SetUIFloatAlt "HUDMainMenu\SimpleMiniMap\SouthText\visible" (eval GetINIFloat_Cached "Map:bSouthText" "Stentorious\SimpleMiniMap.ini")
-	SetUIFloatAlt "HUDMainMenu\SimpleMiniMap\EastText\visible" (eval GetINIFloat_Cached "Map:bEastText" "Stentorious\SimpleMiniMap.ini")
-	SetUIFloatAlt "HUDMainMenu\SimpleMiniMap\WestText\visible" (eval GetINIFloat_Cached "Map:bWestText" "Stentorious\SimpleMiniMap.ini")
+	SetUIFloatAlt "HUDMainMenu\SimpleMinimap\NorthText\visible" (eval GetINIFloat_Cached "Map:bNorthText" "Stentorious\SimpleMinimap.ini")
+	SetUIFloatAlt "HUDMainMenu\SimpleMinimap\SouthText\visible" (eval GetINIFloat_Cached "Map:bSouthText" "Stentorious\SimpleMinimap.ini")
+	SetUIFloatAlt "HUDMainMenu\SimpleMinimap\EastText\visible" (eval GetINIFloat_Cached "Map:bEastText" "Stentorious\SimpleMinimap.ini")
+	SetUIFloatAlt "HUDMainMenu\SimpleMinimap\WestText\visible" (eval GetINIFloat_Cached "Map:bWestText" "Stentorious\SimpleMinimap.ini")
 	; Scan animation
-	if eval GetINIFloat_Cached "Map:bScanEffect" "Stentorious\SimpleMiniMap.ini"
-		SetUIFloatAlt "HUDMainMenu\SimpleMiniMap\Scan\visible" 1
-		iTemp = GetUIFloatAlt "HUDMainMenu\SimpleMiniMap\_width"
-		SetUIFloatGradual "HUDMainMenu\SimpleMiniMap\Scan\brightness" 153 255 1 2
-		SetUIFloatGradual "HUDMainMenu\SimpleMiniMap\Scan\y" (iTemp * -2) (iTemp * 3) 10 3
+	if eval GetINIFloat_Cached "Map:bScanEffect" "Stentorious\SimpleMinimap.ini"
+		SetUIFloatAlt "HUDMainMenu\SimpleMinimap\Scan\visible" 1
+		iTemp = GetUIFloatAlt "HUDMainMenu\SimpleMinimap\_width"
+		SetUIFloatGradual "HUDMainMenu\SimpleMinimap\Scan\brightness" 153 255 1 2
+		SetUIFloatGradual "HUDMainMenu\SimpleMinimap\Scan\y" (iTemp * -2) (iTemp * 3) 10 3
 	endif
 	; Combat indicator
-	if eval (GetINIFloat_Cached "Map:bCombatIndicator" "Stentorious\SimpleMiniMap.ini") == 0
-		SetUIFloatAlt "HUDMainMenu\SimpleMiniMap\_systemcolor" 1
+	if eval (GetINIFloat_Cached "Map:bCombatIndicator" "Stentorious\SimpleMinimap.ini") == 0
+		SetUIFloatAlt "HUDMainMenu\SimpleMinimap\_systemcolor" 1
 	endif
 	; Default rotation mode
-	SetUIFloatAlt "HUDMainMenu\SimpleMiniMap\_RotationMode" (eval GetINIFloat_Cached "Map:iRotationMode" "Stentorious\SimpleMiniMap.ini")
+	SetUIFloatAlt "HUDMainMenu\SimpleMinimap\_RotationMode" (eval GetINIFloat_Cached "Map:iRotationMode" "Stentorious\SimpleMinimap.ini")
 	; Location text
-	iTemp = GetINIFloat_Cached "Map:iLocationText" "Stentorious\SimpleMiniMap.ini"
-	Goo1.AuxVarSetFlt "*MiniMap_INI" iTemp 2
+	iTemp = GetINIFloat_Cached "Map:iLocationText" "Stentorious\SimpleMinimap.ini"
+	Goo1.AuxVarSetFlt "*Minimap_INI" iTemp 2
 	if iTemp > 0
-		SetUIFloatAlt "HUDMainMenu\SimpleMiniMap\LocationText\visible" 1
+		SetUIFloatAlt "HUDMainMenu\SimpleMinimap\LocationText\visible" 1
 	endif
 
 	; Load icon settings
-	SetUIFloatAlt "HUDMainMenu\SimpleMiniMap\_IconScale" (GetINIFloat_Cached "Icons:fSize" "Stentorious\SimpleMiniMap.ini")
-	SetUIFloatAlt "HUDMainMenu\SimpleMiniMap\_Drop" (GetINIFloat_Cached "Icons:bDropShadow" "Stentorious\SimpleMiniMap.ini")
-	SetUIFloatAlt "HUDMainMenu\SimpleMiniMap\_Height" (eval GetINIFloat_Cached "Icons:bHeightIndicator" "Stentorious\SimpleMiniMap.ini")
-	SetUIFloatAlt "HUDMainMenu\SimpleMiniMap\_Dist" ((GetMaxOf 5 (GetMinOf 100 (GetINIFloat_Cached "Icons:fRadius" "Stentorious\SimpleMiniMap.ini"))) * 69.99104)
-	if eval GetINIFloat_Cached "Icons:bPerceptionCalc" "Stentorious\SimpleMiniMap.ini"
-		SetUIFloatAlt "HUDMainMenu\SimpleMiniMap\_DistMode" 1
-		SetOnActorValueChangeEventHandler 1 ({int iAVCode, float fOldValue, float fNewValue} => SetUIFloatAlt "HUDMainMenu\SimpleMiniMap\_PlrAV6" (GetMaxOf 1 (GetMinOf 10 (Player.GetAV Perception)))) 0 6
+	SetUIFloatAlt "HUDMainMenu\SimpleMinimap\_IconScale" (GetINIFloat_Cached "Icons:fSize" "Stentorious\SimpleMinimap.ini")
+	SetUIFloatAlt "HUDMainMenu\SimpleMinimap\_Drop" (GetINIFloat_Cached "Icons:bDropShadow" "Stentorious\SimpleMinimap.ini")
+	SetUIFloatAlt "HUDMainMenu\SimpleMinimap\_Height" (eval GetINIFloat_Cached "Icons:bHeightIndicator" "Stentorious\SimpleMinimap.ini")
+	SetUIFloatAlt "HUDMainMenu\SimpleMinimap\_Dist" ((GetMaxOf 5 (GetMinOf 100 (GetINIFloat_Cached "Icons:fRadius" "Stentorious\SimpleMinimap.ini"))) * 69.99104)
+	if eval GetINIFloat_Cached "Icons:bPerceptionCalc" "Stentorious\SimpleMinimap.ini"
+		SetUIFloatAlt "HUDMainMenu\SimpleMinimap\_DistMode" 1
+		SetOnActorValueChangeEventHandler 1 ({int iAVCode, float fOldValue, float fNewValue} => SetUIFloatAlt "HUDMainMenu\SimpleMinimap\_PlrAV6" (GetMaxOf 1 (GetMinOf 10 (Player.GetAV Perception)))) 0 6
 	endif
-	SetUIFloatAlt "HUDMainMenu\SimpleMiniMap\_Fade" (eval GetINIFloat_Cached "Icons:bFadeAlpha" "Stentorious\SimpleMiniMap.ini")
+	SetUIFloatAlt "HUDMainMenu\SimpleMinimap\_Fade" (eval GetINIFloat_Cached "Icons:bFadeAlpha" "Stentorious\SimpleMinimap.ini")
 
 	; Actor settings
-	if eval GetINIFloat_Cached "Actors:bHostileColor" "Stentorious\SimpleMiniMap.ini"
-		SetUIFloatAlt "HUDMainMenu\SimpleMiniMap\_Color2" 2
+	if eval GetINIFloat_Cached "Actors:bHostileColor" "Stentorious\SimpleMinimap.ini"
+		SetUIFloatAlt "HUDMainMenu\SimpleMinimap\_Color2" 2
 	endif
-	Goo1.AuxVarSetFlt "*MiniMap_INI" (GetMaxOf 0 (GetMinOf 3 (GetINIFloat_Cached "Actors:iMode" "Stentorious\SimpleMiniMap.ini"))) 3
-	Goo1.AuxVarSetFlt "*MiniMap_INI" (eval GetINIFloat_Cached "Actors:bHideEmptyCorpses" "Stentorious\SimpleMiniMap.ini") 4
+	Goo1.AuxVarSetFlt "*Minimap_INI" (GetMaxOf 0 (GetMinOf 3 (GetINIFloat_Cached "Actors:iMode" "Stentorious\SimpleMinimap.ini"))) 3
+	Goo1.AuxVarSetFlt "*Minimap_INI" (eval GetINIFloat_Cached "Actors:bHideEmptyCorpses" "Stentorious\SimpleMinimap.ini") 4
 
 	; Marker alpha pulse
-	SetUIFloatGradual "HUDMainMenu\SimpleMiniMap\_AlphaPulse" -1.5 0.75 3 2
+	SetUIFloatGradual "HUDMainMenu\SimpleMinimap\_AlphaPulse" -1.5 0.75 3 2
 
 	; Color mode (EXPERIMENTAL)
-	SetUIFloatAlt "HUDMainMenu\SimpleMiniMap\_ColorMode" (eval GetINIFloat_Cached "Developer:bColorRender" "Stentorious\SimpleMiniMap.ini")
+	SetUIFloatAlt "HUDMainMenu\SimpleMinimap\_ColorMode" (eval GetINIFloat_Cached "Developer:bColorRender" "Stentorious\SimpleMinimap.ini")
 
 	int iDeadMoney = (eval IsModLoaded "DeadMoney.esm")
 	int iHonestHearts = (eval IsModLoaded "HonestHearts.esm")
@@ -136,260 +136,260 @@ if eval Goo1.AuxVarGetFlt "*MiniMap_Init" 0 == 0
 	Goo1.AuxVarSetFlt "*TaleOfTwoWastelands.esm" iTaleOfTwoWastelands
 
 	; Assign keywords (Crafting stations)
-	if eval GetINIFloat_Cached "Objects:bCraftingStation" "Stentorious\SimpleMiniMap.ini"
-		AssignKeyword WorkBench "MiniMapIcon"
-		AssignKeyword ReloadingBench "MiniMapIcon"
-		AssignKeyword CampfireCrafting01 "MiniMapIcon"
-		AssignKeyword CampfireCrafting02 "MiniMapIcon"
-		AssignKeyword CampfireCrafting03 "MiniMapIcon"
-		AssignKeyword CampfireCrafting04 "MiniMapIcon"
-		AssignKeyword VCG03CampfireCrafting03 "MiniMapIcon"
+	if eval GetINIFloat_Cached "Objects:bCraftingStation" "Stentorious\SimpleMinimap.ini"
+		AssignKeyword WorkBench "MinimapIcon"
+		AssignKeyword ReloadingBench "MinimapIcon"
+		AssignKeyword CampfireCrafting01 "MinimapIcon"
+		AssignKeyword CampfireCrafting02 "MinimapIcon"
+		AssignKeyword CampfireCrafting03 "MinimapIcon"
+		AssignKeyword CampfireCrafting04 "MinimapIcon"
+		AssignKeyword VCG03CampfireCrafting03 "MinimapIcon"
 		if eval iDeadMoney
-			AssignKeyword (EditorIDToFormID "NVDLC01CraftingOven") "MiniMapIcon"
-			AssignKeyword (EditorIDToFormID "NVDLC01VendingArtDeco") "MiniMapIcon"
+			AssignKeyword (EditorIDToFormID "NVDLC01CraftingOven") "MinimapIcon"
+			AssignKeyword (EditorIDToFormID "NVDLC01VendingArtDeco") "MinimapIcon"
 		endif
 		if eval iHonestHearts
-			AssignKeyword (EditorIDToFormID "NVDLC02Campfire01") "MiniMapIcon"
-			AssignKeyword (EditorIDToFormID "NVDLC02Campfire02") "MiniMapIcon"
-			AssignKeyword (EditorIDToFormID "NVDLC02CraftingOven01") "MiniMapIcon"
+			AssignKeyword (EditorIDToFormID "NVDLC02Campfire01") "MinimapIcon"
+			AssignKeyword (EditorIDToFormID "NVDLC02Campfire02") "MinimapIcon"
+			AssignKeyword (EditorIDToFormID "NVDLC02CraftingOven01") "MinimapIcon"
 		endif
 		if eval iOldWorldBlues
-			AssignKeyword (EditorIDToFormID "NVDLC03HotPlate") "MiniMapIcon"
+			AssignKeyword (EditorIDToFormID "NVDLC03HotPlate") "MinimapIcon"
 		endif
 		if eval iTaleOfTwoWastelands
-			AssignKeyword (EditorIDToFormID "TTWDLC05ControlWB") "MiniMapIcon"
-			AssignKeyword (EditorIDToFormID "TTWDLC05ControlRB") "MiniMapIcon"
-			AssignKeyword (EditorIDToFormID "TTWCampGrillCrafting01") "MiniMapIcon"
-			AssignKeyword (EditorIDToFormID "TTWGrillBBQDirtyCrafting") "MiniMapIcon"
-			AssignKeyword (EditorIDToFormID "TTWGrillBBQCleanCrafting") "MiniMapIcon"
+			AssignKeyword (EditorIDToFormID "TTWDLC05ControlWB") "MinimapIcon"
+			AssignKeyword (EditorIDToFormID "TTWDLC05ControlRB") "MinimapIcon"
+			AssignKeyword (EditorIDToFormID "TTWCampGrillCrafting01") "MinimapIcon"
+			AssignKeyword (EditorIDToFormID "TTWGrillBBQDirtyCrafting") "MinimapIcon"
+			AssignKeyword (EditorIDToFormID "TTWGrillBBQCleanCrafting") "MinimapIcon"
 		endif
 	endif
 
 	iTemp = 0
 
 	; Assign keywords (Skill books)
-	if eval GetINIFloat_Cached "Objects:bSkillBook" "Stentorious\SimpleMiniMap.ini"
-		AssignKeyword BookSkillBarter "MiniMapIcon"
-		AssignKeyword BookSkillBigGuns "MiniMapIcon"
-		AssignKeyword BookSkillEnergyWeapons "MiniMapIcon"
-		AssignKeyword BookSkillExplosives "MiniMapIcon"
-		AssignKeyword BookSkillGuns "MiniMapIcon"
-		AssignKeyword BookSkillLockpicking "MiniMapIcon"
-		AssignKeyword BookSkillMedicine "MiniMapIcon"
-		AssignKeyword BookSkillMelee "MiniMapIcon"
-		AssignKeyword BookSkillRepair "MiniMapIcon"
-		AssignKeyword BookSkillScience "MiniMapIcon"
-		AssignKeyword BookSkillSneak "MiniMapIcon"
-		AssignKeyword BookSkillSpeech "MiniMapIcon"
-		AssignKeyword BookSkillSurvival "MiniMapIcon"
-		AssignKeyword BookSkillUnarmed "MiniMapIcon"
+	if eval GetINIFloat_Cached "Objects:bSkillBook" "Stentorious\SimpleMinimap.ini"
+		AssignKeyword BookSkillBarter "MinimapIcon"
+		AssignKeyword BookSkillBigGuns "MinimapIcon"
+		AssignKeyword BookSkillEnergyWeapons "MinimapIcon"
+		AssignKeyword BookSkillExplosives "MinimapIcon"
+		AssignKeyword BookSkillGuns "MinimapIcon"
+		AssignKeyword BookSkillLockpicking "MinimapIcon"
+		AssignKeyword BookSkillMedicine "MinimapIcon"
+		AssignKeyword BookSkillMelee "MinimapIcon"
+		AssignKeyword BookSkillRepair "MinimapIcon"
+		AssignKeyword BookSkillScience "MinimapIcon"
+		AssignKeyword BookSkillSneak "MinimapIcon"
+		AssignKeyword BookSkillSpeech "MinimapIcon"
+		AssignKeyword BookSkillSurvival "MinimapIcon"
+		AssignKeyword BookSkillUnarmed "MinimapIcon"
 		if eval iTaleOfTwoWastelands
-			AssignKeyword (EditorIDToFormID "DLC04GhoulEcologyBook") "MiniMapIcon"
-			AssignKeyword (EditorIDToFormID "DLC04MirelurkEcologyBook") "MiniMapIcon"
-			AssignKeyword (EditorIDToFormID "TTWBookSkillBarterVault101d") "MiniMapIcon"
+			AssignKeyword (EditorIDToFormID "DLC04GhoulEcologyBook") "MinimapIcon"
+			AssignKeyword (EditorIDToFormID "DLC04MirelurkEcologyBook") "MinimapIcon"
+			AssignKeyword (EditorIDToFormID "TTWBookSkillBarterVault101d") "MinimapIcon"
 		endif
 		iTemp += 1
 	endif
 
 	; Assign keywords (Skill magazines)
-	if eval GetINIFloat_Cached "Objects:bSkillMagazine" "Stentorious\SimpleMiniMap.ini"
-		AssignKeyword MagazineNVBarter "MiniMapIcon"
-		AssignKeyword MagazineNVCritical "MiniMapIcon"
-		AssignKeyword MagazineNVEnergyWeapons "MiniMapIcon"
-		AssignKeyword MagazineNVExplosives "MiniMapIcon"
-		AssignKeyword MagazineNVGuns "MiniMapIcon"
-		AssignKeyword MagazineNVLockpick "MiniMapIcon"
-		AssignKeyword MagazineNVMedicine "MiniMapIcon"
-		AssignKeyword MagazineNVMeleeWeapons "MiniMapIcon"
-		AssignKeyword MagazineNVRepair "MiniMapIcon"
-		AssignKeyword MagazineNVScience "MiniMapIcon"
-		AssignKeyword MagazineNVSneak "MiniMapIcon"
-		AssignKeyword MagazineNVSpeech "MiniMapIcon"
-		AssignKeyword MagazineNVSurvival "MiniMapIcon"
-		AssignKeyword MagazineNVUnarmed "MiniMapIcon"
+	if eval GetINIFloat_Cached "Objects:bSkillMagazine" "Stentorious\SimpleMinimap.ini"
+		AssignKeyword MagazineNVBarter "MinimapIcon"
+		AssignKeyword MagazineNVCritical "MinimapIcon"
+		AssignKeyword MagazineNVEnergyWeapons "MinimapIcon"
+		AssignKeyword MagazineNVExplosives "MinimapIcon"
+		AssignKeyword MagazineNVGuns "MinimapIcon"
+		AssignKeyword MagazineNVLockpick "MinimapIcon"
+		AssignKeyword MagazineNVMedicine "MinimapIcon"
+		AssignKeyword MagazineNVMeleeWeapons "MinimapIcon"
+		AssignKeyword MagazineNVRepair "MinimapIcon"
+		AssignKeyword MagazineNVScience "MinimapIcon"
+		AssignKeyword MagazineNVSneak "MinimapIcon"
+		AssignKeyword MagazineNVSpeech "MinimapIcon"
+		AssignKeyword MagazineNVSurvival "MinimapIcon"
+		AssignKeyword MagazineNVUnarmed "MinimapIcon"
 	endif
 
 	; Assign keywords (Collectables)
-	if eval GetINIFloat_Cached "Objects:bCollectable" "Stentorious\SimpleMiniMap.ini"
-		AssignKeyword NVStarBottleCap "MiniMapIcon"
-		AssignKeyword SnowglobeFortmormon "MiniMapIcon"
-		AssignKeyword SnowglobeMtCharleston "MiniMapIcon"
-		AssignKeyword SnowglobeHooverDam "MiniMapIcon"
-		AssignKeyword SnowglobeGoodsprings "MiniMapIcon"
-		AssignKeyword SnowglobeTestSite "MiniMapIcon"
-		AssignKeyword SnowglobeNellis "MiniMapIcon"
-		AssignKeyword SnowglobeTheStrip "MiniMapIcon"
+	if eval GetINIFloat_Cached "Objects:bCollectable" "Stentorious\SimpleMinimap.ini"
+		AssignKeyword NVStarBottleCap "MinimapIcon"
+		AssignKeyword SnowglobeFortmormon "MinimapIcon"
+		AssignKeyword SnowglobeMtCharleston "MinimapIcon"
+		AssignKeyword SnowglobeHooverDam "MinimapIcon"
+		AssignKeyword SnowglobeGoodsprings "MinimapIcon"
+		AssignKeyword SnowglobeTestSite "MinimapIcon"
+		AssignKeyword SnowglobeNellis "MinimapIcon"
+		AssignKeyword SnowglobeTheStrip "MinimapIcon"
 		if eval iDeadMoney
-			AssignKeyword (EditorIDToFormID "NVDLC01Snowglobe") "MiniMapIcon"
-			AssignKeyword (EditorIDToFormID "NVDLC01DeanSecretStash") "MiniMapIcon"
+			AssignKeyword (EditorIDToFormID "NVDLC01Snowglobe") "MinimapIcon"
+			AssignKeyword (EditorIDToFormID "NVDLC01DeanSecretStash") "MinimapIcon"
 		endif
 		if eval iHonestHearts
-			AssignKeyword (EditorIDToFormID "NVDLC02SnowGlobe") "MiniMapIcon"
-			AssignKeyword (EditorIDToFormID "NVDLC02DuffleBagFORCHALLENGE") "MiniMapIcon"
+			AssignKeyword (EditorIDToFormID "NVDLC02SnowGlobe") "MinimapIcon"
+			AssignKeyword (EditorIDToFormID "NVDLC02DuffleBagFORCHALLENGE") "MinimapIcon"
 		endif
 		if eval iOldWorldBlues
-			AssignKeyword (EditorIDToFormID "NVDLC03SnowGlobe") "MiniMapIcon"
+			AssignKeyword (EditorIDToFormID "NVDLC03SnowGlobe") "MinimapIcon"
 		endif
 		if eval iLonesomeRoad
-			AssignKeyword (EditorIDToFormID "NVDLC04Snowglobe") "MiniMapIcon"
-			AssignKeyword (EditorIDToFormID "NVDLC04RALPHIEPosterActivator") "MiniMapIcon"
-			AssignKeyword (EditorIDToFormID "NVDLC04Warhead") "MiniMapIcon"
-			AssignKeyword (EditorIDToFormID "NVDLC04DivideBldgWarhead") "MiniMapIcon"
-			AssignKeyword (EditorIDToFormID "NVDLC04DivideDeathclawWarhead") "MiniMapIcon"
-			AssignKeyword (EditorIDToFormID "NVDLC04DivideSniperWarhead01") "MiniMapIcon"
-			AssignKeyword (EditorIDToFormID "NVDLC04DivideSniperWarhead02") "MiniMapIcon"
-			AssignKeyword (EditorIDToFormID "NVDLC04DivideSniperWarhead03") "MiniMapIcon"
+			AssignKeyword (EditorIDToFormID "NVDLC04Snowglobe") "MinimapIcon"
+			AssignKeyword (EditorIDToFormID "NVDLC04RALPHIEPosterActivator") "MinimapIcon"
+			AssignKeyword (EditorIDToFormID "NVDLC04Warhead") "MinimapIcon"
+			AssignKeyword (EditorIDToFormID "NVDLC04DivideBldgWarhead") "MinimapIcon"
+			AssignKeyword (EditorIDToFormID "NVDLC04DivideDeathclawWarhead") "MinimapIcon"
+			AssignKeyword (EditorIDToFormID "NVDLC04DivideSniperWarhead01") "MinimapIcon"
+			AssignKeyword (EditorIDToFormID "NVDLC04DivideSniperWarhead02") "MinimapIcon"
+			AssignKeyword (EditorIDToFormID "NVDLC04DivideSniperWarhead03") "MinimapIcon"
 		endif
 		if eval iTaleOfTwoWastelands
-			AssignKeyword (EditorIDToFormID "BobbleheadAGL") "MiniMapIcon"
-			AssignKeyword (EditorIDToFormID "BobbleheadBART") "MiniMapIcon"
-			AssignKeyword (EditorIDToFormID "BobbleheadBGUN") "MiniMapIcon"
-			AssignKeyword (EditorIDToFormID "BobbleheadCHA") "MiniMapIcon"
-			AssignKeyword (EditorIDToFormID "BobbleheadEND") "MiniMapIcon"
-			AssignKeyword (EditorIDToFormID "BobbleheadERGW") "MiniMapIcon"
-			AssignKeyword (EditorIDToFormID "BobbleheadEXPL") "MiniMapIcon"
-			AssignKeyword (EditorIDToFormID "BobbleheadINT") "MiniMapIcon"
-			AssignKeyword (EditorIDToFormID "BobbleheadLOCK") "MiniMapIcon"
-			AssignKeyword (EditorIDToFormID "BobbleheadLUK") "MiniMapIcon"
-			AssignKeyword (EditorIDToFormID "BobbleheadMEDI") "MiniMapIcon"
-			AssignKeyword (EditorIDToFormID "BobbleheadMELE") "MiniMapIcon"
-			AssignKeyword (EditorIDToFormID "BobbleheadPER") "MiniMapIcon"
-			AssignKeyword (EditorIDToFormID "BobbleheadREPR") "MiniMapIcon"
-			AssignKeyword (EditorIDToFormID "BobbleheadSCNC") "MiniMapIcon"
-			AssignKeyword (EditorIDToFormID "BobbleheadSGUN") "MiniMapIcon"
-			AssignKeyword (EditorIDToFormID "BobbleheadSNEK") "MiniMapIcon"
-			AssignKeyword (EditorIDToFormID "BobbleheadSPCH") "MiniMapIcon"
-			AssignKeyword (EditorIDToFormID "BobbleheadSTR") "MiniMapIcon"
-			AssignKeyword (EditorIDToFormID "BobbleheadSUR") "MiniMapIcon"
-			AssignKeyword (EditorIDToFormID "BobbleheadUARM") "MiniMapIcon"
-			AssignKeyword (EditorIDToFormID "DLC01SteelPlateActivator") "MiniMapIcon"
-			AssignKeyword (EditorIDToFormID "DLC02FF004Briefcase") "MiniMapIcon"
+			AssignKeyword (EditorIDToFormID "BobbleheadAGL") "MinimapIcon"
+			AssignKeyword (EditorIDToFormID "BobbleheadBART") "MinimapIcon"
+			AssignKeyword (EditorIDToFormID "BobbleheadBGUN") "MinimapIcon"
+			AssignKeyword (EditorIDToFormID "BobbleheadCHA") "MinimapIcon"
+			AssignKeyword (EditorIDToFormID "BobbleheadEND") "MinimapIcon"
+			AssignKeyword (EditorIDToFormID "BobbleheadERGW") "MinimapIcon"
+			AssignKeyword (EditorIDToFormID "BobbleheadEXPL") "MinimapIcon"
+			AssignKeyword (EditorIDToFormID "BobbleheadINT") "MinimapIcon"
+			AssignKeyword (EditorIDToFormID "BobbleheadLOCK") "MinimapIcon"
+			AssignKeyword (EditorIDToFormID "BobbleheadLUK") "MinimapIcon"
+			AssignKeyword (EditorIDToFormID "BobbleheadMEDI") "MinimapIcon"
+			AssignKeyword (EditorIDToFormID "BobbleheadMELE") "MinimapIcon"
+			AssignKeyword (EditorIDToFormID "BobbleheadPER") "MinimapIcon"
+			AssignKeyword (EditorIDToFormID "BobbleheadREPR") "MinimapIcon"
+			AssignKeyword (EditorIDToFormID "BobbleheadSCNC") "MinimapIcon"
+			AssignKeyword (EditorIDToFormID "BobbleheadSGUN") "MinimapIcon"
+			AssignKeyword (EditorIDToFormID "BobbleheadSNEK") "MinimapIcon"
+			AssignKeyword (EditorIDToFormID "BobbleheadSPCH") "MinimapIcon"
+			AssignKeyword (EditorIDToFormID "BobbleheadSTR") "MinimapIcon"
+			AssignKeyword (EditorIDToFormID "BobbleheadSUR") "MinimapIcon"
+			AssignKeyword (EditorIDToFormID "BobbleheadUARM") "MinimapIcon"
+			AssignKeyword (EditorIDToFormID "DLC01SteelPlateActivator") "MinimapIcon"
+			AssignKeyword (EditorIDToFormID "DLC02FF004Briefcase") "MinimapIcon"
 		endif
 		iTemp += 128
 	endif
 
 	; Assign keywords (Quest)
-	if eval GetINIFloat_Cached "Objects:bQuest" "Stentorious\SimpleMiniMap.ini"
+	if eval GetINIFloat_Cached "Objects:bQuest" "Stentorious\SimpleMinimap.ini"
 		;if eval iTaleOfTwoWastelands
-		;	AssignKeyword (EditorIDToFormID "MegatonPipeJointY01ACT") "MiniMapIcon"
-		;	AssignKeyword (EditorIDToFormID "MegatonPipeStraightRegSmlACT") "MiniMapIcon"
-		;	AssignKeyword (EditorIDToFormID "MegatonPipeJointLrgToLrgACT") "MiniMapIcon"
+		;	AssignKeyword (EditorIDToFormID "MegatonPipeJointY01ACT") "MinimapIcon"
+		;	AssignKeyword (EditorIDToFormID "MegatonPipeStraightRegSmlACT") "MinimapIcon"
+		;	AssignKeyword (EditorIDToFormID "MegatonPipeJointLrgToLrgACT") "MinimapIcon"
 		;endif
 		iTemp += 16
 	endif
 
 	; Assign keywords (Trap)
-	if eval GetINIFloat_Cached "Objects:bTrap" "Stentorious\SimpleMiniMap.ini"
-		AssignKeyword TrapGrenadeBunch "MiniMapIcon"
-		AssignKeyword TrapBearTrap "MiniMapIcon"
-		AssignKeyword TrapTripwire01 "MiniMapIcon"
-		AssignKeyword trapShotgun "MiniMapIcon"
-		AssignKeyword TrapComputer "MiniMapIcon"
-		AssignKeyword trapMineBuried01 "MiniMapIcon"
-		AssignKeyword TrapBabyCarriage "MiniMapIcon"
-		AssignKeyword TrapPressurePlate "MiniMapIcon"
-		AssignKeyword TrapPitchingMachine01 "MiniMapIcon"
-		AssignKeyword TrapMailboxBomb01 "MiniMapIcon"
-		AssignKeyword SprungTrapBearTrap "MiniMapIcon"
-		AssignKeyword VHDLegionOliverRangerTrapBearTrap "MiniMapIcon"
-		AssignKeyword VHDLegionOliverTrapTripwire "MiniMapIcon"
+	if eval GetINIFloat_Cached "Objects:bTrap" "Stentorious\SimpleMinimap.ini"
+		AssignKeyword TrapGrenadeBunch "MinimapIcon"
+		AssignKeyword TrapBearTrap "MinimapIcon"
+		AssignKeyword TrapTripwire01 "MinimapIcon"
+		AssignKeyword trapShotgun "MinimapIcon"
+		AssignKeyword TrapComputer "MinimapIcon"
+		AssignKeyword trapMineBuried01 "MinimapIcon"
+		AssignKeyword TrapBabyCarriage "MinimapIcon"
+		AssignKeyword TrapPressurePlate "MinimapIcon"
+		AssignKeyword TrapPitchingMachine01 "MinimapIcon"
+		AssignKeyword TrapMailboxBomb01 "MinimapIcon"
+		AssignKeyword SprungTrapBearTrap "MinimapIcon"
+		AssignKeyword VHDLegionOliverRangerTrapBearTrap "MinimapIcon"
+		AssignKeyword VHDLegionOliverTrapTripwire "MinimapIcon"
 		if eval iDeadMoney
-			AssignKeyword (EditorIDToFormID "NVDLC01TrapTripwire") "MiniMapIcon"
-			AssignKeyword (EditorIDToFormID "NVDLC01TrapBearTrap") "MiniMapIcon"
-			AssignKeyword (EditorIDToFormID "NVDLC01TrapPressurePlate") "MiniMapIcon"
-			AssignKeyword (EditorIDToFormID "NVDLC01trapShotgun") "MiniMapIcon"
-			AssignKeyword (EditorIDToFormID "NVDLC01SprungTrapBearTrap") "MiniMapIcon"
-			AssignKeyword (EditorIDToFormID "NVDLC01Radio") "MiniMapIcon"
-			AssignKeyword (EditorIDToFormID "NVDLC01SpeakerINV") "MiniMapIcon"
-			AssignKeyword (EditorIDToFormID "NVDLC01SpeakerDest") "MiniMapIcon"
-			AssignKeyword (EditorIDToFormID "NVDLC01SpeakerINVOff") "MiniMapIcon"
+			AssignKeyword (EditorIDToFormID "NVDLC01TrapTripwire") "MinimapIcon"
+			AssignKeyword (EditorIDToFormID "NVDLC01TrapBearTrap") "MinimapIcon"
+			AssignKeyword (EditorIDToFormID "NVDLC01TrapPressurePlate") "MinimapIcon"
+			AssignKeyword (EditorIDToFormID "NVDLC01trapShotgun") "MinimapIcon"
+			AssignKeyword (EditorIDToFormID "NVDLC01SprungTrapBearTrap") "MinimapIcon"
+			AssignKeyword (EditorIDToFormID "NVDLC01Radio") "MinimapIcon"
+			AssignKeyword (EditorIDToFormID "NVDLC01SpeakerINV") "MinimapIcon"
+			AssignKeyword (EditorIDToFormID "NVDLC01SpeakerDest") "MinimapIcon"
+			AssignKeyword (EditorIDToFormID "NVDLC01SpeakerINVOff") "MinimapIcon"
 		endif
 
 		if eval iHonestHearts
-			AssignKeyword (EditorIDToFormID "NVDLC02MQ03BearTrap") "MiniMapIcon"
-			AssignKeyword (EditorIDToFormID "NVDLC02BearTrap") "MiniMapIcon"
-			AssignKeyword (EditorIDToFormID "NVDLC02TrapTripwire01") "MiniMapIcon"
-			AssignKeyword (EditorIDToFormID "NVDLC02TrapPressurePlate") "MiniMapIcon"
+			AssignKeyword (EditorIDToFormID "NVDLC02MQ03BearTrap") "MinimapIcon"
+			AssignKeyword (EditorIDToFormID "NVDLC02BearTrap") "MinimapIcon"
+			AssignKeyword (EditorIDToFormID "NVDLC02TrapTripwire01") "MinimapIcon"
+			AssignKeyword (EditorIDToFormID "NVDLC02TrapPressurePlate") "MinimapIcon"
 		endif
 		if eval iTaleOfTwoWastelands
-			AssignKeyword (EditorIDToFormID "trapShotgunCombat") "MiniMapIcon"
-			AssignKeyword (EditorIDToFormID "TrapElectrifiedToiletTop01") "MiniMapIcon"
-			AssignKeyword (EditorIDToFormID "TakomaTrapBabyCarriage") "MiniMapIcon"
-			AssignKeyword (EditorIDToFormID "DLC04LabTrapComputer") "MiniMapIcon"
-			AssignKeyword (EditorIDToFormID "DLC04TrapPitchingMachine") "MiniMapIcon"
+			AssignKeyword (EditorIDToFormID "trapShotgunCombat") "MinimapIcon"
+			AssignKeyword (EditorIDToFormID "TrapElectrifiedToiletTop01") "MinimapIcon"
+			AssignKeyword (EditorIDToFormID "TakomaTrapBabyCarriage") "MinimapIcon"
+			AssignKeyword (EditorIDToFormID "DLC04LabTrapComputer") "MinimapIcon"
+			AssignKeyword (EditorIDToFormID "DLC04TrapPitchingMachine") "MinimapIcon"
 		endif
 	endif
 
 	; Icon visibility bitmask
-	iTemp += 2 * (eval GetINIFloat_Cached "Objects:bNote" "Stentorious\SimpleMiniMap.ini")
-	iTemp += 4 * (eval GetINIFloat_Cached "Objects:bKey" "Stentorious\SimpleMiniMap.ini")
-	iTemp += 8 * (eval GetINIFloat_Cached "Objects:bUnique" "Stentorious\SimpleMiniMap.ini")
-	iTemp += 32 * (eval GetINIFloat_Cached "Objects:bMine" "Stentorious\SimpleMiniMap.ini")
-	iTemp += 64 * (eval GetINIFloat_Cached "Objects:bLockedContainer" "Stentorious\SimpleMiniMap.ini")
-	iTemp += 256 * (eval GetINIFloat_Cached "Objects:bTerminal" "Stentorious\SimpleMiniMap.ini")
-	iTemp += 512 * (eval GetINIFloat_Cached "Objects:bDoor" "Stentorious\SimpleMiniMap.ini")
+	iTemp += 2 * (eval GetINIFloat_Cached "Objects:bNote" "Stentorious\SimpleMinimap.ini")
+	iTemp += 4 * (eval GetINIFloat_Cached "Objects:bKey" "Stentorious\SimpleMinimap.ini")
+	iTemp += 8 * (eval GetINIFloat_Cached "Objects:bUnique" "Stentorious\SimpleMinimap.ini")
+	iTemp += 32 * (eval GetINIFloat_Cached "Objects:bMine" "Stentorious\SimpleMinimap.ini")
+	iTemp += 64 * (eval GetINIFloat_Cached "Objects:bLockedContainer" "Stentorious\SimpleMinimap.ini")
+	iTemp += 256 * (eval GetINIFloat_Cached "Objects:bTerminal" "Stentorious\SimpleMinimap.ini")
+	iTemp += 512 * (eval GetINIFloat_Cached "Objects:bDoor" "Stentorious\SimpleMinimap.ini")
 
-	Goo1.AuxVarSetFlt "*MiniMap_INI" iTemp 5
-	Goo1.AuxVarSetFlt "*MiniMap_INI" (GetMaxOf 0 (GetMinOf 2 (GetINIFloat_Cached "Vendors:iMode" "Stentorious\SimpleMiniMap.ini"))) 6
+	Goo1.AuxVarSetFlt "*Minimap_INI" iTemp 5
+	Goo1.AuxVarSetFlt "*Minimap_INI" (GetMaxOf 0 (GetMinOf 2 (GetINIFloat_Cached "Vendors:iMode" "Stentorious\SimpleMinimap.ini"))) 6
 
-	CloseFileSO "Stentorious\SimpleMiniMap.ini" 0
+	CloseFileSO "Stentorious\SimpleMinimap.ini" 0
 
 	; Add custom quest marker template
-	AddTileFromTemplate "HUDMainMenu\SimpleMiniMap|MiniMap_Marker_Template|CustomMarker"
-	SetUIFloatAlt "HUDMainMenu\SimpleMiniMap\CustomMarker\depth" 200
-	SetUIStringAlt "HUDMainMenu\SimpleMiniMap\CustomMarker\filename" "Interface\Stentorious\SimpleMiniMap\MarkerPlayer.dds"
+	AddTileFromTemplate "HUDMainMenu\SimpleMinimap|Minimap_Marker_Template|CustomMarker"
+	SetUIFloatAlt "HUDMainMenu\SimpleMinimap\CustomMarker\depth" 200
+	SetUIStringAlt "HUDMainMenu\SimpleMinimap\CustomMarker\filename" "Interface\Stentorious\SimpleMinimap\MarkerPlayer.dds"
 
 	; Init event handlers
-	SetGameMainLoopCallback (CompileScript "SimpleMiniMap\MainLoop.gek") 1 15 1
-	SetGameMainLoopCallback (CompileScript "SimpleMiniMap\OnRender.gek") 1 1 1
-	SetEventHandler "OnCellExit" (CompileScript "SimpleMiniMap\CellChange.gek")
+	SetGameMainLoopCallback (CompileScript "SimpleMinimap\MainLoop.gek") 1 15 1
+	SetGameMainLoopCallback (CompileScript "SimpleMinimap\OnRender.gek") 1 1 1
+	SetEventHandler "OnCellExit" (CompileScript "SimpleMinimap\CellChange.gek")
 	SetOnFastTravelEventHandler (begin Function {ref rMapMarker}
-		Goo1.AuxVarSetFlt "*MiniMap_Travel" 1
-		CallAfterFrames 0 (CompileScript "SimpleMiniMap\FastTravel.gek") 0 (Player.GPC)
+		Goo1.AuxVarSetFlt "*Minimap_Travel" 1
+		CallAfterFrames 0 (CompileScript "SimpleMinimap\FastTravel.gek") 0 (Player.GPC)
 	end) 1
 
 endif
 
 ; On game load
-if eval Goo1.AuxVarGetFlt "*MiniMap_Init" 1
+if eval Goo1.AuxVarGetFlt "*Minimap_Init" 1
 
-	; Reset minimap rect
-	UnloadUIComponent "HUDMainMenu\SimpleMiniMap\Icons"
-	UnloadUIComponent "HUDMainMenu\SimpleMiniMap\Markers"
-	AddTileFromTemplate "HUDMainMenu\SimpleMiniMap|MiniMap_Icon_Rect|Icons"
-	AddTileFromTemplate "HUDMainMenu\SimpleMiniMap|MiniMap_Icon_Rect|Markers"
+	; Reset Minimap rect
+	UnloadUIComponent "HUDMainMenu\SimpleMinimap\Icons"
+	UnloadUIComponent "HUDMainMenu\SimpleMinimap\Markers"
+	AddTileFromTemplate "HUDMainMenu\SimpleMinimap|Minimap_Icon_Rect|Icons"
+	AddTileFromTemplate "HUDMainMenu\SimpleMinimap|Minimap_Icon_Rect|Markers"
 
 	; Update player Perception
-	SetUIFloatAlt "HUDMainMenu\SimpleMiniMap\_PlrAV6" (GetMaxOf 1 (GetMinOf 10 (Player.GetAV Perception)))
+	SetUIFloatAlt "HUDMainMenu\SimpleMinimap\_PlrAV6" (GetMaxOf 1 (GetMinOf 10 (Player.GetAV Perception)))
 
 	; Update cell rotation
-	SetUIFloatAlt "HUDMainMenu\SimpleMiniMap\_CellDeg" (ABS (GetCellNorthRotation (Player.GPC)))
+	SetUIFloatAlt "HUDMainMenu\SimpleMinimap\_CellDeg" (ABS (GetCellNorthRotation (Player.GPC)))
 
 	; Default cell zoom
 	if eval GetCellFlag (Player.GPC) 0
-		SetUIFloatAlt "HUDMainMenu\SimpleMiniMap\_MapScale" (Goo1.AuxVarGetFlt "*MiniMap_INI" 0)
-		SetUIFloatAlt "HUDMainMenu\SimpleMiniMap\_Interior" 1
+		SetUIFloatAlt "HUDMainMenu\SimpleMinimap\_MapScale" (Goo1.AuxVarGetFlt "*Minimap_INI" 0)
+		SetUIFloatAlt "HUDMainMenu\SimpleMinimap\_Interior" 1
 	else
-		SetUIFloatAlt "HUDMainMenu\SimpleMiniMap\_MapScale" (Goo1.AuxVarGetFlt "*MiniMap_INI" 1)
-		SetUIFloatAlt "HUDMainMenu\SimpleMiniMap\_Interior" 0
+		SetUIFloatAlt "HUDMainMenu\SimpleMinimap\_MapScale" (Goo1.AuxVarGetFlt "*Minimap_INI" 1)
+		SetUIFloatAlt "HUDMainMenu\SimpleMinimap\_Interior" 0
 	endif
 
 	; Update render
-	SetUIFloatAlt "HUDMainMenu\SimpleMiniMap\_MapOriginX" -999999
+	SetUIFloatAlt "HUDMainMenu\SimpleMinimap\_MapOriginX" -999999
 
 	; Update icons
-	Call (CompileScript "SimpleMiniMap\MainLoop.gek")
+	Call (CompileScript "SimpleMinimap\MainLoop.gek")
 
 	; Update worldspace cache
-	Goo1.AuxVarSetFlt "*MiniMap_Travel" 0 0
-	Goo1.AuxVarSetRef "*MiniMap_Travel" (Player.GPW) 1
+	Goo1.AuxVarSetFlt "*Minimap_Travel" 0 0
+	Goo1.AuxVarSetRef "*Minimap_Travel" (Player.GPW) 1
 
 	; Update location name
-	iTemp = Goo1.AuxVarGetFlt "*MiniMap_INI" 2
+	iTemp = Goo1.AuxVarGetFlt "*Minimap_INI" 2
 	if iTemp > 0
-		CallAfterFrames 0 ({} => SetUIStringAlt "HUDMainMenu\SimpleMiniMap\LocationText\string" (Player.GetLocationName))
+		CallAfterFrames 0 ({} => SetUIStringAlt "HUDMainMenu\SimpleMinimap\LocationText\string" (Player.GetLocationName))
 		if iTemp == 1
-			SetUIFloatGradual "HUDMainMenu\SimpleMiniMap\LocationText\alpha" 0 255 6 1
+			SetUIFloatGradual "HUDMainMenu\SimpleMinimap\LocationText\alpha" 0 255 6 1
 		endif
 	endif
 

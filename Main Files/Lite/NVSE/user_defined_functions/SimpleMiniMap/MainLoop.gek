@@ -13,22 +13,22 @@ array_var aMarkerRefs
 begin Function {}
 
 	; Update player info
-	SetUIFloatAlt "HUDMainMenu\SimpleMiniMap\_PlrDetect" (GetPCDetectionState)
+	SetUIFloatAlt "HUDMainMenu\SimpleMinimap\_PlrDetect" (GetPCDetectionState)
 
 	; Reset tracked refs
 	aIconRefs = Ar_Construct "array"
 	aMarkerRefs = Ar_Construct "array"
-	Goo1.AuxVarErase "*MiniMap_Icons"
-	Goo1.AuxVarErase "*MiniMap_Markers"
+	Goo1.AuxVarErase "*Minimap_Icons"
+	Goo1.AuxVarErase "*Minimap_Markers"
 
 	; Get global settings
-	iDist = GetUIFloatAlt "HUDMainMenu\SimpleMiniMap\_Dist"
+	iDist = GetUIFloatAlt "HUDMainMenu\SimpleMinimap\_Dist"
 
 	; Door refs
 	aRefs = Player.GetRefs 28 2 1 iDist
 
 	; Actor refs
-	iTemp = Goo1.AuxVarGetFlt "*MiniMap_INI" 3
+	iTemp = Goo1.AuxVarGetFlt "*Minimap_INI" 3
 	if eval iTemp > 0
 		if iTemp == 2
 			aTemp = Player.GetRefs 43 2 1 iDist
@@ -59,23 +59,23 @@ begin Function {}
 				endif
 			endif
 		loop
-		Goo1.AuxVarSetFromArr "*MiniMap_Icons" aIconRefs
+		Goo1.AuxVarSetFromArr "*Minimap_Icons" aIconRefs
 	endif
 
 	; Update icon tile count
-	iIndex = GetMaxOf 0 (GetUIFloatAlt "HUDMainMenu\SimpleMiniMap\Icons\childcount")
+	iIndex = GetMaxOf 0 (GetUIFloatAlt "HUDMainMenu\SimpleMinimap\Icons\childcount")
 	iSize = (Ar_Size aIconRefs) - iIndex
 
 	; Add tile
 	if iSize > 0
 		while (iSize -= 1) > -1
-			AddTileFromTemplate "HUDMainMenu\SimpleMiniMap\Icons|MiniMap_Icon_Template|Icon"
-			SetUIFloatAlt "HUDMainMenu\SimpleMiniMap\Icons\Icon:0\_DepthMod" (iIndex += 1)
+			AddTileFromTemplate "HUDMainMenu\SimpleMinimap\Icons|Minimap_Icon_Template|Icon"
+			SetUIFloatAlt "HUDMainMenu\SimpleMinimap\Icons\Icon:0\_DepthMod" (iIndex += 1)
 		loop
 	; Remove tile
 	elseif iSize < 0
 		while (iSize += 1) < 1
-			UnloadUIComponent "HUDMainMenu\SimpleMiniMap\Icons\Icon:0"
+			UnloadUIComponent "HUDMainMenu\SimpleMinimap\Icons\Icon:0"
 		loop
 	endif
 
@@ -90,32 +90,32 @@ begin Function {}
 			endif
 		loop
 	endif
-	Goo1.AuxVarSetFromArr "*MiniMap_Markers" aMarkerRefs
+	Goo1.AuxVarSetFromArr "*Minimap_Markers" aMarkerRefs
 
 	; Update marker tile count
-	iIndex = GetMaxOf 0 (GetUIFloatAlt "HUDMainMenu\SimpleMiniMap\Markers\childcount")
+	iIndex = GetMaxOf 0 (GetUIFloatAlt "HUDMainMenu\SimpleMinimap\Markers\childcount")
 	iSize = (Ar_Size aMarkerRefs) - iIndex
 
 	; Add tile
 	if iSize > 0
 		while (iSize -= 1) > -1
-			AddTileFromTemplate "HUDMainMenu\SimpleMiniMap\Markers|MiniMap_Marker_Template|Marker"
-			SetUIFloatAlt "HUDMainMenu\SimpleMiniMap\Markers\Marker:0\_DepthMod" (iIndex += 1)
+			AddTileFromTemplate "HUDMainMenu\SimpleMinimap\Markers|Minimap_Marker_Template|Marker"
+			SetUIFloatAlt "HUDMainMenu\SimpleMinimap\Markers\Marker:0\_DepthMod" (iIndex += 1)
 		loop
 	; Remove tile
 	elseif iSize < 0
 		while (iSize += 1) < 1
-			UnloadUIComponent "HUDMainMenu\SimpleMiniMap\Markers\Marker:0"
+			UnloadUIComponent "HUDMainMenu\SimpleMinimap\Markers\Marker:0"
 		loop
 	endif
 
 	; Player marker
 	rIcon = GetCustomMapMarker
 	if eval IsFormValid rIcon && IsReference rIcon
-		Goo1.AuxVarSetRef "*MiniMap_Custom" rIcon
-		SetUIFloatAlt "HUDMainMenu\SimpleMiniMap\CustomMarker\visible" 1
+		Goo1.AuxVarSetRef "*Minimap_Custom" rIcon
+		SetUIFloatAlt "HUDMainMenu\SimpleMinimap\CustomMarker\visible" 1
 	else
-		SetUIFloatAlt "HUDMainMenu\SimpleMiniMap\CustomMarker\visible" 0
+		SetUIFloatAlt "HUDMainMenu\SimpleMinimap\CustomMarker\visible" 0
 	endif
 
 	aRefs = aTemp = aIconRefs = aMarkerRefs = ar_Null

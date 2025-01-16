@@ -1,8 +1,8 @@
-<rect name="SimpleMiniMap">
+<rect name="SimpleMinimap">
 
 	<id> 204 </id>
 
-	<!-- Traits to interface with SimpleMiniMap.dll -->
+	<!-- Traits to interface with SimpleMinimap.dll -->
 
 	<!-- Render width / 2 (Game units) -->
 	<_Frustum> 2048 </_Frustum>
@@ -117,13 +117,13 @@
 
 	<_Dist> 0 </_Dist>						<!-- Max icon distance -->
 	<_DistMode> 0 </_DistMode>				<!-- Perception based icon distance -->
-	<_TileScale> 1 </_TileScale>			<!-- MiniMap UI tile scale -->
+	<_TileScale> 1 </_TileScale>			<!-- Minimap UI tile scale -->
 
 	<_WorldScale> 							<!-- World to map coordinates translation -->
 		<copy src="me()" trait="_MapScale" />
 		<div src="me()" trait="_Frustum" />
 	</_WorldScale>
-	<_MapScale> 1 </_MapScale>				<!-- MiniMap image scale -->
+	<_MapScale> 1 </_MapScale>				<!-- Minimap image scale -->
 	<_RotationMode> 1 </_RotationMode>		<!-- Fixed North (0) or Player Heading (1) -->
 	<_ColorMode> 1 </_ColorMode>
 	<_AlphaPulse> 0 </_AlphaPulse>
@@ -133,7 +133,7 @@
 	</_AlphaPulseMax>
 	<_Interior> 0 </_Interior>
 
-	<!-- Calculates -->
+	<!-- Calculates distance where icons become visible -->
 	<_DistCalc>
 		<copy> 0 </copy>
 		<add src="me()" trait="_Dist" />
@@ -151,6 +151,7 @@
 			<onlyif src="me()" trait="_DistMode" />
 		</add>
 	</_DistCalc>
+
 	<_Color0>
 		<copy> 0 </copy>
 		<copy> &hudmain; </copy>
@@ -469,7 +470,7 @@
 		<width>
 			<copy> 36 </copy>
 			<mul>
-				<copy src="SimpleMiniMap" trait="_MapScale" />
+				<copy src="SimpleMinimap" trait="_MapScale" />
 				<min> 1 </min>
 				<sub> 1 </sub>
 				<div> 2 </div>
@@ -478,7 +479,7 @@
 		</width>
 		<height> <copy src="me()" trait="width" /> </height>
 		<zoom> &scale; </zoom>
-		<filename> Interface\Stentorious\SimpleMiniMap\Player.dds </filename>
+		<filename> Interface\Stentorious\SimpleMinimap\Player.dds </filename>
 
 		<_DegOffset>
 			<copy src="parent()" trait="_CellDeg" />
@@ -512,7 +513,7 @@
 		<image name="DropShadow">
 			<visible>
 				<copy src="sibling(Icon)" trait="visible" />
-				<and src="SimpleMiniMap" trait="_Drop" />
+				<and src="SimpleMinimap" trait="_Drop" />
 			</visible>
 			<alpha>
 				<copy src="sibling(Icon)" trait="alpha" />
@@ -578,7 +579,7 @@
 
 	<!-- Cardinal Directions -->
 	<text name="NorthText">
-		<include src="Stentorious\SimpleMiniMap\CardinalText.xml"/>
+		<include src="Stentorious\SimpleMinimap\CardinalText.xml"/>
 		<string> N </string>
 		<_x>
 			<copy> 0.5 </copy>
@@ -597,7 +598,7 @@
 	</text>
 
 	<text name="SouthText">
-		<include src="Stentorious\SimpleMiniMap\CardinalText.xml"/>
+		<include src="Stentorious\SimpleMinimap\CardinalText.xml"/>
 		<string> S </string>
 		<_x>
 			<copy> 0.5 </copy>
@@ -616,7 +617,7 @@
 	</text>
 
 	<text name="EastText">
-		<include src="Stentorious\SimpleMiniMap\CardinalText.xml"/>
+		<include src="Stentorious\SimpleMinimap\CardinalText.xml"/>
 		<x>
 			<copy src="me()" trait="_x" />
 			<mul src="parent()" trait="width" />
@@ -640,7 +641,7 @@
 	</text>
 
 	<text name="WestText">
-		<include src="Stentorious\SimpleMiniMap\CardinalText.xml"/>
+		<include src="Stentorious\SimpleMinimap\CardinalText.xml"/>
 		<string> W </string>
 		<_x>
 			<copy> 0.5 </copy>
@@ -660,19 +661,19 @@
 
 </rect>
 
-<template name="MiniMap_Icon_Rect">
-	<rect name="MiniMap_Icon_Rect">
+<template name="Minimap_Icon_Rect">
+	<rect name="Minimap_Icon_Rect">
 		<visible> 1 </visible>
 		<width> <copy src="parent()" trait="width" /> </width>
 		<height> <copy src="parent()" trait="height" /> </height>
 	</rect>
 </template>
 
-<template name="MiniMap_Icon_Template">
-	<hotrect name="MiniMap_Icon_Template">
-		<include src="Stentorious\SimpleMiniMap\Icon.xml"/>
+<template name="Minimap_Icon_Template">
+	<hotrect name="Minimap_Icon_Template">
+		<include src="Stentorious\SimpleMinimap\Icon.xml"/>
 		<visible>
-			<copy src="SimpleMiniMap" trait="_DistCalc" />
+			<copy src="SimpleMinimap" trait="_DistCalc" />
 			<gte src="me()" trait="_Dist" />
 			<and>
 				<copy src="me()" trait="_Hostile" />
@@ -703,7 +704,7 @@
 		<width>
 			<copy> 24 </copy>
 			<mul>
-				<copy src="SimpleMiniMap" trait="_MapScale" />
+				<copy src="SimpleMinimap" trait="_MapScale" />
 				<min> 1 </min>
 				<sub> 1 </sub>
 				<div> 2 </div>
@@ -711,13 +712,13 @@
 			</mul>
 		</width>
 		<height> <copy src="me()" trait="width" /> </height>
-		<filename> Interface\Stentorious\SimpleMiniMap\Actor.dds </filename>
+		<filename> Interface\Stentorious\SimpleMinimap\Actor.dds </filename>
 	</hotrect>
 </template>
 
-<template name="MiniMap_Marker_Template">
-	<hotrect name="MiniMap_Marker_Template">
-		<include src="Stentorious\SimpleMiniMap\Icon.xml"/>
+<template name="Minimap_Marker_Template">
+	<hotrect name="Minimap_Marker_Template">
+		<include src="Stentorious\SimpleMinimap\Icon.xml"/>
 		<visible> 1 </visible>
 		<depth>
 			<copy> 150 </copy>
@@ -754,7 +755,7 @@
 		<width>
 			<copy> 18 </copy>
 			<mul>
-				<copy src="SimpleMiniMap" trait="_MapScale" />
+				<copy src="SimpleMinimap" trait="_MapScale" />
 				<min> 1 </min>
 				<sub> 1 </sub>
 				<div> 2 </div>
@@ -765,7 +766,7 @@
 			<copy src="me()" trait="width" />
 			<mul> 2 </mul>
 		</height>
-		<filename> Interface\Stentorious\SimpleMiniMap\MarkerQuest.dds </filename>
+		<filename> Interface\Stentorious\SimpleMinimap\MarkerQuest.dds </filename>
 		<_Pulse> 1 </_Pulse>
 
 		<!-- Calculate marker position to remain in the bounds of the map -->
@@ -773,22 +774,22 @@
 			<copy> 0 </copy>
 			<add>
 				<copy src="me()" trait="_PosXOffset" />
-				<mul src="SimpleMiniMap" trait="_IconDegCos" />
+				<mul src="SimpleMinimap" trait="_IconDegCos" />
 			</add>
 			<sub>
 				<copy src="me()" trait="_PosYOffset" />
-				<mul src="SimpleMiniMap" trait="_IconDegSin" />
+				<mul src="SimpleMinimap" trait="_IconDegSin" />
 			</sub>
 		</_x1>
 		<_y1>
 			<copy> 0 </copy>
 			<sub>
 				<copy src="me()" trait="_PosXOffset" />
-				<mul src="SimpleMiniMap" trait="_IconDegSin" />
+				<mul src="SimpleMinimap" trait="_IconDegSin" />
 			</sub>
 			<sub>
 				<copy src="me()" trait="_PosYOffset" />
-				<mul src="SimpleMiniMap" trait="_IconDegCos" />
+				<mul src="SimpleMinimap" trait="_IconDegCos" />
 			</sub>
 		</_y1>
 		<_scaler>

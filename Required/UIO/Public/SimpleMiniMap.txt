@@ -1,2 +1,2 @@
-Stentorious\SimpleMiniMap.xml::HUDMainMenu
+Stentorious\SimpleMinimap.xml::HUDMainMenu
 true
