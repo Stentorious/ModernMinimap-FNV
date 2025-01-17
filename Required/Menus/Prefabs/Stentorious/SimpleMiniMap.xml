@@ -69,10 +69,7 @@
 	</_Render>
 
 	<_background_pad> 8 </_background_pad> 	<!-- Padding between the map and the background edges -->
-	<_line_thickness> 						<!-- Thickness of headlines -->
-		<copy src="globals()" trait="_line_thickness"/>
-	</_line_thickness>
-
+	<_line_thickness> 2 </_line_thickness>	<!-- Thickness of headlines -->
 	<_Drop> 0 </_Drop>						<!-- Icon drop shadow -->
 	<_Fade> 0 </_Fade>						<!-- Icon alpha fade -->
 	<_Height> 0 </_Height>					<!-- Icon height indicator -->
@@ -242,39 +239,51 @@
 	</_systemcolor>
 
 	<image name="Headline_VL">
-		<include src="line.xml"/>
-		<x> <sub src="parent()" trait="_line_thickness" /> </x>
+		<x>
+			<copy> 0 </copy>
+			<sub src="parent()" trait="_line_thickness" />
+		</x>
+		<width> <copy src="parent()" trait="_line_thickness" /> </width>
+		<height> <copy src="parent()" trait="_width" /> </height>
 		<systemcolor> <copy src="parent()" trait="_systemcolor" /> </systemcolor>
-		<_horizontal> 0 </_horizontal>
-		<_length> <copy src="parent()" trait="_width" /> </_length>
+		<brightness> 255 </brightness>
+		<filename> Interface\Shared\solid.dds </filename>
 	</image>
 	<image name="Headline_VR">
-		<include src="line.xml"/>
 		<x> <copy src="parent()" trait="_width" /> </x>
+		<width> <copy src="parent()" trait="_line_thickness" /> </width>
+		<height> <copy src="parent()" trait="_width" /> </height>
 		<systemcolor> <copy src="parent()" trait="_systemcolor" /> </systemcolor>
-		<_horizontal> 0 </_horizontal>
-		<_length> <copy src="parent()" trait="_width" /> </_length>
+		<brightness> 255 </brightness>
+		<filename> Interface\Shared\solid.dds </filename>
 	</image>
 	<image name="Headline_HT">
-		<include src="line.xml"/>
-		<x> <sub src="parent()" trait="_line_thickness" /> </x>
-		<y> <sub src="parent()" trait="_line_thickness" /> </y>
-		<systemcolor> <copy src="parent()" trait="_systemcolor" /> </systemcolor>
-		<_length>
+		<x> <copy src="sibling(Headline_VL)" trait="x" /> </x>
+		<y> <copy src="me()" trait="x" /> </y>
+		<width>
 			<copy src="parent()" trait="_width" />
 			<add src="parent()" trait="_line_thickness" />
 			<add src="parent()" trait="_line_thickness" />
-		</_length>
+		</width>
+		<height> <copy src="parent()" trait="_line_thickness" /> </height>
+		<systemcolor> <copy src="parent()" trait="_systemcolor" /> </systemcolor>
+		<brightness> 255 </brightness>
+		<filename> Interface\Shared\solid.dds </filename>
 	</image>
 	<image name="Headline_HB">
-		<include src="line.xml"/>
-		<x> <sub src="parent()" trait="_line_thickness" /> </x>
+		<x> <copy src="sibling(Headline_VL)" trait="x" /> </x>
 		<y> <copy src="parent()" trait="_width" /> </y>
+		<width>
+			<copy src="parent()" trait="_width" />
+			<add src="parent()" trait="_line_thickness" />
+			<add src="parent()" trait="_line_thickness" />
+		</width>
+		<height> <copy src="parent()" trait="_line_thickness" /> </height>
 		<systemcolor> <copy src="parent()" trait="_systemcolor" /> </systemcolor>
-		<_length> <copy src="sibling(Headline_HT)" trait="_length" /> </_length>
+		<brightness> 255 </brightness>
+		<filename> Interface\Shared\solid.dds </filename>
 	</image>
 	<image name="Headline_VC">
-		<include src="line.xml"/>
 		<visible> 0 </visible>
 		<alpha> 102 </alpha>
 		<x>
@@ -287,6 +296,8 @@
 			<sub src="parent()" trait="_width" />
 			<div> 2 </div>
 		</y>
+		<width> <copy src="parent()" trait="_line_thickness" /> </width>
+		<height> <copy src="parent()" trait="_width" /> <mul> 2 </mul> </height>
 		<clips> 1 </clips>
 		<rotateaxisx>
 			<copy src="me()" trait="width" />
@@ -298,15 +309,15 @@
 		</rotateaxisy>
 		<rotateangle> <copy src="sibling(MapRender)" trait="rotateangle" /> </rotateangle>
 		<brightness> 153 </brightness>
-		<_horizontal> 0 </_horizontal>
-		<_length> <copy src="parent()" trait="_width" /> <mul> 2 </mul> </_length>
+		<filename> Interface\Shared\solid.dds </filename>
 	</image>
 	<image name="Headline_HC">
-		<include src="line.xml"/>
 		<visible> 0 </visible>
 		<alpha> 102 </alpha>
 		<x> <copy src="sibling(Headline_VC)" trait="y" /> </x>
 		<y> <copy src="sibling(Headline_VC)" trait="x" /> </y>
+		<width> <copy src="sibling(Headline_VC)" trait="height" /> </width>
+		<height> <copy src="parent()" trait="_line_thickness" /> </height>
 		<clips> 1 </clips>
 		<rotateaxisx>
 			<copy src="me()" trait="width" />
@@ -318,7 +329,7 @@
 		</rotateaxisy>
 		<rotateangle> <copy src="sibling(MapRender)" trait="rotateangle" /> </rotateangle>
 		<brightness> 153 </brightness>
-		<_length> <copy src="sibling(Headline_VC)" trait="_length" /> </_length>
+		<filename> Interface\Shared\solid.dds </filename>
 	</image>
 
 	<hotrect name="Scan">
