@@ -25,7 +25,7 @@ begin Function {}
 	iDist = GetUIFloatAlt "HUDMainMenu\SimpleMinimap\_Dist"
 
 	; Door refs
-	aRefs = Player.GetRefs 28 2 1 iDist
+	aRefs = Player.GetRefs 28 2 1 (iDist * 2)
 
 	; Actor refs
 	iTemp = Goo1.AuxVarGetFlt "*Minimap_INI" 3

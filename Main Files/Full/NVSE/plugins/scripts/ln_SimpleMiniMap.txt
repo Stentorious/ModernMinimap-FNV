@@ -343,7 +343,9 @@ if eval Goo1.AuxVarGetFlt "*Minimap_Init" 0 == 0
 	; Add custom quest marker template
 	AddTileFromTemplate "HUDMainMenu\SimpleMinimap|Minimap_Marker_Template|CustomMarker"
 	SetUIFloatAlt "HUDMainMenu\SimpleMinimap\CustomMarker\depth" 200
-	SetUIStringAlt "HUDMainMenu\SimpleMinimap\CustomMarker\filename" "Interface\Stentorious\SimpleMinimap\MarkerPlayer.dds"
+	SetUIStringAlt "HUDMainMenu\SimpleMinimap\CustomMarker\_filename_0" "Interface\Stentorious\SimpleMinimap\MarkerPlayerNeutral.dds"
+	SetUIStringAlt "HUDMainMenu\SimpleMinimap\CustomMarker\_filename_1" "Interface\Stentorious\SimpleMinimap\MarkerPlayerBelow.dds"
+	SetUIStringAlt "HUDMainMenu\SimpleMinimap\CustomMarker\_filename_2" "Interface\Stentorious\SimpleMinimap\MarkerPlayerAbove.dds"
 
 	; Init event handlers
 	SetGameMainLoopCallback (CompileScript "SimpleMinimap\MainLoop.gek") 1 15 1

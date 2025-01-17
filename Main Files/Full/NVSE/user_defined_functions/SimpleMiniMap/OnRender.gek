@@ -5,6 +5,7 @@ int iCorpse
 int iVendor
 int iHostile
 int iTaleOfTwoWastelands
+float fDist
 float fAngle
 ref rIcon
 ref rTemp
@@ -45,6 +46,7 @@ begin Function {}
 				iType = rIcon.GetType
 				iHostile = -1
 				fAngle = -1
+				fDist = Player.GetDistance3D rIcon
 
 				; Actor icons
 				if eval iType == 42 || iType == 43
@@ -91,8 +93,12 @@ begin Function {}
 						sFilename = "Interface\Stentorious\SimpleMinimap\Actor.dds"
 					endif
 
-				; Door icons
-				elseif eval iType == 27 || iType == 28
+				; Door, Container, and Terminal icons
+				elseif eval iType == 28 || iType == 27 || iType == 23
+
+					if eval iType == 28
+						fDist /= 2
+					endif
 
 					if eval rIcon.GetLocked > 0
 
@@ -102,7 +108,7 @@ begin Function {}
 						; Locked
 						else
 							iTemp = rIcon.GetLockLevel
-							if rIcon.GetType == 27
+							if eval iType != 23
 								iTemp /= 25
 							endif
 							; Requires key
@@ -124,6 +130,7 @@ begin Function {}
 						endif
 					endif
 
+				; All other icons
 				else
 					sFilename = rIcon.ySIGetTrait "filename"
 				endif
@@ -132,7 +139,7 @@ begin Function {}
 				SetUIFloatAlt (sUIPath + "_PosX") (rIcon.GetPos X)
 				SetUIFloatAlt (sUIPath + "_PosY") (rIcon.GetPos Y)
 				SetUIFloatAlt (sUIPath + "_PosZ") (rIcon.GetPos Z)
-				SetUIFloatAlt (sUIPath + "_Dist") (Player.GetDistance3D rIcon)
+				SetUIFloatAlt (sUIPath + "_Dist") fDist
 				SetUIFloatAlt (sUIPath + "_Deg") fAngle
 				SetUIFloatAlt (sUIPath + "_Hostile") iHostile
 				SetUIStringAlt (sUIPath + "filename") (sFilename)
@@ -151,7 +158,7 @@ begin Function {}
 				sUIPath = Sv_Construct "HUDMainMenu\SimpleMinimap\Markers\Marker:%g\" iSize
 				SetUIFloatAlt (sUIPath + "_PosX") (rIcon.GetPos X)
 				SetUIFloatAlt (sUIPath + "_PosY") (rIcon.GetPos Y)
-				;SetUIFloatAlt (sUIPath + "_PosZ") (rIcon.GetPos Z)
+				SetUIFloatAlt (sUIPath + "_PosZ") (rIcon.GetPos Z)
 			endif
 		loop
 	endif
@@ -161,7 +168,7 @@ begin Function {}
 	if IsFormValid rIcon && IsReference rIcon
 		SetUIFloatAlt "HUDMainMenu\SimpleMinimap\CustomMarker\_PosX" (rIcon.GetPos X)
 		SetUIFloatAlt "HUDMainMenu\SimpleMinimap\CustomMarker\_PosY" (rIcon.GetPos Y)
-		;SetUIFloatAlt "HUDMainMenu\SimpleMinimap\CustomMarker\_PosZ" (rIcon.GetPos Z)
+		SetUIFloatAlt "HUDMainMenu\SimpleMinimap\CustomMarker\_PosZ" (rIcon.GetPos Z)
 	endif
 
 	sv_Destruct sUIPath sFilename

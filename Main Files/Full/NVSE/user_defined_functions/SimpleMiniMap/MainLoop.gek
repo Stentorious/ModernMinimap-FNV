@@ -29,7 +29,7 @@ begin Function {}
 	; These are split into different sections for performance
 
 	; Door refs
-	aRefs = Player.GetRefs 28 2 1 iDist
+	aRefs = Player.GetRefs 28 2 1 (iDist * 2)
 	iSize = Ar_Size aRefs
 	if eval iSize > 0
 		while (iSize -= 1) > -1

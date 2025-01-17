@@ -2,6 +2,7 @@ int iType
 int iSize
 int iCorpse
 int iHostile
+float fDist
 float fAngle
 ref rIcon
 ref rTemp
@@ -35,6 +36,8 @@ begin Function {}
 				iHostile = -1
 				fAngle = -1
 
+				fDist = Player.GetDistance3D rIcon
+
 				; Actor icons
 				if eval iType > 28
 					if eval rIcon.GetDead
@@ -52,6 +55,7 @@ begin Function {}
 
 				; Door icons
 				else
+					fDist /= 2
 					sFilename = "interface\icons\Misc_Door.dds"
 					if eval rIcon.IsLoadDoor && rIcon.IsInInterior
 						rTemp = rIcon.GetTeleportDoor
@@ -65,7 +69,7 @@ begin Function {}
 				SetUIFloatAlt (sUIPath + "_PosX") (rIcon.GetPos X)
 				SetUIFloatAlt (sUIPath + "_PosY") (rIcon.GetPos Y)
 				SetUIFloatAlt (sUIPath + "_PosZ") (rIcon.GetPos Z)
-				SetUIFloatAlt (sUIPath + "_Dist") (Player.GetDistance3D rIcon)
+				SetUIFloatAlt (sUIPath + "_Dist") fDist
 				SetUIFloatAlt (sUIPath + "_Deg") fAngle
 				SetUIFloatAlt (sUIPath + "_Hostile") iHostile
 				SetUIStringAlt (sUIPath + "filename") (sFilename)
@@ -84,7 +88,7 @@ begin Function {}
 				sUIPath = Sv_Construct "HUDMainMenu\SimpleMinimap\Markers\Marker:%g\" iSize
 				SetUIFloatAlt (sUIPath + "_PosX") (rIcon.GetPos X)
 				SetUIFloatAlt (sUIPath + "_PosY") (rIcon.GetPos Y)
-				;SetUIFloatAlt (sUIPath + "_PosZ") (rIcon.GetPos Z)
+				SetUIFloatAlt (sUIPath + "_PosZ") (rIcon.GetPos Z)
 			endif
 		loop
 	endif
@@ -94,6 +98,7 @@ begin Function {}
 	if IsFormValid rIcon && IsReference rIcon
 		SetUIFloatAlt "HUDMainMenu\SimpleMinimap\CustomMarker\_PosX" (rIcon.GetPos X)
 		SetUIFloatAlt "HUDMainMenu\SimpleMinimap\CustomMarker\_PosY" (rIcon.GetPos Y)
+		SetUIFloatAlt "HUDMainMenu\SimpleMinimap\CustomMarker\_PosZ" (rIcon.GetPos Z)
 	endif
 
 	sv_Destruct sUIPath sFilename

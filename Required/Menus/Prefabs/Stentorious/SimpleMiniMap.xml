@@ -767,8 +767,17 @@
 			<copy src="me()" trait="width" />
 			<mul> 2 </mul>
 		</height>
-		<filename> Interface\Stentorious\SimpleMinimap\MarkerQuest.dds </filename>
+
+		<_filename_0> Interface\Stentorious\SimpleMinimap\MarkerQuestNeutral.dds </_filename_0>
+		<_filename_1> Interface\Stentorious\SimpleMinimap\MarkerQuestBelow.dds </_filename_1>
+		<_filename_2> Interface\Stentorious\SimpleMinimap\MarkerQuestAbove.dds </_filename_2>
+		<filename>
+			<copy src="me()" trait="_Level" />
+			<copy src="me()" trait="_filename_" />
+		</filename>
+
 		<_Pulse> 1 </_Pulse>
+		<_Height> 0 </_Height>
 
 		<!-- Calculate marker position to remain in the bounds of the map -->
 		<_x1>
