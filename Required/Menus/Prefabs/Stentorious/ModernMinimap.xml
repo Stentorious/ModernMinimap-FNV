@@ -10,7 +10,7 @@
 	</_FrustumSize>
 
 	<!-- Orthographic render camera offset from player z coordinate -->
-	<_ColorMode> 1 </_ColorMode>			<!-- Render Mode: Classic (0) or Full Color (1) -->
+	<_ColorMode> 0 </_ColorMode>			<!-- Render Mode: Classic (0) or Full Color (1) -->
 	<_Interior> 0 </_Interior>				<!-- Is player in an interior cell -->
 	<_CameraOffset>
 		<copy> 10000 </copy>

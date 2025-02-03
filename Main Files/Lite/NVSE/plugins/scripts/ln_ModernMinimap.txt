@@ -156,7 +156,7 @@ if eval Goo1.AuxVarGetFlt "*Minimap_Init" 0 == 0
 	SetUIFloatGradual "HUDMainMenu\ModernMinimap\_AlphaPulse" -1.5 0.75 3 2
 
 	; Color mode (EXPERIMENTAL)
-	SetUIFloatAlt "HUDMainMenu\ModernMinimap\_ColorMode" (eval GetINIFloat_Cached "Developer:bColorRender" "Stentorious\ModernMinimap.ini")
+	;SetUIFloatAlt "HUDMainMenu\ModernMinimap\_ColorMode" (eval GetINIFloat_Cached "Developer:bColorRender" "Stentorious\ModernMinimap.ini")
 
 	CloseFileSO "Stentorious\ModernMinimap.ini" 0
 
