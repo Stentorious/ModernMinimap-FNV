@@ -128,6 +128,38 @@ if eval Goo1.AuxVarGetFlt "*Minimap_Init" 0 == 0
 	Goo1.AuxVarSetFlt "*Minimap_INI" (GetMaxOf 0 (GetMinOf 3 (GetINIFloat_Cached "Actors:iMode" "Stentorious\SimpleMinimap.ini"))) 3
 	Goo1.AuxVarSetFlt "*Minimap_INI" (eval GetINIFloat_Cached "Actors:bHideEmptyCorpses" "Stentorious\SimpleMinimap.ini") 4
 
+	; Teammate color
+	string_var sINI = GetINIString_Cached "Companions:iColor" "Stentorious\SimpleMinimap.ini"
+	iTemp = 1
+	int iLength = Sv_Length sINI
+	if eval iLength == 6 && TestExpr (ToNumber sINI 1 1)
+		SetUIFloatAlt "HUDMainMenu\SimpleMinimap\_red_2" (ToNumber (sINI[0:1]) 1)
+		SetUIFloatAlt "HUDMainMenu\SimpleMinimap\_green_2" (ToNumber (sINI[2:3]) 1)
+		SetUIFloatAlt "HUDMainMenu\SimpleMinimap\_blue_2" (ToNumber (sINI[4:5]) 1)
+		iTemp = 0
+	elseif eval iLength == 1 && TestExpr (ToNumber sINI 0 1)
+		iTemp = ToNumber sINI
+	endif
+	SetUIFloatAlt "HUDMainMenu\SimpleMinimap\_systemcolor_2" iTemp
+	sv_Destruct sINI
+
+	; JIP CCC avatar support
+	if eval GetINIFloat_Cached "Companions:bJIPCCC" "Stentorious\SimpleMinimap.ini" && FileExists "textures\jazzisparis\ccc\avatar_male.dds"
+		Goo1.AuxVarSetFlt "*Minimap_INI" 1 5
+		SetOnMenuCloseEventHandler (CompileScript "SimpleMinimap\JIPCCCAvatar.gek") 1 1009
+		if eval IsModLoaded "JIP Companions Command & Control.esp"
+			SetOnMenuOpenEventHandler ({int iMenuID} => Goo1.AuxVarSetFlt "*JIPCCC_Force" (GetVariable "bConfirm" (EditorIDToFormID "JIPCCCMain"))) 1 1001
+			SetOnMenuCloseEventHandler ({int iMenuID} => CallAfter 0.1 (CompileScript "SimpleMinimap\JIPCCCAvatar.gek") 0 1001) 1 1001
+		endif
+	else
+		Goo1.AuxVarSetFlt "*Minimap_INI" 0 5
+	endif
+	if eval eval GetINIFloat_Cached "Companions:bJIPCCCColor" "Stentorious\SimpleMinimap.ini"
+		Goo1.AuxVarSetFlt "*Minimap_INI" 2 6
+	else
+		Goo1.AuxVarSetFlt "*Minimap_INI" 3 6
+	endif
+
 	; Marker alpha pulse
 	SetUIFloatGradual "HUDMainMenu\SimpleMinimap\_AlphaPulse" -1.5 0.75 3 2
 
@@ -139,7 +171,6 @@ if eval Goo1.AuxVarGetFlt "*Minimap_Init" 0 == 0
 	int iOldWorldBlues = (eval IsModLoaded "OldWorldBlues.esm")
 	int iLonesomeRoad = (eval IsModLoaded "LonesomeRoad.esm")
 	int iTaleOfTwoWastelands = (eval IsModLoaded "TaleOfTwoWastelands.esm")
-	Goo1.AuxVarSetFlt "*TaleOfTwoWastelands.esm" iTaleOfTwoWastelands
 
 	; Assign keywords (Crafting stations)
 	if eval GetINIFloat_Cached "Objects:bCraftingStation" "Stentorious\SimpleMinimap.ini"
@@ -335,8 +366,8 @@ if eval Goo1.AuxVarGetFlt "*Minimap_Init" 0 == 0
 	iTemp += 256 * (eval GetINIFloat_Cached "Objects:bTerminal" "Stentorious\SimpleMinimap.ini")
 	iTemp += 512 * (eval GetINIFloat_Cached "Objects:bDoor" "Stentorious\SimpleMinimap.ini")
 
-	Goo1.AuxVarSetFlt "*Minimap_INI" iTemp 5
-	Goo1.AuxVarSetFlt "*Minimap_INI" (GetMaxOf 0 (GetMinOf 2 (GetINIFloat_Cached "Vendors:iMode" "Stentorious\SimpleMinimap.ini"))) 6
+	Goo1.AuxVarSetFlt "*Minimap_ySI" iTemp 0
+	Goo1.AuxVarSetFlt "*Minimap_ySI" (GetMaxOf 0 (GetMinOf 2 (GetINIFloat_Cached "Vendors:iMode" "Stentorious\SimpleMinimap.ini"))) 1
 
 	CloseFileSO "Stentorious\SimpleMinimap.ini" 0
 
@@ -362,9 +393,15 @@ endif
 if eval Goo1.AuxVarGetFlt "*Minimap_Init" 1
 
 	; Reset Minimap rect
-	UnloadUIComponent "HUDMainMenu\SimpleMinimap\Icons"
+	UnloadUIComponent "HUDMainMenu\SimpleMinimap\Doors"
+	UnloadUIComponent "HUDMainMenu\SimpleMinimap\Basic"
+	UnloadUIComponent "HUDMainMenu\SimpleMinimap\Actors"
+	UnloadUIComponent "HUDMainMenu\SimpleMinimap\Followers"
 	UnloadUIComponent "HUDMainMenu\SimpleMinimap\Markers"
-	AddTileFromTemplate "HUDMainMenu\SimpleMinimap|Minimap_Icon_Rect|Icons"
+	AddTileFromTemplate "HUDMainMenu\SimpleMinimap|Minimap_Icon_Rect|Doors"
+	AddTileFromTemplate "HUDMainMenu\SimpleMinimap|Minimap_Icon_Rect|Basic"
+	AddTileFromTemplate "HUDMainMenu\SimpleMinimap|Minimap_Icon_Rect|Actors"
+	AddTileFromTemplate "HUDMainMenu\SimpleMinimap|Minimap_Icon_Rect|Followers"
 	AddTileFromTemplate "HUDMainMenu\SimpleMinimap|Minimap_Icon_Rect|Markers"
 
 	; Update player Perception
@@ -399,6 +436,12 @@ if eval Goo1.AuxVarGetFlt "*Minimap_Init" 1
 		if iTemp == 1
 			SetUIFloatGradual "HUDMainMenu\SimpleMinimap\LocationText\alpha" 0 255 6 1
 		endif
+	endif
+
+	; Update JIP CCC avatar map
+	if eval Goo1.AuxVarGetFlt "*Minimap_INI" 5
+		;AuxStringMapDestroy "*JIPCCCAvatars"
+		Call (CompileScript "SimpleMinimap\JIPCCCAvatar.gek") 0
 	endif
 
 endif

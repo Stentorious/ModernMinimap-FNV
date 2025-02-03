@@ -1,6 +1,5 @@
 int	iDist
 int	iTemp
-int	iDepth
 int iSize
 int iIndex
 int iType
@@ -8,8 +7,8 @@ int iBitIcon
 ref rIcon
 array_var aRefs
 array_var aTemp
-array_var aIconRefs
 array_var aMarkerRefs
+array_var aFollowers
 
 begin Function {}
 
@@ -17,32 +16,94 @@ begin Function {}
 	SetUIFloatAlt "HUDMainMenu\SimpleMinimap\_PlrDetect" (GetPCDetectionState)
 
 	; Reset tracked refs
-	aIconRefs = Ar_Construct "array"
 	aMarkerRefs = Ar_Construct "array"
-	Goo1.AuxVarErase "*Minimap_Icons"
+	Goo1.AuxVarErase "*Minimap_Doors"
+	Goo1.AuxVarErase "*Minimap_Basic"
+	Goo1.AuxVarErase "*Minimap_Actors"
+	Goo1.AuxVarErase "*Minimap_Followers"
 	Goo1.AuxVarErase "*Minimap_Markers"
 
 	; Get global settings
 	iDist = GetUIFloatAlt "HUDMainMenu\SimpleMinimap\_Dist"
-	iBitIcon = Goo1.AuxVarGetFlt "*Minimap_INI" 5
+	iBitIcon = Goo1.AuxVarGetFlt "*Minimap_ySI" 0
 
 	; These are split into different sections for performance
 
 	; Door refs
 	aRefs = Player.GetRefs 28 2 1 (iDist * 2)
-	iSize = Ar_Size aRefs
-	if eval iSize > 0
+	if eval (iSize = Ar_Size aRefs) > 0
 		while (iSize -= 1) > -1
 			rIcon = aRefs[iSize]
 			if eval IsFormValid rIcon && IsReference rIcon && rIcon.GetDisabled == 0 && rIcon.HasLoaded3D && (rIcon.IsLoadDoor || rIcon.GetLocked > 0)
-				Ar_Append aIconRefs rIcon
+				Goo1.AuxVarSetRef "*Minimap_Doors" rIcon -1
 			endif
 		loop
 	endif
 
+	; Container
+	aRefs = Player.GetRefs 27 2 1 iDist
+	if eval (iSize = Ar_Size aRefs) > 0
+		while (iSize -= 1) > -1
+			rIcon = aRefs[iSize]
+			if eval IsFormValid rIcon && IsReference rIcon && rIcon.GetDisabled == 0 && rIcon.HasLoaded3D && ((GetBit iBitIcon 6 && rIcon.GetLocked > 0) || HasKeyword rIcon "MinimapIcon")
+				Goo1.AuxVarSetRef "*Minimap_Doors" rIcon -1
+			endif
+		loop
+	endif
+
+	; Item refs
+	aRefs = Player.GetRefs 201 2 1 iDist
+	if eval (iSize = Ar_Size aRefs) > 0
+		while (iSize -= 1) > -1
+			rIcon = aRefs[iSize]
+			if eval IsFormValid rIcon && IsReference rIcon && rIcon.GetDisabled == 0 && rIcon.HasLoaded3D
+				iType = rIcon.GetType
+				if eval (iType == 49 && GetBit iBitIcon 1) || (iType == 46 && GetBit iBitIcon 2) || (iType == 115 && GetBit iBitIcon 7) || (GetBit iBitIcon 4 && rIcon.IsQuestItem) || (GetBit iBitIcon 3 && IsItemUnique (rIcon.gbo)) || HasKeyword rIcon "MinimapIcon"
+					Goo1.AuxVarSetRef "*Minimap_Basic" rIcon -1
+				endif
+			endif
+		loop
+	endif
+
+	; Activators
+	aRefs = Player.GetRefs 21 2 1 iDist
+	if eval (iSize = Ar_Size aRefs) > 0
+		while (iSize -= 1) > -1
+			rIcon = aRefs[iSize]
+			if eval IsFormValid rIcon && IsReference rIcon && rIcon.GetDisabled == 0 && rIcon.HasLoaded3D && rIcon.GetDestroyed == 0 && HasKeyword rIcon "MinimapIcon"
+				Goo1.AuxVarSetRef "*Minimap_Basic" rIcon -1
+			endif
+		loop
+	endif
+
+	; Terminal
+	if eval GetBit iBitIcon 8
+		aRefs = Player.GetRefs 23 2 1 iDist
+		if eval (iSize = Ar_Size aRefs) > 0
+			while (iSize -= 1) > -1
+				rIcon = aRefs[iSize]
+				if eval IsFormValid rIcon && IsReference rIcon && rIcon.GetDisabled == 0 && rIcon.HasLoaded3D
+					Goo1.AuxVarSetRef "*Minimap_Basic" rIcon -1
+				endif
+			loop
+		endif
+	endif
+
+	; Projectile
+	if eval GetBit iBitIcon 5
+		aRefs = Player.GetRefs 51 2 1 iDist
+		if eval (iSize = Ar_Size aRefs) > 0
+			while (iSize -= 1) > -1
+				rIcon = aRefs[iSize]
+				if eval IsFormValid rIcon && IsReference rIcon && rIcon.GetDisabled == 0 && rIcon.HasLoaded3D && rIcon.GetMineArmed
+					Goo1.AuxVarSetRef "*Minimap_Basic" rIcon -1
+				endif
+			loop
+		endif
+	endif
+
 	; Actor refs
-	iTemp = Goo1.AuxVarGetFlt "*Minimap_INI" 3
-	if eval iTemp > 0
+	if eval (iTemp = Goo1.AuxVarGetFlt "*Minimap_INI" 3) > 0
 		if iTemp == 2
 			aRefs = Player.GetRefs 43 2 1 iDist
 		else
@@ -52,142 +113,120 @@ begin Function {}
 				ar_Cat aRefs aTemp
 			endif
 		endif
-		iSize = Ar_Size aRefs
-		if eval iSize > 0
+
+		if eval (iSize = Ar_Size aRefs) > 0
+
+			; Build array of followers
+			aFollowers = Player.GetFollowers
+			aTemp = Player.GetTeammates
+			ar_Cat aFollowers aTemp
+			aFollowers = Ar_Unique aFollowers
+
+			; Checks if actor is a follow and assigns them to the respective aux
 			while (iSize -= 1) > -1
 				rIcon = aRefs[iSize]
 				if eval IsFormValid rIcon && IsReference rIcon && rIcon.GetDisabled == 0 && rIcon.HasLoaded3D && rIcon.IsActorsAIOff == 0 && rIcon.IsActorInvisibleToPlayer == 0
-					Ar_Append aIconRefs rIcon
+					if eval (Ar_Find rIcon aFollowers) == Ar_BadNumericIndex
+						Goo1.AuxVarSetRef "*Minimap_Actors" rIcon -1
+					else
+						Goo1.AuxVarSetRef "*Minimap_Followers" rIcon -1
+					endif
 				endif
 			loop
 		endif
-	endif
-
-	; Item refs
-	aRefs = Player.GetRefs 201 2 1 iDist
-	iSize = Ar_Size aRefs
-	if eval iSize > 0
-		while (iSize -= 1) > -1
-			rIcon = aRefs[iSize]
-			if eval IsFormValid rIcon && IsReference rIcon && rIcon.GetDisabled == 0 && rIcon.HasLoaded3D
-				iType = rIcon.GetType
-				if eval (iType == 49 && GetBit iBitIcon 1) || (iType == 46 && GetBit iBitIcon 2) || (iType == 115 && GetBit iBitIcon 7) || (GetBit iBitIcon 4 && rIcon.IsQuestItem) || (GetBit iBitIcon 3 && IsItemUnique (rIcon.gbo)) || HasKeyword rIcon "MinimapIcon"
-					Ar_Append aIconRefs rIcon
-				endif
-			endif
-		loop
-	endif
-
-	; Container
-	aRefs = Player.GetRefs 27 2 1 iDist
-	iSize = Ar_Size aRefs
-	if eval iSize > 0
-		while (iSize -= 1) > -1
-			rIcon = aRefs[iSize]
-			if eval IsFormValid rIcon && IsReference rIcon && rIcon.GetDisabled == 0 && rIcon.HasLoaded3D && ((GetBit iBitIcon 6 && rIcon.GetLocked > 0) || HasKeyword rIcon "MinimapIcon")
-				Ar_Append aIconRefs rIcon
-			endif
-		loop
-	endif
-
-	; Activators
-	aRefs = Player.GetRefs 21 2 1 iDist
-	iSize = Ar_Size aRefs
-	if eval iSize > 0
-		while (iSize -= 1) > -1
-			rIcon = aRefs[iSize]
-			if eval IsFormValid rIcon && IsReference rIcon && rIcon.GetDisabled == 0 && rIcon.HasLoaded3D && rIcon.GetDestroyed == 0 && HasKeyword rIcon "MinimapIcon"
-				Ar_Append aIconRefs rIcon
-			endif
-		loop
-	endif
-
-	; Terminal
-	if eval GetBit iBitIcon 8
-		aRefs = Player.GetRefs 23 2 1 iDist
-		iSize = Ar_Size aRefs
-		if eval iSize > 0
-			while (iSize -= 1) > -1
-				rIcon = aRefs[iSize]
-				if eval IsFormValid rIcon && IsReference rIcon && rIcon.GetDisabled == 0 && rIcon.HasLoaded3D
-					Ar_Append aIconRefs rIcon
-				endif
-			loop
-		endif
-	endif
-
-	; Projectile
-	if eval GetBit iBitIcon 5
-		aRefs = Player.GetRefs 51 2 1 iDist
-		iSize = Ar_Size aRefs
-		if eval iSize > 0
-			while (iSize -= 1) > -1
-				rIcon = aRefs[iSize]
-				if eval IsFormValid rIcon && IsReference rIcon && rIcon.GetDisabled == 0 && rIcon.HasLoaded3D && rIcon.GetMineArmed
-					Ar_Append aIconRefs rIcon
-				endif
-			loop
-		endif
-	endif
-
-	Goo1.AuxVarSetFromArr "*Minimap_Icons" aIconRefs
-
-	; Update icon tile count
-	iIndex = GetMaxOf 0 (GetUIFloatAlt "HUDMainMenu\SimpleMinimap\Icons\childcount")
-	iSize = (Ar_Size aIconRefs) - iIndex
-
-	; Add tile
-	if iSize > 0
-		while (iSize -= 1) > -1
-			AddTileFromTemplate "HUDMainMenu\SimpleMinimap\Icons|Minimap_Icon_Template|Icon"
-			SetUIFloatAlt "HUDMainMenu\SimpleMinimap\Icons\Icon:0\_DepthMod" (iIndex += 1)
-		loop
-	; Remove tile
-	elseif iSize < 0
-		while (iSize += 1) < 1
-			UnloadUIComponent "HUDMainMenu\SimpleMinimap\Icons\Icon:0"
-		loop
 	endif
 
 	; Quest objective markers
 	aRefs = GetCurrentQuestObjectiveTeleportLinks
-	iSize = Ar_Size aRefs
-	if eval iSize > 0
+	if eval (iSize = Ar_Size aRefs) > 0
 		while (iSize -= 1) > -1
 			rIcon = aRefs[iSize][0]
-			if eval IsFormValid rIcon && IsReference rIcon && (Ar_Find rIcon aMarkerRefs) == Ar_BadNumericIndex
+			if eval IsFormValid rIcon && IsReference rIcon
 				Ar_Append aMarkerRefs rIcon
 			endif
 		loop
-	endif
-	Goo1.AuxVarSetFromArr "*Minimap_Markers" aMarkerRefs
-
-	; Update marker tile count
-	iIndex = GetMaxOf 0 (GetUIFloatAlt "HUDMainMenu\SimpleMinimap\Markers\childcount")
-	iSize = (Ar_Size aMarkerRefs) - iIndex
-
-	; Add tile
-	if iSize > 0
-		while (iSize -= 1) > -1
-			AddTileFromTemplate "HUDMainMenu\SimpleMinimap\Markers|Minimap_Marker_Template|Marker"
-			SetUIFloatAlt "HUDMainMenu\SimpleMinimap\Markers\Marker:0\_DepthMod" (iIndex += 1)
-		loop
-	; Remove tile
-	elseif iSize < 0
-		while (iSize += 1) < 1
-			UnloadUIComponent "HUDMainMenu\SimpleMinimap\Markers\Marker:0"
-		loop
+		aMarkerRefs = Ar_Unique aMarkerRefs
 	endif
 
-	; Player marker
-	rIcon = GetCustomMapMarker
-	if eval IsFormValid rIcon && IsReference rIcon
+	; Update custom marker tile
+	if eval IsFormValid (rIcon = GetCustomMapMarker)
 		Goo1.AuxVarSetRef "*Minimap_Custom" rIcon
 		SetUIFloatAlt "HUDMainMenu\SimpleMinimap\CustomMarker\visible" 1
 	else
 		SetUIFloatAlt "HUDMainMenu\SimpleMinimap\CustomMarker\visible" 0
 	endif
 
-	aRefs = aTemp = aIconRefs = aMarkerRefs = ar_Null
+	; Update door icon tiles
+	iIndex = GetMaxOf 0 (GetUIFloatAlt "HUDMainMenu\SimpleMinimap\Doors\childcount")
+	iSize = (Goo1.AuxVarSize "*Minimap_Doors") - iIndex
+	if iSize > 0
+		while (iSize -= 1) > -1
+			AddTileFromTemplate "HUDMainMenu\SimpleMinimap\Doors|Minimap_Icon_Template|Icon"
+			SetUIFloatAlt "HUDMainMenu\SimpleMinimap\Doors\Icon:0\_DepthMod" (iIndex += 1)
+		loop
+	elseif iSize < 0
+		while (iSize += 1) < 1
+			UnloadUIComponent "HUDMainMenu\SimpleMinimap\Doors\Icon:0"
+		loop
+	endif
+
+	; Update basic icon tiles
+	iIndex = GetMaxOf 0 (GetUIFloatAlt "HUDMainMenu\SimpleMinimap\Basic\childcount")
+	iSize = (Goo1.AuxVarSize "*Minimap_Basic") - iIndex
+	if iSize > 0
+		while (iSize -= 1) > -1
+			AddTileFromTemplate "HUDMainMenu\SimpleMinimap\Basic|Minimap_Icon_Template|Icon"
+			SetUIFloatAlt "HUDMainMenu\SimpleMinimap\Basic\Icon:0\_DepthMod" (iIndex += 1)
+		loop
+	elseif iSize < 0
+		while (iSize += 1) < 1
+			UnloadUIComponent "HUDMainMenu\SimpleMinimap\Basic\Icon:0"
+		loop
+	endif
+
+	; Update actor icon tiles
+	iIndex = GetMaxOf 0 (GetUIFloatAlt "HUDMainMenu\SimpleMinimap\Actors\childcount")
+	iSize = (Goo1.AuxVarSize "*Minimap_Actors") - iIndex
+	if iSize > 0
+		while (iSize -= 1) > -1
+			AddTileFromTemplate "HUDMainMenu\SimpleMinimap\Actors|Minimap_Icon_Template|Icon"
+			SetUIFloatAlt "HUDMainMenu\SimpleMinimap\Actors\Icon:0\_DepthMod" (iIndex += 1)
+		loop
+	elseif iSize < 0
+		while (iSize += 1) < 1
+			UnloadUIComponent "HUDMainMenu\SimpleMinimap\Actors\Icon:0"
+		loop
+	endif
+
+	; Update follower icon tiles
+	iIndex = GetMaxOf 0 (GetUIFloatAlt "HUDMainMenu\SimpleMinimap\Followers\childcount")
+	iSize = (Goo1.AuxVarSize "*Minimap_Followers") - iIndex
+	if iSize > 0
+		while (iSize -= 1) > -1
+			AddTileFromTemplate "HUDMainMenu\SimpleMinimap\Followers|Minimap_Icon_Template|Icon"
+			SetUIFloatAlt "HUDMainMenu\SimpleMinimap\Followers\Icon:0\_DepthMod" (iIndex += 1)
+		loop
+	elseif iSize < 0
+		while (iSize += 1) < 1
+			UnloadUIComponent "HUDMainMenu\SimpleMinimap\Followers\Icon:0"
+		loop
+	endif
+
+	; Update quest marker tiles
+	iIndex = GetMaxOf 0 (GetUIFloatAlt "HUDMainMenu\SimpleMinimap\Markers\childcount")
+	iSize = (Ar_Size aMarkerRefs) - iIndex
+	if iSize > 0
+		while (iSize -= 1) > -1
+			AddTileFromTemplate "HUDMainMenu\SimpleMinimap\Markers|Minimap_Marker_Template|Icon"
+			SetUIFloatAlt "HUDMainMenu\SimpleMinimap\Markers\Icon:0\_DepthMod" (iIndex += 1)
+		loop
+	elseif iSize < 0
+		while (iSize += 1) < 1
+			UnloadUIComponent "HUDMainMenu\SimpleMinimap\Markers\Icon:0"
+		loop
+	endif
+	Goo1.AuxVarSetFromArr "*Minimap_Markers" aMarkerRefs
+
+	aRefs = aTemp = aMarkerRefs = aMarkerRefs = ar_Null
 
 end

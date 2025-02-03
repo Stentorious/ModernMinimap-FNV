@@ -1,14 +1,12 @@
 int iType
 int iSize
 int iCorpse
-int iHostile
-float fDist
+int iState
 float fAngle
 ref rIcon
 ref rTemp
 string_var sUIPath
 string_var sFilename
-array_var aIconRefs
 
 begin Function {}
 
@@ -18,74 +16,127 @@ begin Function {}
 	SetUIFloatAlt "HUDMainMenu\SimpleMinimap\_PlrZ" (Player.GetPos Z)
 	SetUIFloatAlt "HUDMainMenu\SimpleMinimap\_PlrDeg" (Player.GetAngle Z)
 
-	; Update actor and door icons
-	aIconRefs = Goo1.AuxVarGetAsArr "*Minimap_Icons"
-	iSize = Ar_Size aIconRefs
-	if eval iSize > 0
 
-		; Get actor settings
-		iCorpse = Goo1.AuxVarGetFlt "*Minimap_INI" 4
-
-		; Process refs and update any valid icons
+	; Update door icons
+	if eval (iSize = Goo1.AuxVarSize "*Minimap_Doors") > 0
 		while (iSize -= 1) > -1
-			rIcon = aIconRefs[iSize]
-			if IsFormValid rIcon && IsReference rIcon
+			if eval IsFormValid (rIcon = Goo1.AuxVarGetRef "*Minimap_Doors" iSize)
 
-				sUIPath = Sv_Construct "HUDMainMenu\SimpleMinimap\Icons\Icon:%g\" iSize
-				iType = rIcon.GetType
-				iHostile = -1
-				fAngle = -1
-
-				fDist = Player.GetDistance3D rIcon
-
-				; Actor icons
-				if eval iType > 28
-					if eval rIcon.GetDead
-						if eval iCorpse && rIcon.GetContainerInventoryCount == 0
-							iHostile = -2
-						else
-							iHostile = 0
-							sFilename = "Interface\Stentorious\SimpleMinimap\ActorDead.dds"
-						endif
-					else
-						fAngle = rIcon.GetAngle Z
-						iHostile = rIcon.IsCompassHostile
-						sFilename = "Interface\Stentorious\SimpleMinimap\Actor.dds"
-					endif
-
-				; Door icons
-				else
-					fDist /= 2
-					sFilename = "interface\icons\Misc_Door.dds"
-					if eval rIcon.IsLoadDoor && rIcon.IsInInterior
-						rTemp = rIcon.GetTeleportDoor
-						if eval IsFormValid rTemp && rTemp.IsInInterior == 0
-							sFilename = "interface\icons\Misc_Door_Ext.dds"
-						endif
+				; Assign interior/exterior door icon
+				sFilename = "interface\icons\Misc_Door.dds"
+				if eval rIcon.IsLoadDoor && rIcon.IsInInterior
+					rTemp = rIcon.GetTeleportDoor
+					if eval IsFormValid rTemp && rTemp.IsInInterior == 0
+						sFilename = "interface\icons\Misc_Door_Ext.dds"
 					endif
 				endif
 
 				; Update UI traits
+				sUIPath = Sv_Construct "HUDMainMenu\SimpleMinimap\Doors\Icon:%g\" iSize
 				SetUIFloatAlt (sUIPath + "_PosX") (rIcon.GetPos X)
 				SetUIFloatAlt (sUIPath + "_PosY") (rIcon.GetPos Y)
 				SetUIFloatAlt (sUIPath + "_PosZ") (rIcon.GetPos Z)
-				SetUIFloatAlt (sUIPath + "_Dist") fDist
-				SetUIFloatAlt (sUIPath + "_Deg") fAngle
-				SetUIFloatAlt (sUIPath + "_Hostile") iHostile
+				SetUIFloatAlt (sUIPath + "_Dist") ((Player.GetDistance3D rIcon) / 2)
 				SetUIStringAlt (sUIPath + "filename") (sFilename)
 
 			endif
 		loop
 	endif
 
-	; Update quest markers
-	aIconRefs = Goo1.AuxVarGetAsArr "*Minimap_Markers"
-	iSize = Ar_Size aIconRefs
-	if eval iSize > 0
+
+	; Update actor icons
+	if eval (iSize = Goo1.AuxVarSize "*Minimap_Actors") > 0
+
+		; Get actor settings
+		iCorpse = Goo1.AuxVarGetFlt "*Minimap_INI" 4
+
 		while (iSize -= 1) > -1
-			rIcon = aIconRefs[iSize]
-			if IsFormValid rIcon && IsReference rIcon
-				sUIPath = Sv_Construct "HUDMainMenu\SimpleMinimap\Markers\Marker:%g\" iSize
+			if eval IsFormValid (rIcon = Goo1.AuxVarGetRef "*Minimap_Actors" iSize)
+
+				iState = -1
+				fAngle = -1
+
+				; Give corpse icon or hide if dead
+				if eval rIcon.GetDead
+					if eval iCorpse && rIcon.GetContainerInventoryCount == 0 && (Ar_Size (rIcon.GetDroppedRefs)) == -1
+						iState = -2
+					else
+						iState = 0
+						sFilename = "Interface\Stentorious\SimpleMinimap\ActorDead.dds"
+					endif
+
+				else
+					fAngle = rIcon.GetAngle Z
+					iState = rIcon.IsCompassHostile
+					sFilename = "Interface\Stentorious\SimpleMinimap\Actor.dds"
+				endif
+
+				; Update UI traits
+				sUIPath = Sv_Construct "HUDMainMenu\SimpleMinimap\Icons\Icon:%g\" iSize
+				SetUIFloatAlt (sUIPath + "_PosX") (rIcon.GetPos X)
+				SetUIFloatAlt (sUIPath + "_PosY") (rIcon.GetPos Y)
+				SetUIFloatAlt (sUIPath + "_PosZ") (rIcon.GetPos Z)
+				SetUIFloatAlt (sUIPath + "_Dist") (Player.GetDistance3D rIcon)
+				SetUIStringAlt (sUIPath + "filename") (sFilename)
+				SetUIFloatAlt (sUIPath + "_Deg") fAngle
+				SetUIFloatAlt (sUIPath + "_Hostile") iState
+
+			endif
+		loop
+	endif
+
+
+	; Update follower icons
+	if eval (iSize = Goo1.AuxVarSize "*Minimap_Followers") > 0
+
+		; Get actor settings
+		iCorpse = Goo1.AuxVarGetFlt "*Minimap_INI" 4
+
+		while (iSize -= 1) > -1
+			if eval IsFormValid (rIcon = Goo1.AuxVarGetRef "*Minimap_Followers" iSize)
+
+				iState = -1
+				fAngle = -1
+
+				; Give corpse icon or hide if dead
+				if eval rIcon.GetDead
+					if eval iCorpse && (Ar_Size (rIcon.GetAllItems 0 1 0 0)) == -1 && (Ar_Size (rIcon.GetDroppedRefs)) == -1
+						iState = -2
+					else
+						iState = 0
+						sFilename = "Interface\Stentorious\SimpleMinimap\ActorDead.dds"
+					endif
+				elseif eval rIcon.GetKnockedState
+					sFilename = "Interface\icons\typeicons\hot_keys_icon_surgerykit.dds"
+					iState = 1
+				elseif eval Goo1.AuxVarGetFlt "*Minimap_INI" 5 && rIcon.GetPlayerTeammate && (sFilename = AuxStringMapGetStr "*JIPCCC_Avatars" (GetName rIcon)) != ""
+					iState = Goo1.AuxVarGetFlt "*Minimap_INI" 6
+				else
+					iState = 2
+					fAngle = rIcon.GetAngle Z
+					sFilename = "Interface\Stentorious\SimpleMinimap\Actor.dds"
+				endif
+
+				; Update UI traits
+				sUIPath = Sv_Construct "HUDMainMenu\SimpleMinimap\Followers\Icon:%g\" iSize
+				SetUIFloatAlt (sUIPath + "_PosX") (rIcon.GetPos X)
+				SetUIFloatAlt (sUIPath + "_PosY") (rIcon.GetPos Y)
+				SetUIFloatAlt (sUIPath + "_PosZ") (rIcon.GetPos Z)
+				SetUIFloatAlt (sUIPath + "_Dist") (Player.GetDistance3D rIcon)
+				SetUIStringAlt (sUIPath + "filename") (sFilename)
+				SetUIFloatAlt (sUIPath + "_Deg") fAngle
+				SetUIFloatAlt (sUIPath + "_Hostile") iState
+
+			endif
+		loop
+	endif
+
+
+	; Update quest markers
+	if eval (iSize = Goo1.AuxVarSize "*Minimap_Markers") > 0
+		while (iSize -= 1) > -1
+			if eval IsFormValid (rIcon = Goo1.AuxVarGetRef "*Minimap_Markers" iSize)
+				sUIPath = Sv_Construct "HUDMainMenu\SimpleMinimap\Markers\Icon:%g\" iSize
 				SetUIFloatAlt (sUIPath + "_PosX") (rIcon.GetPos X)
 				SetUIFloatAlt (sUIPath + "_PosY") (rIcon.GetPos Y)
 				SetUIFloatAlt (sUIPath + "_PosZ") (rIcon.GetPos Z)
@@ -93,15 +144,15 @@ begin Function {}
 		loop
 	endif
 
+
 	; Update custom marker
-	rIcon = Goo1.AuxVarGetRef "*Minimap_Custom"
-	if IsFormValid rIcon && IsReference rIcon
+	if eval IsFormValid (rIcon = Goo1.AuxVarGetRef "*Minimap_Custom")
 		SetUIFloatAlt "HUDMainMenu\SimpleMinimap\CustomMarker\_PosX" (rIcon.GetPos X)
 		SetUIFloatAlt "HUDMainMenu\SimpleMinimap\CustomMarker\_PosY" (rIcon.GetPos Y)
 		SetUIFloatAlt "HUDMainMenu\SimpleMinimap\CustomMarker\_PosZ" (rIcon.GetPos Z)
 	endif
 
+
 	sv_Destruct sUIPath sFilename
-	aIconRefs = Ar_Null
 
 end
