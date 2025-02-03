@@ -7,7 +7,7 @@
 <_PosZ> <copy src="SimpleMinimap" trait="_PlrZ" /> </_PosZ>
 <_Deg> -1 </_Deg>
 <_Dist> 0 </_Dist>
-<_Hostile> 0 </_Hostile>
+<_Hostile> -1 </_Hostile>
 <_DepthMod> 0 </_DepthMod>
 <_PosXOffset>
 	<copy src="me()" trait="_PosX" />
@@ -125,29 +125,21 @@
 	<width> <copy src="parent()" trait="width" /> </width>
 	<zoom> &scale; </zoom>
 	<systemcolor>
-		<copy> 0 </copy>
-		<add>
-			<copy src="SimpleMinimap" trait="_Color0" />
-			<onlyif>
-				<copy src="parent()" trait="_Hostile" />
-				<eq> -1 </eq>
-			</onlyif>
-		</add>
-		<add>
-			<copy> &hudmain; </copy>
-			<onlyif>
-				<copy src="parent()" trait="_Hostile" />
-				<eq> 0 </eq>
-			</onlyif>
-		</add>
-		<add>
-			<copy src="SimpleMinimap" trait="_Color2" />
-			<onlyif>
-				<copy src="parent()" trait="_Hostile" />
-				<eq> 1 </eq>
-			</onlyif>
-		</add>
+		<copy src="parent()" trait="_Hostile" />
+		<copy src="SimpleMinimap" trait="_systemcolor_" />
 	</systemcolor>
+	<red>
+		<copy src="parent()" trait="_Hostile" />
+		<copy src="SimpleMinimap" trait="_red_" />
+	</red>
+	<green>
+		<copy src="parent()" trait="_Hostile" />
+		<copy src="SimpleMinimap" trait="_green_" />
+	</green>
+	<blue>
+		<copy src="parent()" trait="_Hostile" />
+		<copy src="SimpleMinimap" trait="_blue_" />
+	</blue>
 	<brightness> 255 </brightness>
 	<filename> <copy src="parent()" trait="filename" /> </filename>
 </image>

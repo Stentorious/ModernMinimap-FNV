@@ -1,7 +1,5 @@
 <rect name="SimpleMinimap">
 
-	<id> 204 </id>
-
 	<!-- Traits to interface with SimpleMinimap.dll -->
 
 	<!-- Render width / 2 (Game units) -->
@@ -12,13 +10,15 @@
 	</_FrustumSize>
 
 	<!-- Orthographic render camera offset from player z coordinate -->
+	<_ColorMode> 1 </_ColorMode>			<!-- Render Mode: Classic (0) or Full Color (1) -->
+	<_Interior> 0 </_Interior>				<!-- Is player in an interior cell -->
 	<_CameraOffset>
 		<copy> 10000 </copy>
 		<sub>
 			<copy> 9800 </copy>
 			<onlyif>
-				<copy src="me()" trait="_Interior" />
-				<and src="me()" trait="_ColorMode" />
+				<copy src="me()" trait="_ColorMode" />
+				<and src="me()" trait="_Interior" />
 			</onlyif>
 		</sub>
 	</_CameraOffset>
@@ -111,7 +111,6 @@
 
 	<_PlrAV6> 0 </_PlrAV6>					<!-- Player perception -->
 	<_PlrDetect> 0 </_PlrDetect>			<!-- Player detection state -->
-
 	<_Dist> 0 </_Dist>						<!-- Max icon distance -->
 	<_DistMode> 0 </_DistMode>				<!-- Perception based icon distance -->
 	<_TileScale> 1 </_TileScale>			<!-- Minimap UI tile scale -->
@@ -122,13 +121,11 @@
 	</_WorldScale>
 	<_MapScale> 1 </_MapScale>				<!-- Minimap image scale -->
 	<_RotationMode> 1 </_RotationMode>		<!-- Fixed North (0) or Player Heading (1) -->
-	<_ColorMode> 1 </_ColorMode>
-	<_AlphaPulse> 0 </_AlphaPulse>
+	<_AlphaPulse> 0 </_AlphaPulse>			<!-- Quest marker alpha pulse -->
 	<_AlphaPulseMax>
 		<copy src="me()" trait="_AlphaPulse" />
 		<max> 0 </max>
 	</_AlphaPulseMax>
-	<_Interior> 0 </_Interior>
 
 	<!-- Calculates distance where icons become visible -->
 	<_DistCalc>
@@ -149,12 +146,30 @@
 		</add>
 	</_DistCalc>
 
-	<_Color0>
+	<_systemcolor_-1>
 		<copy> 0 </copy>
-		<copy> &hudmain; </copy>
+		<add> &hudmain; </add>
 		<onlyifnot src="io()" trait="_ySIColorFulIconsFix" />
-	</_Color0>
-	<_Color2> &hudmain; </_Color2>
+	</_systemcolor_-1>
+	<_systemcolor_0> &hudmain; </_systemcolor_0>
+	<_systemcolor_1> &hudalt; </_systemcolor_1>
+	<_systemcolor_2> &hudmain; </_systemcolor_2>
+	<_systemcolor_3> 0 </_systemcolor_3>
+	<_red_-1> 255 </_red_-1>
+	<_red_0> 255 </_red_0>
+	<_red_1> 255 </_red_1>
+	<_red_2> 255 </_red_2>
+	<_red_3> 255 </_red_3>
+	<_green_-1> 255 </_green_-1>
+	<_green_0> 255 </_green_0>
+	<_green_1> 255 </_green_1>
+	<_green_2> 255 </_green_2>
+	<_green_3> 255 </_green_3>
+	<_blue_-1> 255 </_blue_-1>
+	<_blue_0> 255 </_blue_0>
+	<_blue_1> 255 </_blue_1>
+	<_blue_2> 255 </_blue_2>
+	<_blue_3> 255 </_blue_3>
 
 	<_Toggle> 1 </_Toggle>
 	<visible>
@@ -582,11 +597,6 @@
 			<copy src="parent()" trait="_width" />
 			<sub> 10 </sub>
 		</wrapwidth>
-		<_zoomMul>
-			<copy> 200 </copy>
-			<div src="me()" trait="width" />
-			<min> 1 </min>
-		</_zoomMul>
 	</text>
 
 	<!-- Cardinal Directions -->
@@ -608,7 +618,6 @@
 			</sub>
 		</_y>
 	</text>
-
 	<text name="SouthText">
 		<include src="Stentorious\SimpleMinimap\CardinalText.xml"/>
 		<string> S </string>
@@ -627,7 +636,6 @@
 			</sub>
 		</_y>
 	</text>
-
 	<text name="EastText">
 		<include src="Stentorious\SimpleMinimap\CardinalText.xml"/>
 		<x>
@@ -651,7 +659,6 @@
 			</sub>
 		</_y>
 	</text>
-
 	<text name="WestText">
 		<include src="Stentorious\SimpleMinimap\CardinalText.xml"/>
 		<string> W </string>
@@ -728,10 +735,11 @@
 	</hotrect>
 </template>
 
+<!-- Quest/Player Marker -->
 <template name="Minimap_Marker_Template">
 	<hotrect name="Minimap_Marker_Template">
-		<include src="Stentorious\SimpleMinimap\Icon.xml"/>
 		<visible> 1 </visible>
+		<locus> 1 </locus>
 		<depth>
 			<copy> 150 </copy>
 			<add src="me()" trait="_DepthMod" />
@@ -778,7 +786,8 @@
 			<copy src="me()" trait="width" />
 			<mul> 2 </mul>
 		</height>
-
+		<zoom> &scale; </zoom>
+		<clips> 1 </clips>
 		<_filename_0> Interface\Stentorious\SimpleMinimap\MarkerQuestNeutral.dds </_filename_0>
 		<_filename_1> Interface\Stentorious\SimpleMinimap\MarkerQuestBelow.dds </_filename_1>
 		<_filename_2> Interface\Stentorious\SimpleMinimap\MarkerQuestAbove.dds </_filename_2>
@@ -786,9 +795,6 @@
 			<copy src="me()" trait="_Level" />
 			<copy src="me()" trait="_filename_" />
 		</filename>
-
-		<_Pulse> 1 </_Pulse>
-		<_Height> 0 </_Height>
 
 		<!-- Calculate marker position to remain in the bounds of the map -->
 		<_x1>
@@ -863,6 +869,60 @@
 				</onlyif>
 			</add>
 		</_y>
+		<_PosX> 0 </_PosX>
+		<_PosY> 0 </_PosY>
+		<_PosZ> <copy src="SimpleMinimap" trait="_PlrZ" /> </_PosZ>
+		<_DepthMod> 0 </_DepthMod>
+		<_PosXOffset>
+			<copy src="me()" trait="_PosX" />
+			<sub src="SimpleMinimap" trait="_PlrX" />
+			<mul src="SimpleMinimap" trait="_WorldScale" />
+		</_PosXOffset>
+		<_PosYOffset>
+			<copy src="me()" trait="_PosY" />
+			<sub src="SimpleMinimap" trait="_PlrY" />
+			<mul src="SimpleMinimap" trait="_WorldScale" />
+		</_PosYOffset>
+		<_PosZOffset>
+			<copy src="me()" trait="_PosZ" />
+			<sub src="SimpleMinimap" trait="_PlrZ" />
+		</_PosZOffset>
+		<_Level>
+			<copy> 0 </copy>
+			<add>
+				<copy> 1 </copy>
+				<onlyif>
+					<copy src="me()" trait="_PosZOffset" />
+					<gt> 175 </gt>
+				</onlyif>
+			</add>
+			<add>
+				<copy> 2 </copy>
+				<onlyif>
+					<copy src="me()" trait="_PosZOffset" />
+					<lt> -175 </lt>
+				</onlyif>
+			</add>
+		</_Level>
+
+		<image name="Icon">
+			<visible> <copy src="parent()" trait="visible" /> </visible>
+			<alpha>
+				<copy> 255 </copy>
+				<mul>
+					<copy> 1 </copy>
+					<sub src="SimpleMinimap" trait="_AlphaPulseMax" />
+				</mul>
+			</alpha>
+			<x>	0 </x>
+			<y> 0 </y>
+			<height> <copy src="parent()" trait="height" /> </height>
+			<width> <copy src="parent()" trait="width" /> </width>
+			<zoom> &scale; </zoom>
+			<systemcolor> &hudmain; </systemcolor>
+			<brightness> 255 </brightness>
+			<filename> <copy src="parent()" trait="filename" /> </filename>
+		</image>
 
 	</hotrect>
 </template>
