@@ -1,0 +1,13 @@
+int	iKeyID
+
+begin Function {iKeyID}
+
+	if eval !MenuMode
+		if eval GetUIFloatAlt "HUDMainMenu\ModernMinimap\_RotationMode"
+			SetUIFloatAlt "HUDMainMenu\ModernMinimap\_RotationMode" 0
+		else
+			SetUIFloatAlt "HUDMainMenu\ModernMinimap\_RotationMode" 1
+		endif
+	endif
+
+end

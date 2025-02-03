@@ -16,7 +16,7 @@ begin Function {iMenuID}
 		if eval IsFormValid rTeammate
 			if eval rTeammate.GetPlayerTeammate
 				if eval Goo1.AuxStringMapGetStr "*JIPCCC_Avatars" (sTeammateName = GetName rTeammate) == ""
-					Call (CompileScript "SimpleMinimap\JIPCCCAvatarMap.gek") sTeammateName
+					Call (CompileScript "ModernMinimap\JIPCCCAvatarMap.gek") sTeammateName
 				endif
 			endif
 		endif
@@ -26,7 +26,7 @@ begin Function {iMenuID}
 		rTeammate = GetMenuTargetRef 1009
 		if eval rTeammate.GetPlayerTeammate
 			if eval Goo1.AuxStringMapGetStr "*JIPCCC_Avatars" (sTeammateName = GetName rTeammate) == ""
-				Call (CompileScript "SimpleMinimap\JIPCCCAvatarMap.gek") sTeammateName
+				Call (CompileScript "ModernMinimap\JIPCCCAvatarMap.gek") sTeammateName
 			endif
 		endif
 
@@ -36,7 +36,7 @@ begin Function {iMenuID}
 		if eval (iSize = Ar_Size aTeammates) > 0
 			while (iSize -= 1) > -1
 				if eval Goo1.AuxStringMapGetStr "*JIPCCC_Avatars" (sTeammateName = GetName (aTeammates[iSize])) == ""
-					Call (CompileScript "SimpleMinimap\JIPCCCAvatarMap.gek") sTeammateName
+					Call (CompileScript "ModernMinimap\JIPCCCAvatarMap.gek") sTeammateName
 				endif
 			loop
 		endif

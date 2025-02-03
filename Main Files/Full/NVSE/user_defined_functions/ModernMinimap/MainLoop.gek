@@ -13,7 +13,7 @@ array_var aFollowers
 begin Function {}
 
 	; Update player info
-	SetUIFloatAlt "HUDMainMenu\SimpleMinimap\_PlrDetect" (GetPCDetectionState)
+	SetUIFloatAlt "HUDMainMenu\ModernMinimap\_PlrDetect" (GetPCDetectionState)
 
 	; Reset tracked refs
 	aMarkerRefs = Ar_Construct "array"
@@ -24,7 +24,7 @@ begin Function {}
 	Goo1.AuxVarErase "*Minimap_Markers"
 
 	; Get global settings
-	iDist = GetUIFloatAlt "HUDMainMenu\SimpleMinimap\_Dist"
+	iDist = GetUIFloatAlt "HUDMainMenu\ModernMinimap\_Dist"
 	iBitIcon = Goo1.AuxVarGetFlt "*Minimap_ySI" 0
 
 	; These are split into different sections for performance
@@ -151,78 +151,78 @@ begin Function {}
 	; Update custom marker tile
 	if eval IsFormValid (rIcon = GetCustomMapMarker)
 		Goo1.AuxVarSetRef "*Minimap_Custom" rIcon
-		SetUIFloatAlt "HUDMainMenu\SimpleMinimap\CustomMarker\visible" 1
+		SetUIFloatAlt "HUDMainMenu\ModernMinimap\CustomMarker\visible" 1
 	else
-		SetUIFloatAlt "HUDMainMenu\SimpleMinimap\CustomMarker\visible" 0
+		SetUIFloatAlt "HUDMainMenu\ModernMinimap\CustomMarker\visible" 0
 	endif
 
 	; Update door icon tiles
-	iIndex = GetMaxOf 0 (GetUIFloatAlt "HUDMainMenu\SimpleMinimap\Doors\childcount")
+	iIndex = GetMaxOf 0 (GetUIFloatAlt "HUDMainMenu\ModernMinimap\Doors\childcount")
 	iSize = (Goo1.AuxVarSize "*Minimap_Doors") - iIndex
 	if iSize > 0
 		while (iSize -= 1) > -1
-			AddTileFromTemplate "HUDMainMenu\SimpleMinimap\Doors|Minimap_Icon_Template|Icon"
-			SetUIFloatAlt "HUDMainMenu\SimpleMinimap\Doors\Icon:0\_DepthMod" (iIndex += 1)
+			AddTileFromTemplate "HUDMainMenu\ModernMinimap\Doors|Minimap_Icon_Template|Icon"
+			SetUIFloatAlt "HUDMainMenu\ModernMinimap\Doors\Icon:0\_DepthMod" (iIndex += 1)
 		loop
 	elseif iSize < 0
 		while (iSize += 1) < 1
-			UnloadUIComponent "HUDMainMenu\SimpleMinimap\Doors\Icon:0"
+			UnloadUIComponent "HUDMainMenu\ModernMinimap\Doors\Icon:0"
 		loop
 	endif
 
 	; Update basic icon tiles
-	iIndex = GetMaxOf 0 (GetUIFloatAlt "HUDMainMenu\SimpleMinimap\Basic\childcount")
+	iIndex = GetMaxOf 0 (GetUIFloatAlt "HUDMainMenu\ModernMinimap\Basic\childcount")
 	iSize = (Goo1.AuxVarSize "*Minimap_Basic") - iIndex
 	if iSize > 0
 		while (iSize -= 1) > -1
-			AddTileFromTemplate "HUDMainMenu\SimpleMinimap\Basic|Minimap_Icon_Template|Icon"
-			SetUIFloatAlt "HUDMainMenu\SimpleMinimap\Basic\Icon:0\_DepthMod" (iIndex += 1)
+			AddTileFromTemplate "HUDMainMenu\ModernMinimap\Basic|Minimap_Icon_Template|Icon"
+			SetUIFloatAlt "HUDMainMenu\ModernMinimap\Basic\Icon:0\_DepthMod" (iIndex += 1)
 		loop
 	elseif iSize < 0
 		while (iSize += 1) < 1
-			UnloadUIComponent "HUDMainMenu\SimpleMinimap\Basic\Icon:0"
+			UnloadUIComponent "HUDMainMenu\ModernMinimap\Basic\Icon:0"
 		loop
 	endif
 
 	; Update actor icon tiles
-	iIndex = GetMaxOf 0 (GetUIFloatAlt "HUDMainMenu\SimpleMinimap\Actors\childcount")
+	iIndex = GetMaxOf 0 (GetUIFloatAlt "HUDMainMenu\ModernMinimap\Actors\childcount")
 	iSize = (Goo1.AuxVarSize "*Minimap_Actors") - iIndex
 	if iSize > 0
 		while (iSize -= 1) > -1
-			AddTileFromTemplate "HUDMainMenu\SimpleMinimap\Actors|Minimap_Icon_Template|Icon"
-			SetUIFloatAlt "HUDMainMenu\SimpleMinimap\Actors\Icon:0\_DepthMod" (iIndex += 1)
+			AddTileFromTemplate "HUDMainMenu\ModernMinimap\Actors|Minimap_Icon_Template|Icon"
+			SetUIFloatAlt "HUDMainMenu\ModernMinimap\Actors\Icon:0\_DepthMod" (iIndex += 1)
 		loop
 	elseif iSize < 0
 		while (iSize += 1) < 1
-			UnloadUIComponent "HUDMainMenu\SimpleMinimap\Actors\Icon:0"
+			UnloadUIComponent "HUDMainMenu\ModernMinimap\Actors\Icon:0"
 		loop
 	endif
 
 	; Update follower icon tiles
-	iIndex = GetMaxOf 0 (GetUIFloatAlt "HUDMainMenu\SimpleMinimap\Followers\childcount")
+	iIndex = GetMaxOf 0 (GetUIFloatAlt "HUDMainMenu\ModernMinimap\Followers\childcount")
 	iSize = (Goo1.AuxVarSize "*Minimap_Followers") - iIndex
 	if iSize > 0
 		while (iSize -= 1) > -1
-			AddTileFromTemplate "HUDMainMenu\SimpleMinimap\Followers|Minimap_Icon_Template|Icon"
-			SetUIFloatAlt "HUDMainMenu\SimpleMinimap\Followers\Icon:0\_DepthMod" (iIndex += 1)
+			AddTileFromTemplate "HUDMainMenu\ModernMinimap\Followers|Minimap_Icon_Template|Icon"
+			SetUIFloatAlt "HUDMainMenu\ModernMinimap\Followers\Icon:0\_DepthMod" (iIndex += 1)
 		loop
 	elseif iSize < 0
 		while (iSize += 1) < 1
-			UnloadUIComponent "HUDMainMenu\SimpleMinimap\Followers\Icon:0"
+			UnloadUIComponent "HUDMainMenu\ModernMinimap\Followers\Icon:0"
 		loop
 	endif
 
 	; Update quest marker tiles
-	iIndex = GetMaxOf 0 (GetUIFloatAlt "HUDMainMenu\SimpleMinimap\Markers\childcount")
+	iIndex = GetMaxOf 0 (GetUIFloatAlt "HUDMainMenu\ModernMinimap\Markers\childcount")
 	iSize = (Ar_Size aMarkerRefs) - iIndex
 	if iSize > 0
 		while (iSize -= 1) > -1
-			AddTileFromTemplate "HUDMainMenu\SimpleMinimap\Markers|Minimap_Marker_Template|Icon"
-			SetUIFloatAlt "HUDMainMenu\SimpleMinimap\Markers\Icon:0\_DepthMod" (iIndex += 1)
+			AddTileFromTemplate "HUDMainMenu\ModernMinimap\Markers|Minimap_Marker_Template|Icon"
+			SetUIFloatAlt "HUDMainMenu\ModernMinimap\Markers\Icon:0\_DepthMod" (iIndex += 1)
 		loop
 	elseif iSize < 0
 		while (iSize += 1) < 1
-			UnloadUIComponent "HUDMainMenu\SimpleMinimap\Markers\Icon:0"
+			UnloadUIComponent "HUDMainMenu\ModernMinimap\Markers\Icon:0"
 		loop
 	endif
 	Goo1.AuxVarSetFromArr "*Minimap_Markers" aMarkerRefs

@@ -11,10 +11,10 @@ string_var sFilename
 begin Function {}
 
 	; Update player position
-	SetUIFloatAlt "HUDMainMenu\SimpleMinimap\_PlrX" (Player.GetPos X)
-	SetUIFloatAlt "HUDMainMenu\SimpleMinimap\_PlrY" (Player.GetPos Y)
-	SetUIFloatAlt "HUDMainMenu\SimpleMinimap\_PlrZ" (Player.GetPos Z)
-	SetUIFloatAlt "HUDMainMenu\SimpleMinimap\_PlrDeg" (Player.GetAngle Z)
+	SetUIFloatAlt "HUDMainMenu\ModernMinimap\_PlrX" (Player.GetPos X)
+	SetUIFloatAlt "HUDMainMenu\ModernMinimap\_PlrY" (Player.GetPos Y)
+	SetUIFloatAlt "HUDMainMenu\ModernMinimap\_PlrZ" (Player.GetPos Z)
+	SetUIFloatAlt "HUDMainMenu\ModernMinimap\_PlrDeg" (Player.GetAngle Z)
 
 
 	; Update door icons
@@ -32,7 +32,7 @@ begin Function {}
 				endif
 
 				; Update UI traits
-				sUIPath = Sv_Construct "HUDMainMenu\SimpleMinimap\Doors\Icon:%g\" iSize
+				sUIPath = Sv_Construct "HUDMainMenu\ModernMinimap\Doors\Icon:%g\" iSize
 				SetUIFloatAlt (sUIPath + "_PosX") (rIcon.GetPos X)
 				SetUIFloatAlt (sUIPath + "_PosY") (rIcon.GetPos Y)
 				SetUIFloatAlt (sUIPath + "_PosZ") (rIcon.GetPos Z)
@@ -62,17 +62,17 @@ begin Function {}
 						iState = -2
 					else
 						iState = 0
-						sFilename = "Interface\Stentorious\SimpleMinimap\ActorDead.dds"
+						sFilename = "Interface\Stentorious\ModernMinimap\ActorDead.dds"
 					endif
 
 				else
 					fAngle = rIcon.GetAngle Z
 					iState = rIcon.IsCompassHostile
-					sFilename = "Interface\Stentorious\SimpleMinimap\Actor.dds"
+					sFilename = "Interface\Stentorious\ModernMinimap\Actor.dds"
 				endif
 
 				; Update UI traits
-				sUIPath = Sv_Construct "HUDMainMenu\SimpleMinimap\Icons\Icon:%g\" iSize
+				sUIPath = Sv_Construct "HUDMainMenu\ModernMinimap\Icons\Icon:%g\" iSize
 				SetUIFloatAlt (sUIPath + "_PosX") (rIcon.GetPos X)
 				SetUIFloatAlt (sUIPath + "_PosY") (rIcon.GetPos Y)
 				SetUIFloatAlt (sUIPath + "_PosZ") (rIcon.GetPos Z)
@@ -104,7 +104,7 @@ begin Function {}
 						iState = -2
 					else
 						iState = 0
-						sFilename = "Interface\Stentorious\SimpleMinimap\ActorDead.dds"
+						sFilename = "Interface\Stentorious\ModernMinimap\ActorDead.dds"
 					endif
 				elseif eval rIcon.GetKnockedState
 					sFilename = "Interface\icons\typeicons\hot_keys_icon_surgerykit.dds"
@@ -114,11 +114,11 @@ begin Function {}
 				else
 					iState = 2
 					fAngle = rIcon.GetAngle Z
-					sFilename = "Interface\Stentorious\SimpleMinimap\Actor.dds"
+					sFilename = "Interface\Stentorious\ModernMinimap\Actor.dds"
 				endif
 
 				; Update UI traits
-				sUIPath = Sv_Construct "HUDMainMenu\SimpleMinimap\Followers\Icon:%g\" iSize
+				sUIPath = Sv_Construct "HUDMainMenu\ModernMinimap\Followers\Icon:%g\" iSize
 				SetUIFloatAlt (sUIPath + "_PosX") (rIcon.GetPos X)
 				SetUIFloatAlt (sUIPath + "_PosY") (rIcon.GetPos Y)
 				SetUIFloatAlt (sUIPath + "_PosZ") (rIcon.GetPos Z)
@@ -136,7 +136,7 @@ begin Function {}
 	if eval (iSize = Goo1.AuxVarSize "*Minimap_Markers") > 0
 		while (iSize -= 1) > -1
 			if eval IsFormValid (rIcon = Goo1.AuxVarGetRef "*Minimap_Markers" iSize)
-				sUIPath = Sv_Construct "HUDMainMenu\SimpleMinimap\Markers\Icon:%g\" iSize
+				sUIPath = Sv_Construct "HUDMainMenu\ModernMinimap\Markers\Icon:%g\" iSize
 				SetUIFloatAlt (sUIPath + "_PosX") (rIcon.GetPos X)
 				SetUIFloatAlt (sUIPath + "_PosY") (rIcon.GetPos Y)
 				SetUIFloatAlt (sUIPath + "_PosZ") (rIcon.GetPos Z)
@@ -147,9 +147,9 @@ begin Function {}
 
 	; Update custom marker
 	if eval IsFormValid (rIcon = Goo1.AuxVarGetRef "*Minimap_Custom")
-		SetUIFloatAlt "HUDMainMenu\SimpleMinimap\CustomMarker\_PosX" (rIcon.GetPos X)
-		SetUIFloatAlt "HUDMainMenu\SimpleMinimap\CustomMarker\_PosY" (rIcon.GetPos Y)
-		SetUIFloatAlt "HUDMainMenu\SimpleMinimap\CustomMarker\_PosZ" (rIcon.GetPos Z)
+		SetUIFloatAlt "HUDMainMenu\ModernMinimap\CustomMarker\_PosX" (rIcon.GetPos X)
+		SetUIFloatAlt "HUDMainMenu\ModernMinimap\CustomMarker\_PosY" (rIcon.GetPos Y)
+		SetUIFloatAlt "HUDMainMenu\ModernMinimap\CustomMarker\_PosZ" (rIcon.GetPos Z)
 	endif
 
 

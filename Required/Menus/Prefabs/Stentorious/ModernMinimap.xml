@@ -1,6 +1,6 @@
-<rect name="SimpleMinimap">
+<rect name="ModernMinimap">
 
-	<!-- Traits to interface with SimpleMinimap.dll -->
+	<!-- Traits to interface with ModernMinimap.dll -->
 
 	<!-- Render width / 2 (Game units) -->
 	<_Frustum> 2048 </_Frustum>
@@ -497,7 +497,7 @@
 		<width>
 			<copy> 36 </copy>
 			<mul>
-				<copy src="SimpleMinimap" trait="_MapScale" />
+				<copy src="ModernMinimap" trait="_MapScale" />
 				<min> 1 </min>
 				<sub> 1 </sub>
 				<div> 2 </div>
@@ -506,7 +506,7 @@
 		</width>
 		<height> <copy src="me()" trait="width" /> </height>
 		<zoom> &scale; </zoom>
-		<filename> Interface\Stentorious\SimpleMinimap\Player.dds </filename>
+		<filename> Interface\Stentorious\ModernMinimap\Player.dds </filename>
 
 		<_DegOffset>
 			<copy src="parent()" trait="_CellDeg" />
@@ -540,7 +540,7 @@
 		<image name="DropShadow">
 			<visible>
 				<copy src="sibling(Icon)" trait="visible" />
-				<and src="SimpleMinimap" trait="_Drop" />
+				<and src="ModernMinimap" trait="_Drop" />
 			</visible>
 			<alpha>
 				<copy src="sibling(Icon)" trait="alpha" />
@@ -601,7 +601,7 @@
 
 	<!-- Cardinal Directions -->
 	<text name="NorthText">
-		<include src="Stentorious\SimpleMinimap\CardinalText.xml"/>
+		<include src="Stentorious\ModernMinimap\CardinalText.xml"/>
 		<string> N </string>
 		<_x>
 			<copy> 0.5 </copy>
@@ -619,7 +619,7 @@
 		</_y>
 	</text>
 	<text name="SouthText">
-		<include src="Stentorious\SimpleMinimap\CardinalText.xml"/>
+		<include src="Stentorious\ModernMinimap\CardinalText.xml"/>
 		<string> S </string>
 		<_x>
 			<copy> 0.5 </copy>
@@ -637,7 +637,7 @@
 		</_y>
 	</text>
 	<text name="EastText">
-		<include src="Stentorious\SimpleMinimap\CardinalText.xml"/>
+		<include src="Stentorious\ModernMinimap\CardinalText.xml"/>
 		<x>
 			<copy src="me()" trait="_x" />
 			<mul src="parent()" trait="width" />
@@ -660,7 +660,7 @@
 		</_y>
 	</text>
 	<text name="WestText">
-		<include src="Stentorious\SimpleMinimap\CardinalText.xml"/>
+		<include src="Stentorious\ModernMinimap\CardinalText.xml"/>
 		<string> W </string>
 		<_x>
 			<copy> 0.5 </copy>
@@ -690,9 +690,9 @@
 
 <template name="Minimap_Icon_Template">
 	<hotrect name="Minimap_Icon_Template">
-		<include src="Stentorious\SimpleMinimap\Icon.xml"/>
+		<include src="Stentorious\ModernMinimap\Icon.xml"/>
 		<visible>
-			<copy src="SimpleMinimap" trait="_DistCalc" />
+			<copy src="ModernMinimap" trait="_DistCalc" />
 			<gte src="me()" trait="_Dist" />
 			<and>
 				<copy src="me()" trait="_Hostile" />
@@ -723,7 +723,7 @@
 		<width>
 			<copy> 24 </copy>
 			<mul>
-				<copy src="SimpleMinimap" trait="_MapScale" />
+				<copy src="ModernMinimap" trait="_MapScale" />
 				<min> 1 </min>
 				<sub> 1 </sub>
 				<div> 2 </div>
@@ -731,7 +731,7 @@
 			</mul>
 		</width>
 		<height> <copy src="me()" trait="width" /> </height>
-		<filename> Interface\Stentorious\SimpleMinimap\Actor.dds </filename>
+		<filename> Interface\Stentorious\ModernMinimap\Actor.dds </filename>
 	</hotrect>
 </template>
 
@@ -775,7 +775,7 @@
 		<width>
 			<copy> 18 </copy>
 			<mul>
-				<copy src="SimpleMinimap" trait="_MapScale" />
+				<copy src="ModernMinimap" trait="_MapScale" />
 				<min> 1 </min>
 				<sub> 1 </sub>
 				<div> 2 </div>
@@ -788,9 +788,9 @@
 		</height>
 		<zoom> &scale; </zoom>
 		<clips> 1 </clips>
-		<_filename_0> Interface\Stentorious\SimpleMinimap\MarkerQuestNeutral.dds </_filename_0>
-		<_filename_1> Interface\Stentorious\SimpleMinimap\MarkerQuestBelow.dds </_filename_1>
-		<_filename_2> Interface\Stentorious\SimpleMinimap\MarkerQuestAbove.dds </_filename_2>
+		<_filename_0> Interface\Stentorious\ModernMinimap\MarkerQuestNeutral.dds </_filename_0>
+		<_filename_1> Interface\Stentorious\ModernMinimap\MarkerQuestBelow.dds </_filename_1>
+		<_filename_2> Interface\Stentorious\ModernMinimap\MarkerQuestAbove.dds </_filename_2>
 		<filename>
 			<copy src="me()" trait="_Level" />
 			<copy src="me()" trait="_filename_" />
@@ -801,22 +801,22 @@
 			<copy> 0 </copy>
 			<add>
 				<copy src="me()" trait="_PosXOffset" />
-				<mul src="SimpleMinimap" trait="_IconDegCos" />
+				<mul src="ModernMinimap" trait="_IconDegCos" />
 			</add>
 			<sub>
 				<copy src="me()" trait="_PosYOffset" />
-				<mul src="SimpleMinimap" trait="_IconDegSin" />
+				<mul src="ModernMinimap" trait="_IconDegSin" />
 			</sub>
 		</_x1>
 		<_y1>
 			<copy> 0 </copy>
 			<sub>
 				<copy src="me()" trait="_PosXOffset" />
-				<mul src="SimpleMinimap" trait="_IconDegSin" />
+				<mul src="ModernMinimap" trait="_IconDegSin" />
 			</sub>
 			<sub>
 				<copy src="me()" trait="_PosYOffset" />
-				<mul src="SimpleMinimap" trait="_IconDegCos" />
+				<mul src="ModernMinimap" trait="_IconDegCos" />
 			</sub>
 		</_y1>
 		<_scaler>
@@ -871,21 +871,21 @@
 		</_y>
 		<_PosX> 0 </_PosX>
 		<_PosY> 0 </_PosY>
-		<_PosZ> <copy src="SimpleMinimap" trait="_PlrZ" /> </_PosZ>
+		<_PosZ> <copy src="ModernMinimap" trait="_PlrZ" /> </_PosZ>
 		<_DepthMod> 0 </_DepthMod>
 		<_PosXOffset>
 			<copy src="me()" trait="_PosX" />
-			<sub src="SimpleMinimap" trait="_PlrX" />
-			<mul src="SimpleMinimap" trait="_WorldScale" />
+			<sub src="ModernMinimap" trait="_PlrX" />
+			<mul src="ModernMinimap" trait="_WorldScale" />
 		</_PosXOffset>
 		<_PosYOffset>
 			<copy src="me()" trait="_PosY" />
-			<sub src="SimpleMinimap" trait="_PlrY" />
-			<mul src="SimpleMinimap" trait="_WorldScale" />
+			<sub src="ModernMinimap" trait="_PlrY" />
+			<mul src="ModernMinimap" trait="_WorldScale" />
 		</_PosYOffset>
 		<_PosZOffset>
 			<copy src="me()" trait="_PosZ" />
-			<sub src="SimpleMinimap" trait="_PlrZ" />
+			<sub src="ModernMinimap" trait="_PlrZ" />
 		</_PosZOffset>
 		<_Level>
 			<copy> 0 </copy>
@@ -911,7 +911,7 @@
 				<copy> 255 </copy>
 				<mul>
 					<copy> 1 </copy>
-					<sub src="SimpleMinimap" trait="_AlphaPulseMax" />
+					<sub src="ModernMinimap" trait="_AlphaPulseMax" />
 				</mul>
 			</alpha>
 			<x>	0 </x>

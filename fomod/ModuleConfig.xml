@@ -1,15 +1,15 @@
 <config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://qconsulting.ca/fo3/ModConfig5.0.xsd">
-	<moduleName>Simple Minimap</moduleName>
+	<moduleName>Modern Minimap</moduleName>
 	<requiredInstallFiles>
 		<folder source="Required" destination="" />
 	</requiredInstallFiles>
 	<installSteps order="Explicit">
-		<installStep name="Simple Minimap">
+		<installStep name="Modern Minimap">
 			<optionalFileGroups order="Explicit">
 				<group name="Version" type="SelectExactlyOne">
 					<plugins order="Explicit">
 						<plugin name="Lite">
-							<description>Select if you want the Lite Version of Simple Minimap.&#13;&#10;
+							<description>Select if you want the Lite Version of Modern Minimap.&#13;&#10;
  - NPC, Creature, Door, Quest Icons
  - Limited Configuration</description>
 							<files>
@@ -20,7 +20,7 @@
 							</typeDescriptor>
 						</plugin>
 						<plugin name="Full">
-							<description>Select if you want the Full Version of Simple Minimap.&#13;&#10;
+							<description>Select if you want the Full Version of Modern Minimap.&#13;&#10;
  - Full Icon Suite
  - KEYWORDs Support
  - In Depth Configuration

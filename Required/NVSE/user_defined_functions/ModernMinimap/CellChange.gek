@@ -18,11 +18,11 @@ begin Function {rCellExit}
 		; Swapped between interior/exterior cells
 		if eval iEnterInterior != GetCellFlag rCellExit 0
 			if eval iEnterInterior
-				SetUIFloatAlt "HUDMainMenu\SimpleMinimap\_MapScale" (Goo1.AuxVarGetFlt "*Minimap_INI" 0)
-				SetUIFloatAlt "HUDMainMenu\SimpleMinimap\_Interior" 1
+				SetUIFloatAlt "HUDMainMenu\ModernMinimap\_MapScale" (Goo1.AuxVarGetFlt "*Minimap_INI" 0)
+				SetUIFloatAlt "HUDMainMenu\ModernMinimap\_Interior" 1
 			else
-				SetUIFloatAlt "HUDMainMenu\SimpleMinimap\_MapScale" (Goo1.AuxVarGetFlt "*Minimap_INI" 1)
-				SetUIFloatAlt "HUDMainMenu\SimpleMinimap\_Interior" 0
+				SetUIFloatAlt "HUDMainMenu\ModernMinimap\_MapScale" (Goo1.AuxVarGetFlt "*Minimap_INI" 1)
+				SetUIFloatAlt "HUDMainMenu\ModernMinimap\_Interior" 0
 			endif
 			iUpdate = 1
 
@@ -41,20 +41,20 @@ begin Function {rCellExit}
 
 		; Update map
 		if eval iUpdate
-			SetUIFloatAlt "HUDMainMenu\SimpleMinimap\_MapOriginX" -999999
-			SetUIFloatAlt "HUDMainMenu\SimpleMinimap\_CellDeg" (ABS (GetCellNorthRotation (rCellEnter)))
-			Call (CompileScript "SimpleMinimap\MainLoop.gek")
+			SetUIFloatAlt "HUDMainMenu\ModernMinimap\_MapOriginX" -999999
+			SetUIFloatAlt "HUDMainMenu\ModernMinimap\_CellDeg" (ABS (GetCellNorthRotation (rCellEnter)))
+			Call (CompileScript "ModernMinimap\MainLoop.gek")
 		endif
 
 		; Update location name
 		iTemp = Goo1.AuxVarGetFlt "*Minimap_INI" 2
 		if iTemp > 0
 			sLocation = Player.GetLocationName
-			sLocationOld = GetUIString "HUDMainMenu\SimpleMinimap\LocationText\string"
+			sLocationOld = GetUIString "HUDMainMenu\ModernMinimap\LocationText\string"
 			if eval iTemp == 1 && sLocation != sLocationOld
-				SetUIFloatGradual "HUDMainMenu\SimpleMinimap\LocationText\alpha" 0 255 6 1
+				SetUIFloatGradual "HUDMainMenu\ModernMinimap\LocationText\alpha" 0 255 6 1
 			endif
-			SetUIStringAlt "HUDMainMenu\SimpleMinimap\LocationText\string" (sLocation)
+			SetUIStringAlt "HUDMainMenu\ModernMinimap\LocationText\string" (sLocation)
 		endif
 
 	endif

@@ -4,35 +4,35 @@
 
 <_PosX> 0 </_PosX>
 <_PosY> 0 </_PosY>
-<_PosZ> <copy src="SimpleMinimap" trait="_PlrZ" /> </_PosZ>
+<_PosZ> <copy src="ModernMinimap" trait="_PlrZ" /> </_PosZ>
 <_Deg> -1 </_Deg>
 <_Dist> 0 </_Dist>
 <_Hostile> -1 </_Hostile>
 <_DepthMod> 0 </_DepthMod>
 <_PosXOffset>
 	<copy src="me()" trait="_PosX" />
-	<sub src="SimpleMinimap" trait="_PlrX" />
-	<mul src="SimpleMinimap" trait="_WorldScale" />
+	<sub src="ModernMinimap" trait="_PlrX" />
+	<mul src="ModernMinimap" trait="_WorldScale" />
 </_PosXOffset>
 <_PosYOffset>
 	<copy src="me()" trait="_PosY" />
-	<sub src="SimpleMinimap" trait="_PlrY" />
-	<mul src="SimpleMinimap" trait="_WorldScale" />
+	<sub src="ModernMinimap" trait="_PlrY" />
+	<mul src="ModernMinimap" trait="_WorldScale" />
 </_PosYOffset>
 <_PosZOffset>
 	<copy src="me()" trait="_PosZ" />
-	<sub src="SimpleMinimap" trait="_PlrZ" />
+	<sub src="ModernMinimap" trait="_PlrZ" />
 </_PosZOffset>
 <_DegOffset>
 	<copy> 0 </copy>
 	<add>
-		<copy src="SimpleMinimap" trait="_PlrDeg" />
-		<sub src="SimpleMinimap" trait="_CellDeg" />
-		<onlyif src="SimpleMinimap" trait="_RotationMode" />
+		<copy src="ModernMinimap" trait="_PlrDeg" />
+		<sub src="ModernMinimap" trait="_CellDeg" />
+		<onlyif src="ModernMinimap" trait="_RotationMode" />
 	</add>
 	<add>
-		<copy src="SimpleMinimap" trait="_CellDeg" />
-		<onlyifnot src="SimpleMinimap" trait="_RotationMode" />
+		<copy src="ModernMinimap" trait="_CellDeg" />
+		<onlyifnot src="ModernMinimap" trait="_RotationMode" />
 	</add>
 	<sub src="me()" trait="_Deg" />
 	<div> 360 </div>
@@ -58,26 +58,26 @@
 	<copy> 0.5 </copy>
 	<add>
 		<copy src="me()" trait="_PosXOffset" />
-		<mul src="SimpleMinimap" trait="_IconDegCos" />
+		<mul src="ModernMinimap" trait="_IconDegCos" />
 	</add>
 	<sub>
 		<copy src="me()" trait="_PosYOffset" />
-		<mul src="SimpleMinimap" trait="_IconDegSin" />
+		<mul src="ModernMinimap" trait="_IconDegSin" />
 	</sub>
 </_x>
 <_y>
 	<copy> 0.5 </copy>
 	<sub>
 		<copy src="me()" trait="_PosXOffset" />
-		<mul src="SimpleMinimap" trait="_IconDegSin" />
+		<mul src="ModernMinimap" trait="_IconDegSin" />
 	</sub>
 	<sub>
 		<copy src="me()" trait="_PosYOffset" />
-		<mul src="SimpleMinimap" trait="_IconDegCos" />
+		<mul src="ModernMinimap" trait="_IconDegCos" />
 	</sub>
 </_y>
 <_Pulse> 0 </_Pulse>
-<_Height> <copy src="SimpleMinimap" trait="_Height"/> </_Height>
+<_Height> <copy src="ModernMinimap" trait="_Height"/> </_Height>
 
 <image name="Icon">
 	<visible> <copy src="parent()" trait="visible" /> </visible>
@@ -87,18 +87,18 @@
 			<copy src="parent()" trait="_Dist" />
 			<pow> 6 </pow>
 			<div>
-				<copy src="SimpleMinimap" trait="_DistCalc" />
+				<copy src="ModernMinimap" trait="_DistCalc" />
 				<pow> 6 </pow>
 			</div>
 			<mul> 255 </mul>
-			<onlyif src="SimpleMinimap" trait="_Fade" />
+			<onlyif src="ModernMinimap" trait="_Fade" />
 		</sub>
 		<max> 0 </max>
 		<min> 255 </min>
 		<mul>
 			<copy> 1 </copy>
 			<sub>
-				<copy src="SimpleMinimap" trait="_AlphaPulseMax" />
+				<copy src="ModernMinimap" trait="_AlphaPulseMax" />
 				<onlyif src="parent()" trait="_Pulse" />
 			</sub>
 		</mul>
@@ -126,19 +126,19 @@
 	<zoom> &scale; </zoom>
 	<systemcolor>
 		<copy src="parent()" trait="_Hostile" />
-		<copy src="SimpleMinimap" trait="_systemcolor_" />
+		<copy src="ModernMinimap" trait="_systemcolor_" />
 	</systemcolor>
 	<red>
 		<copy src="parent()" trait="_Hostile" />
-		<copy src="SimpleMinimap" trait="_red_" />
+		<copy src="ModernMinimap" trait="_red_" />
 	</red>
 	<green>
 		<copy src="parent()" trait="_Hostile" />
-		<copy src="SimpleMinimap" trait="_green_" />
+		<copy src="ModernMinimap" trait="_green_" />
 	</green>
 	<blue>
 		<copy src="parent()" trait="_Hostile" />
-		<copy src="SimpleMinimap" trait="_blue_" />
+		<copy src="ModernMinimap" trait="_blue_" />
 	</blue>
 	<brightness> 255 </brightness>
 	<filename> <copy src="parent()" trait="filename" /> </filename>
@@ -147,7 +147,7 @@
 <image name="DropShadow">
 	<visible>
 		<copy src="sibling(Icon)" trait="visible" />
-		<and src="SimpleMinimap" trait="_Drop" />
+		<and src="ModernMinimap" trait="_Drop" />
 	</visible>
 	<alpha>
 		<copy src="sibling(Icon)" trait="alpha" />
@@ -224,5 +224,5 @@
 	<zoom> &scale; </zoom>
 	<systemcolor> &hudmain; </systemcolor>
 	<brightness> <copy src="sibling(Icon)" trait="brightness" /> </brightness>
-	<filename> Interface\Stentorious\SimpleMinimap\HeightIndicator.dds </filename>
+	<filename> Interface\Stentorious\ModernMinimap\HeightIndicator.dds </filename>
 </image>

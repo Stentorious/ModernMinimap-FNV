@@ -1,0 +1,42 @@
+ref	rCellExit
+
+int iTemp
+int iEnterInterior
+ref	rCellEnter
+
+begin Function {rCellExit}
+
+	rCellEnter = Player.GPC
+	iEnterInterior = GetCellFlag rCellEnter 0
+
+	; Swapped between interior/exterior cells
+	if eval iEnterInterior != GetCellFlag rCellExit 0
+		if eval iEnterInterior
+			SetUIFloatAlt "HUDMainMenu\ModernMinimap\_MapScale" (Goo1.AuxVarGetFlt "*Minimap_INI" 0)
+			SetUIFloatAlt "HUDMainMenu\ModernMinimap\_Interior" 1
+		else
+			SetUIFloatAlt "HUDMainMenu\ModernMinimap\_MapScale" (Goo1.AuxVarGetFlt "*Minimap_INI" 1)
+			SetUIFloatAlt "HUDMainMenu\ModernMinimap\_Interior" 0
+		endif
+	endif
+
+	SetUIFloatAlt "HUDMainMenu\ModernMinimap\_MapOriginX" -999999
+	SetUIFloatAlt "HUDMainMenu\ModernMinimap\_CellDeg" (ABS (GetCellNorthRotation (rCellEnter)))
+
+	; Update icons
+	Call (CompileScript "ModernMinimap\MainLoop.gek")
+
+	Goo1.AuxVarSetRef "*Minimap_Travel" (Player.GPW) 1
+
+	; Update location name
+	iTemp = Goo1.AuxVarGetFlt "*Minimap_INI" 2
+	if iTemp > 0
+		SetUIStringAlt "HUDMainMenu\ModernMinimap\LocationText\string" (Player.GetLocationName)
+		if iTemp == 1
+			SetUIFloatGradual "HUDMainMenu\ModernMinimap\LocationText\alpha" 0 255 6 1
+		endif
+	endif
+
+	Goo1.AuxVarSetFlt "*Minimap_Travel" 0 0
+
+end
