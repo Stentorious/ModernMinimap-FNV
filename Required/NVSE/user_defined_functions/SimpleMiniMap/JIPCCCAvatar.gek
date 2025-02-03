@@ -1,0 +1,50 @@
+int	iMenuID
+
+int iSize
+ref rTeammate
+array_var aTeammates
+string_var sTeammateName
+
+begin Function {iMenuID}
+
+	; Checks instances when a new teammate's JIP CCC avatar icon needs to be added to the string map
+
+	; New teammate has been force recruited
+	if eval iMenuID == 1001 && Goo1.AuxVarGetFlt "*JIPCCC_Force"
+		Goo1.AuxVarSetFlt "*JIPCCC_Force" 0
+		rTeammate = GetRefVariable "rForced" (EditorIDToFormID "JIPCCCMain")
+		if eval IsFormValid rTeammate
+			if eval rTeammate.GetPlayerTeammate
+				if eval Goo1.AuxStringMapGetStr "*JIPCCC_Avatars" (sTeammateName = GetName rTeammate) == ""
+					Call (CompileScript "SimpleMinimap\JIPCCCAvatarMap.gek") sTeammateName
+				endif
+			endif
+		endif
+
+	; New teammate has been hired via dialog
+	elseif eval iMenuID == 1009 && GetActiveMenuMode == 0
+		rTeammate = GetMenuTargetRef 1009
+		if eval rTeammate.GetPlayerTeammate
+			if eval Goo1.AuxStringMapGetStr "*JIPCCC_Avatars" (sTeammateName = GetName rTeammate) == ""
+				Call (CompileScript "SimpleMinimap\JIPCCCAvatarMap.gek") sTeammateName
+			endif
+		endif
+
+	; Check all teammates on game load
+	else
+		aTeammates = Player.GetTeammates
+		if eval (iSize = Ar_Size aTeammates) > 0
+			while (iSize -= 1) > -1
+				if eval Goo1.AuxStringMapGetStr "*JIPCCC_Avatars" (sTeammateName = GetName (aTeammates[iSize])) == ""
+					Call (CompileScript "SimpleMinimap\JIPCCCAvatarMap.gek") sTeammateName
+				endif
+			loop
+		endif
+
+		aTeammates = ar_Null
+
+	endif
+
+	sv_Destruct sTeammateName
+
+end
