@@ -137,7 +137,7 @@ begin Function {}
 	; Update quest marker tiles
 	iIndex = GetMaxOf 0 (GetUIFloatAlt "HUDMainMenu\ModernMinimap\Markers\childcount")
 	iSize = (Ar_Size aMarkerRefs) - iIndex
-	iIndex += 100
+	iIndex += 200
 	if iSize > 0
 		while (iSize -= 1) > -1
 			AddTileFromTemplate "HUDMainMenu\ModernMinimap\Markers|Minimap_Marker_Template|Icon"
