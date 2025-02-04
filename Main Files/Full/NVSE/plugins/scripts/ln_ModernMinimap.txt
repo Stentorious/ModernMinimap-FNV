@@ -114,6 +114,7 @@ if eval Goo1.AuxVarGetFlt "*Minimap_Init" 0 == 0
 	SetUIFloatAlt "HUDMainMenu\ModernMinimap\_IconScale" (GetINIFloat_Cached "Icons:fSize" "Stentorious\ModernMinimap.ini")
 	SetUIFloatAlt "HUDMainMenu\ModernMinimap\_Drop" (GetINIFloat_Cached "Icons:bDropShadow" "Stentorious\ModernMinimap.ini")
 	SetUIFloatAlt "HUDMainMenu\ModernMinimap\_Height" (eval GetINIFloat_Cached "Icons:bHeightIndicator" "Stentorious\ModernMinimap.ini")
+	SetUIFloatAlt "HUDMainMenu\ModernMinimap\_QuestHeight" (eval GetINIFloat_Cached "Icons:bQuestHeightIndicator" "Stentorious\ModernMinimap.ini")
 	SetUIFloatAlt "HUDMainMenu\ModernMinimap\_Dist" ((GetMaxOf 5 (GetMinOf 100 (GetINIFloat_Cached "Icons:fRadius" "Stentorious\ModernMinimap.ini"))) * 69.99104)
 	if eval GetINIFloat_Cached "Icons:bPerceptionCalc" "Stentorious\ModernMinimap.ini"
 		SetUIFloatAlt "HUDMainMenu\ModernMinimap\_DistMode" 1
@@ -373,7 +374,7 @@ if eval Goo1.AuxVarGetFlt "*Minimap_Init" 0 == 0
 
 	; Add custom quest marker template
 	AddTileFromTemplate "HUDMainMenu\ModernMinimap|Minimap_Marker_Template|CustomMarker"
-	SetUIFloatAlt "HUDMainMenu\ModernMinimap\CustomMarker\depth" 200
+	SetUIFloatAlt "HUDMainMenu\ModernMinimap\CustomMarker\depth" 499
 	SetUIStringAlt "HUDMainMenu\ModernMinimap\CustomMarker\_filename_0" "Interface\Stentorious\ModernMinimap\MarkerPlayerNeutral.dds"
 	SetUIStringAlt "HUDMainMenu\ModernMinimap\CustomMarker\_filename_1" "Interface\Stentorious\ModernMinimap\MarkerPlayerBelow.dds"
 	SetUIStringAlt "HUDMainMenu\ModernMinimap\CustomMarker\_filename_2" "Interface\Stentorious\ModernMinimap\MarkerPlayerAbove.dds"
@@ -424,6 +425,9 @@ if eval Goo1.AuxVarGetFlt "*Minimap_Init" 1
 
 	; Update icons
 	Call (CompileScript "ModernMinimap\MainLoop.gek")
+
+	; Fix custom marker texture
+	SetUIFloatAlt "HUDMainMenu\ModernMinimap\CustomMarker\_PosZ" -99999
 
 	; Update worldspace cache
 	Goo1.AuxVarSetFlt "*Minimap_Travel" 0 0

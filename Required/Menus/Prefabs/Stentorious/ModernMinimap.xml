@@ -73,6 +73,7 @@
 	<_Drop> 0 </_Drop>						<!-- Icon drop shadow -->
 	<_Fade> 0 </_Fade>						<!-- Icon alpha fade -->
 	<_Height> 0 </_Height>					<!-- Icon height indicator -->
+	<_QuestHeight> 0 </_QuestHeight>		<!-- Marker height indicator -->
 
 	<!-- Rotation calculations -->
 	<_CellDeg> 0 </_CellDeg>
@@ -891,6 +892,7 @@
 				<onlyif>
 					<copy src="me()" trait="_PosZOffset" />
 					<gt> 175 </gt>
+					<and src="ModernMinimap" trait="_QuestHeight" />
 				</onlyif>
 			</add>
 			<add>
@@ -898,6 +900,7 @@
 				<onlyif>
 					<copy src="me()" trait="_PosZOffset" />
 					<lt> -175 </lt>
+					<or> <not src="ModernMinimap" trait="_QuestHeight" /> </or>
 				</onlyif>
 			</add>
 		</_Level>
