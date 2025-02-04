@@ -103,6 +103,7 @@
 			</sub>
 		</mul>
 	</alpha>
+	<depth> 0 </depth>
 	<x>	0 </x>
 	<y> 0 </y>
 	<rotateaxisx>
@@ -177,6 +178,7 @@
 		<and src="parent()" trait="_Height"/>
 	</visible>
 	<alpha> <copy src="sibling(Icon)" trait="alpha" /> </alpha>
+	<depth> 0 </depth>
 	<x>
 		<copy src="parent()" trait="width" />
 		<sub src="me()" trait="width" />

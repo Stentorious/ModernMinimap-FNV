@@ -1,6 +1,6 @@
 <visible> 0 </visible>
 <alpha> 255 </alpha>
-<depth> 303 </depth>
+<depth> 503 </depth>
 <x>
 	<copy src="me()" trait="_x" />
 	<mul src="parent()" trait="width" />

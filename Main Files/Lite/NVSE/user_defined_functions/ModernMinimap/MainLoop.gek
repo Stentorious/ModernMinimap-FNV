@@ -107,6 +107,7 @@ begin Function {}
 	; Update actor icon tiles
 	iIndex = GetMaxOf 0 (GetUIFloatAlt "HUDMainMenu\ModernMinimap\Actors\childcount")
 	iSize = (Goo1.AuxVarSize "*Minimap_Actors") - iIndex
+	iIndex += 25
 	if iSize > 0
 		while (iSize -= 1) > -1
 			AddTileFromTemplate "HUDMainMenu\ModernMinimap\Actors|Minimap_Icon_Template|Icon"
@@ -121,6 +122,7 @@ begin Function {}
 	; Update follower icon tiles
 	iIndex = GetMaxOf 0 (GetUIFloatAlt "HUDMainMenu\ModernMinimap\Followers\childcount")
 	iSize = (Goo1.AuxVarSize "*Minimap_Followers") - iIndex
+	iIndex += 75
 	if iSize > 0
 		while (iSize -= 1) > -1
 			AddTileFromTemplate "HUDMainMenu\ModernMinimap\Followers|Minimap_Icon_Template|Icon"
@@ -135,6 +137,7 @@ begin Function {}
 	; Update quest marker tiles
 	iIndex = GetMaxOf 0 (GetUIFloatAlt "HUDMainMenu\ModernMinimap\Markers\childcount")
 	iSize = (Ar_Size aMarkerRefs) - iIndex
+	iIndex += 100
 	if iSize > 0
 		while (iSize -= 1) > -1
 			AddTileFromTemplate "HUDMainMenu\ModernMinimap\Markers|Minimap_Marker_Template|Icon"

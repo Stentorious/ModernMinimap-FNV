@@ -351,7 +351,7 @@
 		<include src="vertical_fade_line.xml"/>
 		<visible> 0 </visible>
 		<alpha> 204 </alpha>
-		<depth> 301 </depth>
+		<depth> 501 </depth>
 		<y> 0 </y>
 		<width> <copy src="parent()" trait="_width" /> </width>
 		<height> 24 </height>
@@ -493,7 +493,7 @@
 			</sub>
 		</x>
 		<y> <copy src="me()" trait="x" /> </y>
-		<depth> 300 </depth>
+		<depth> 500 </depth>
 		<width>
 			<copy> 36 </copy>
 			<mul>
@@ -568,7 +568,7 @@
 	<text name="InfoText">
 		<visible> 1 </visible>
 		<alpha> 0 </alpha>
-		<depth> 302 </depth>
+		<depth> 502 </depth>
 		<x>	5 </x>
 		<y> 10 </y>
 		<zoom> 60 </zoom>
@@ -581,7 +581,7 @@
 	<text name="LocationText">
 		<visible> 0 </visible>
 		<alpha> 255 </alpha>
-		<depth> 302 </depth>
+		<depth> 502 </depth>
 		<x>	5 </x>
 		<y>
 			<copy src="parent()" trait="_width" />
@@ -740,10 +740,7 @@
 	<hotrect name="Minimap_Marker_Template">
 		<visible> 1 </visible>
 		<locus> 1 </locus>
-		<depth>
-			<copy> 150 </copy>
-			<add src="me()" trait="_DepthMod" />
-		</depth>
+		<depth> <copy src="me()" trait="_DepthMod" /> </depth>
 		<x>
 			<copy src="me()" trait="_x" />
 			<mul src="parent()" trait="width" />
