@@ -1,17 +1,13 @@
 string_var sTeammateName
-string_var sJIPName
 string_var sFilename
 
 begin Function {sTeammateName}
 
 	; Check if avatar icon path exists and add to map
-	if eval (sJIPName = GetINIString (sv_Construct "Avatar:%z" sTeammateName) "Stentorious\JIPCCCAvatarDictionary.ini") == ""
-		sJIPName = sTeammateName
-	endif
-	if eval FileExists (sFilename = sv_Construct "textures\jazzisparis\ccc\avatar_%z.dds" sJIPName)
+	if eval FileExists (sFilename = sv_Construct "textures\jazzisparis\ccc\avatar_%z.dds" sTeammateName) || FileExists (sFilename = sv_Construct "textures\jazzisparis\ccc\avatar_%z.dds" (GetINIString (sv_Construct "Avatar:%z" sTeammateName) "Stentorious\JIPCCCAvatarDictionary.ini"))
 		Goo1.AuxStringMapSetStr "*JIPCCC_Avatars" (sTeammateName) (sFilename[9:-1])
 	endif
 
-	sv_Destruct sTeammateName sJIPName sFilename
+	sv_Destruct sTeammateName sFilename
 
 end
