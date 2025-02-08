@@ -53,7 +53,11 @@ begin Function {}
 			; Build array of followers
 			aFollowers = Player.GetFollowers
 			aTemp = Player.GetTeammates
-			ar_Cat aFollowers aTemp
+			if aFollowers
+				ar_Cat aFollowers aTemp
+			else
+				aFollowers = aTemp
+			endif
 			aFollowers = Ar_Unique aFollowers
 
 			; Checks if actor is a follow and assigns them to the respective aux

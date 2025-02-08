@@ -119,7 +119,11 @@ begin Function {}
 			; Build array of followers
 			aFollowers = Player.GetFollowers
 			aTemp = Player.GetTeammates
-			ar_Cat aFollowers aTemp
+			if aFollowers
+				ar_Cat aFollowers aTemp
+			else
+				aFollowers = aTemp
+			endif
 			aFollowers = Ar_Unique aFollowers
 
 			; Checks if actor is a follow and assigns them to the respective aux
@@ -231,6 +235,6 @@ begin Function {}
 	endif
 	Goo1.AuxVarSetFromArr "*Minimap_Markers" aMarkerRefs
 
-	aRefs = aTemp = aMarkerRefs = aMarkerRefs = ar_Null
+	aRefs = aTemp = aFollowers = aMarkerRefs = ar_Null
 
 end
