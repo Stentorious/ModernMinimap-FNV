@@ -375,9 +375,13 @@ if eval Goo1.AuxVarGetFlt "*Minimap_Init" 0 == 0
 	; Add custom quest marker template
 	AddTileFromTemplate "HUDMainMenu\ModernMinimap|Minimap_Marker_Template|CustomMarker"
 	SetUIFloatAlt "HUDMainMenu\ModernMinimap\CustomMarker\depth" 499
-	SetUIStringAlt "HUDMainMenu\ModernMinimap\CustomMarker\_filename_0" "Interface\Stentorious\ModernMinimap\MarkerPlayerNeutral.dds"
-	SetUIStringAlt "HUDMainMenu\ModernMinimap\CustomMarker\_filename_1" "Interface\Stentorious\ModernMinimap\MarkerPlayerBelow.dds"
-	SetUIStringAlt "HUDMainMenu\ModernMinimap\CustomMarker\_filename_2" "Interface\Stentorious\ModernMinimap\MarkerPlayerAbove.dds"
+	if eval GetUIFloatAlt "HUDMainMenu\ModernMinimap\_QuestHeight"
+		SetUIStringAlt "HUDMainMenu\ModernMinimap\CustomMarker\_filename_0" "Interface\Stentorious\ModernMinimap\MarkerPlayerNeutral.dds"
+		SetUIStringAlt "HUDMainMenu\ModernMinimap\CustomMarker\_filename_1" "Interface\Stentorious\ModernMinimap\MarkerPlayerBelow.dds"
+		SetUIStringAlt "HUDMainMenu\ModernMinimap\CustomMarker\_filename_2" "Interface\Stentorious\ModernMinimap\MarkerPlayerAbove.dds"
+	else
+		SetUIStringAlt "HUDMainMenu\ModernMinimap\CustomMarker\filename" "Interface\Stentorious\ModernMinimap\MarkerPlayerAbove.dds"
+	endif
 
 	; Init event handlers
 	SetGameMainLoopCallback (CompileScript "ModernMinimap\MainLoop.gek") 1 15 1
