@@ -3,10 +3,10 @@ int	iKeyID
 begin Function {iKeyID}
 
 	if eval !MenuMode
-		if eval GetUIFloatAlt "HUDMainMenu\ModernMinimap\_Toggle"
-			SetUIFloatAlt "HUDMainMenu\ModernMinimap\_Toggle" 0
+		if eval GetUIFloatAlt "HUDMainMenu\ModernMinimap\_visible"
+			SetUIFloatAlt "HUDMainMenu\ModernMinimap\_visible" 0
 		else
-			SetUIFloatAlt "HUDMainMenu\ModernMinimap\_Toggle" 1
+			SetUIFloatAlt "HUDMainMenu\ModernMinimap\_visible" 1
 		endif
 	endif
 

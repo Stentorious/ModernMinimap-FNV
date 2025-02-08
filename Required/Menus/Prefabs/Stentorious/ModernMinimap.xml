@@ -1,33 +1,39 @@
 <rect name="ModernMinimap">
 
-	<!-- Traits to interface with ModernMinimap.dll -->
+	<!-- ### Configuration Traits ### -->
+	<_x> 0 </_x>							<!-- Screen X offset -->
+	<_y> 0 </_y>							<!-- Screen Y offset -->
+	<_corner> 0 </_corner>					<!-- Map screen corner -->
+	<_background_padding> 8 </_background_padding> <!-- Padding between map window and main background edge -->
+	<_line_thickness> 2 </_line_thickness>	<!-- Headline thickness -->
+	<_Drop> 0 </_Drop>						<!-- Icon drop shadow -->
+	<_Fade> 0 </_Fade>						<!-- Icon alpha fade -->
+	<_Height> 0 </_Height>					<!-- Icon height indicator -->
+	<_QuestHeight> 0 </_QuestHeight>		<!-- Marker height indicator -->
+	<_DistMode> 0 </_DistMode>				<!-- Perception based icon distance -->
 
-	<!-- Render width / 2 (Game units) -->
-	<_Frustum> 2048 </_Frustum>
-	<_FrustumSize>
-		<copy src="me()" trait="_Frustum" />
-		<div src="me()" trait="_MapScale" />
-	</_FrustumSize>
+	<!-- ### Script Traits ### -->
+	<_visible> 1 </_visible>				<!-- Toggle map visibility -->
+	<_PlrX> 0 </_PlrX>						<!-- Player X world coordinate -->
+	<_PlrY> 0 </_PlrY>						<!-- Player Y world coordinate -->
+	<_PlrZ> 0 </_PlrZ>						<!-- Player Z world coordinate -->
+	<_PlrDeg> 0 </_PlrDeg>					<!-- Player world rotation -->
+	<_PlrAV6> 0 </_PlrAV6>					<!-- Player perception -->
+	<_PlrDetect> 0 </_PlrDetect>			<!-- Player detection state -->
+	<_Dist> 0 </_Dist>						<!-- Max icon distance -->
+	<_TileScale> 1 </_TileScale>			<!-- Minimap UI tile scale -->
+	<_MapScale> 1 </_MapScale>				<!-- Minimap image scale -->
+	<_RotationMode> 1 </_RotationMode>		<!-- Fixed North (0) or Player Heading (1) -->
+	<_Interior> 0 </_Interior>				<!-- Player is in interior cell -->
+	<_CellDeg> 0 </_CellDeg>				<!-- Cell rotation -->
 
-	<!-- Orthographic render camera offset from player z coordinate -->
+	<!-- ### ModernMinimap.dll Traits ### -->
 	<_ColorMode> 0 </_ColorMode>			<!-- Render Mode: Classic (0) or Full Color (1) -->
-	<_Interior> 0 </_Interior>				<!-- Is player in an interior cell -->
-	<_CameraOffset>
-		<copy> 10000 </copy>
-		<sub>
-			<copy> 9800 </copy>
-			<onlyif>
-				<copy src="me()" trait="_ColorMode" />
-				<and src="me()" trait="_Interior" />
-			</onlyif>
-		</sub>
-	</_CameraOffset>
+	<_MapOriginX> 0 </_MapOriginX>			<!-- Map center Y world coordinate -->
+	<_MapOriginY> 0 </_MapOriginY>			<!-- Map center X world coordinate -->
+	<_ForceUpdate> 0 </_ForceUpdate>		<!-- Force render update every frame -->
 
-	<!-- Map center world coordinates -->
-	<_MapOriginX> 0 </_MapOriginX>
-	<_MapOriginY> 0 </_MapOriginY>
-
-	<!-- Calculates when the map render should be updated -->
+	<!-- Update render when current texture leaves bounds of the window -->
 	<_CellPlrDeg>
 		<copy> 0 </copy>
 		<sub>
@@ -50,11 +56,10 @@
 		</sub>
 		<div> 2 </div>
 	</_UpdateWidth>
-	<_ForceUpdate> 0 </_ForceUpdate>					<!-- Updates every frame while active -->
-	<_Render>											<!-- Updates render when == 1 -->
+	<_Render>
 		<copy src="me()" trait="_ForceUpdate" />
 		<gt> 0 </gt>
-		<or>											<!-- Updates when map window leaves bounds of current render -->
+		<or>
 			<copy src="child(MapRender)" trait="_x" />
 			<sub> 0.5 </sub>
 			<abs></abs>
@@ -68,15 +73,56 @@
 		</or>
 	</_Render>
 
-	<_background_pad> 8 </_background_pad> 	<!-- Padding between the map and the background edges -->
-	<_line_thickness> 2 </_line_thickness>	<!-- Thickness of headlines -->
-	<_Drop> 0 </_Drop>						<!-- Icon drop shadow -->
-	<_Fade> 0 </_Fade>						<!-- Icon alpha fade -->
-	<_Height> 0 </_Height>					<!-- Icon height indicator -->
-	<_QuestHeight> 0 </_QuestHeight>		<!-- Marker height indicator -->
+	<!-- Render width / 2 (Game units) -->
+	<_Frustum> 2048 </_Frustum>
+	<_FrustumSize>
+		<copy src="me()" trait="_Frustum" />
+		<div src="me()" trait="_MapScale" />
+	</_FrustumSize>
+
+	<!-- Orthographic render camera offset from player z coordinate -->
+	<_CameraOffset>
+		<copy> 10000 </copy>
+		<sub>
+			<copy> 9800 </copy>
+			<onlyif>
+				<copy src="me()" trait="_ColorMode" />
+				<and src="me()" trait="_Interior" />
+			</onlyif>
+		</sub>
+	</_CameraOffset>
+
+	<!-- Map window size -->
+	<_width>
+		<copy> 256 </copy>
+		<mul src="me()" trait="_TileScale" />
+	</_width>
+
+	<!-- World to map coordinates translation -->
+	<_WorldScale>
+		<copy src="me()" trait="_MapScale" />
+		<div src="me()" trait="_Frustum" />
+	</_WorldScale>
+
+	<!-- Quest marker alpha pulse -->
+	<_AlphaPulse> 0 </_AlphaPulse>
+	<_AlphaPulseMax>
+		<copy src="me()" trait="_AlphaPulse" />
+		<max> 0 </max>
+	</_AlphaPulseMax>
+
+	<!-- Icon size -->
+	<_IconScale> 1 </_IconScale>
+	<_IconScaleMul>
+		<copy src="me()" trait="_MapScale" />
+		<min> 1 </min>
+		<sub> 1 </sub>
+		<div> 2 </div>
+		<add> 1 </add>
+		<mul src="me()" trait="_IconScale" />
+	</_IconScaleMul>
 
 	<!-- Rotation calculations -->
-	<_CellDeg> 0 </_CellDeg>
 	<_CellDegCos> <cos src="me()" trait="_CellDeg" /> </_CellDegCos>
 	<_CellDegSin> <sin src="me()" trait="_CellDeg" /> </_CellDegSin>
 	<_PlrDegCos> <cos src="me()" trait="_PlrDeg" /> </_PlrDegCos>
@@ -104,31 +150,7 @@
 		</add>
 	</_IconDegSin>
 
-	<!-- Player position -->
-	<_PlrX> 0 </_PlrX>
-	<_PlrY> 0 </_PlrY>
-	<_PlrZ> 0 </_PlrZ>
-	<_PlrDeg> 0 </_PlrDeg>
-
-	<_PlrAV6> 0 </_PlrAV6>					<!-- Player perception -->
-	<_PlrDetect> 0 </_PlrDetect>			<!-- Player detection state -->
-	<_Dist> 0 </_Dist>						<!-- Max icon distance -->
-	<_DistMode> 0 </_DistMode>				<!-- Perception based icon distance -->
-	<_TileScale> 1 </_TileScale>			<!-- Minimap UI tile scale -->
-
-	<_WorldScale> 							<!-- World to map coordinates translation -->
-		<copy src="me()" trait="_MapScale" />
-		<div src="me()" trait="_Frustum" />
-	</_WorldScale>
-	<_MapScale> 1 </_MapScale>				<!-- Minimap image scale -->
-	<_RotationMode> 1 </_RotationMode>		<!-- Fixed North (0) or Player Heading (1) -->
-	<_AlphaPulse> 0 </_AlphaPulse>			<!-- Quest marker alpha pulse -->
-	<_AlphaPulseMax>
-		<copy src="me()" trait="_AlphaPulse" />
-		<max> 0 </max>
-	</_AlphaPulseMax>
-
-	<!-- Calculates distance where icons become visible -->
+	<!-- Calculates distance from player where icons become visible -->
 	<_DistCalc>
 		<copy> 0 </copy>
 		<add src="me()" trait="_Dist" />
@@ -147,10 +169,27 @@
 		</add>
 	</_DistCalc>
 
+	<!-- Map color control -->
+	<_systemcolor>
+		<copy> &hudmain; </copy>
+		<add>
+			<copy> 1 </copy>
+			<onlyif>
+				<copy src="me()" trait="_PlrDetect" />
+				<eq> 1 </eq>
+				<or>
+					<copy src="me()" trait="_PlrDetect" />
+					<eq> 3 </eq>
+				</or>
+			</onlyif>
+		</add>
+	</_systemcolor>
+
+	<!-- Icon color control -->
 	<_systemcolor_-1>
 		<copy> 0 </copy>
 		<add> &hudmain; </add>
-		<onlyifnot src="io()" trait="_ySIColorFulIconsFix" />
+		<onlyifnot src="io()" trait="_ySIColorfulIconsFix" />
 	</_systemcolor_-1>
 	<_systemcolor_0> &hudmain; </_systemcolor_0>
 	<_systemcolor_1> &hudalt; </_systemcolor_1>
@@ -172,56 +211,56 @@
 	<_blue_2> 255 </_blue_2>
 	<_blue_3> 255 </_blue_3>
 
-	<_Toggle> 1 </_Toggle>
+	<!-- Interface Control (DO NOT TOUCH) -->
 	<visible>
 		<copy src="ReticleCenter" trait="visible" />
 		<or src="AmmoTypeLabel" trait="visible" />
 		<or src="ActionPoints" trait="visible" />
 		<or src="HitPoints" trait="visible" />
-		<and src="me()" trait="_Toggle" />
+		<and src="me()" trait="_visible" />
 	</visible>
 	<x>
-		<copy src="me()" trait="_background_pad"/>
+		<copy src="me()" trait="_background_padding" />
 		<add>
-			<copy src="me()" trait="_x"/>
+			<copy src="me()" trait="_x" />
 			<onlyif>
-				<copy src="me()" trait="_corner"/>
+				<copy src="me()" trait="_corner" />
 				<eq> 0 </eq>
 				<or>
-					<copy src="me()" trait="_corner"/>
+					<copy src="me()" trait="_corner" />
 					<eq> 3 </eq>
 				</or>
 			</onlyif>
 		</add>
 		<add>
-			<copy src="screen()" trait="width"/>
-			<sub src="child(Background)" trait="width"/>
-			<sub src="me()" trait="_x"/>
+			<copy src="screen()" trait="width" />
+			<sub src="child(Background)" trait="width" />
+			<sub src="me()" trait="_x" />
 			<onlyif>
-				<copy src="me()" trait="_corner"/>
+				<copy src="me()" trait="_corner" />
 				<eq> 1 </eq>
 				<or>
-					<copy src="me()" trait="_corner"/>
+					<copy src="me()" trait="_corner" />
 					<eq> 2 </eq>
 				</or>
 			</onlyif>
 		</add>
 	</x>
 	<y>
-		<copy src="me()" trait="_background_pad"/>
+		<copy src="me()" trait="_background_padding" />
 		<add>
-			<copy src="me()" trait="_y"/>
+			<copy src="me()" trait="_y" />
 			<onlyif>
-				<copy src="me()" trait="_corner"/>
+				<copy src="me()" trait="_corner" />
 				<lt> 2 </lt>
 			</onlyif>
 		</add>
 		<add>
-			<copy src="screen()" trait="height"/>
-			<sub src="child(Background)" trait="height"/>
-			<sub src="me()" trait="_y"/>
+			<copy src="screen()" trait="height" />
+			<sub src="child(Background)" trait="height" />
+			<sub src="me()" trait="_y" />
 			<onlyif>
-				<copy src="me()" trait="_corner"/>
+				<copy src="me()" trait="_corner" />
 				<gte> 2 </gte>
 			</onlyif>
 		</add>
@@ -229,136 +268,10 @@
 	<depth> 10 </depth>
 	<locus> 1 </locus>
 	<clipwindow> 1 </clipwindow>
-	<width> <copy src="me()" trait="_width"/> </width>
-	<height> <copy src="me()" trait="_width"/> </height>
+	<width> <copy src="me()" trait="_width" /> </width>
+	<height> <copy src="me()" trait="_width" /> </height>
 
-	<_x> 0 </_x>
-	<_y> 0 </_y>
-	<_width>
-		<copy> 256 </copy>
-		<mul src="me()" trait="_TileScale"/>
-	</_width>
-	<_corner> 0 </_corner>
-	<_systemcolor>
-		<copy> &hudmain; </copy>
-		<add>
-			<copy> 1 </copy>
-			<onlyif>
-				<copy src="me()" trait="_PlrDetect" />
-				<eq> 1 </eq>
-				<or>
-					<copy src="me()" trait="_PlrDetect" />
-					<eq> 3 </eq>
-				</or>
-			</onlyif>
-		</add>
-	</_systemcolor>
-
-	<image name="Headline_VL">
-		<x>
-			<copy> 0 </copy>
-			<sub src="parent()" trait="_line_thickness" />
-		</x>
-		<width> <copy src="parent()" trait="_line_thickness" /> </width>
-		<height> <copy src="parent()" trait="_width" /> </height>
-		<systemcolor> <copy src="parent()" trait="_systemcolor" /> </systemcolor>
-		<brightness> 255 </brightness>
-		<filename> Interface\Shared\solid.dds </filename>
-	</image>
-	<image name="Headline_VR">
-		<x> <copy src="parent()" trait="_width" /> </x>
-		<width> <copy src="parent()" trait="_line_thickness" /> </width>
-		<height> <copy src="parent()" trait="_width" /> </height>
-		<systemcolor> <copy src="parent()" trait="_systemcolor" /> </systemcolor>
-		<brightness> 255 </brightness>
-		<filename> Interface\Shared\solid.dds </filename>
-	</image>
-	<image name="Headline_HT">
-		<x> <copy src="sibling(Headline_VL)" trait="x" /> </x>
-		<y> <copy src="me()" trait="x" /> </y>
-		<width>
-			<copy src="parent()" trait="_width" />
-			<add src="parent()" trait="_line_thickness" />
-			<add src="parent()" trait="_line_thickness" />
-		</width>
-		<height> <copy src="parent()" trait="_line_thickness" /> </height>
-		<systemcolor> <copy src="parent()" trait="_systemcolor" /> </systemcolor>
-		<brightness> 255 </brightness>
-		<filename> Interface\Shared\solid.dds </filename>
-	</image>
-	<image name="Headline_HB">
-		<x> <copy src="sibling(Headline_VL)" trait="x" /> </x>
-		<y> <copy src="parent()" trait="_width" /> </y>
-		<width>
-			<copy src="parent()" trait="_width" />
-			<add src="parent()" trait="_line_thickness" />
-			<add src="parent()" trait="_line_thickness" />
-		</width>
-		<height> <copy src="parent()" trait="_line_thickness" /> </height>
-		<systemcolor> <copy src="parent()" trait="_systemcolor" /> </systemcolor>
-		<brightness> 255 </brightness>
-		<filename> Interface\Shared\solid.dds </filename>
-	</image>
-	<image name="Headline_VC">
-		<visible> 0 </visible>
-		<alpha> 102 </alpha>
-		<x>
-			<copy src="parent()" trait="_width" />
-			<div> 2 </div>
-			<sub src="parent()" trait="_line_thickness" />
-		</x>
-		<y>
-			<copy> 0 </copy>
-			<sub src="parent()" trait="_width" />
-			<div> 2 </div>
-		</y>
-		<width> <copy src="parent()" trait="_line_thickness" /> </width>
-		<height> <copy src="parent()" trait="_width" /> <mul> 2 </mul> </height>
-		<clips> 1 </clips>
-		<rotateaxisx>
-			<copy src="me()" trait="width" />
-			<div> 2 </div>
-		</rotateaxisx>
-		<rotateaxisy>
-			<copy src="me()" trait="height" />
-			<div> 2 </div>
-		</rotateaxisy>
-		<rotateangle> <copy src="sibling(MapRender)" trait="rotateangle" /> </rotateangle>
-		<brightness> 153 </brightness>
-		<filename> Interface\Shared\solid.dds </filename>
-	</image>
-	<image name="Headline_HC">
-		<visible> 0 </visible>
-		<alpha> 102 </alpha>
-		<x> <copy src="sibling(Headline_VC)" trait="y" /> </x>
-		<y> <copy src="sibling(Headline_VC)" trait="x" /> </y>
-		<width> <copy src="sibling(Headline_VC)" trait="height" /> </width>
-		<height> <copy src="parent()" trait="_line_thickness" /> </height>
-		<clips> 1 </clips>
-		<rotateaxisx>
-			<copy src="me()" trait="width" />
-			<div> 2 </div>
-		</rotateaxisx>
-		<rotateaxisy>
-			<copy src="me()" trait="height" />
-			<div> 2 </div>
-		</rotateaxisy>
-		<rotateangle> <copy src="sibling(MapRender)" trait="rotateangle" /> </rotateangle>
-		<brightness> 153 </brightness>
-		<filename> Interface\Shared\solid.dds </filename>
-	</image>
-
-	<hotrect name="Scan">
-		<include src="vertical_fade_line.xml"/>
-		<visible> 0 </visible>
-		<alpha> 204 </alpha>
-		<depth> 501 </depth>
-		<y> 0 </y>
-		<width> <copy src="parent()" trait="_width" /> </width>
-		<height> 24 </height>
-		<clips> 1 </clips>
-	</hotrect>
-
+	<!-- Map Render Texture -->
 	<image name="MapRender">
 		<visible> 1 </visible>
 		<alpha> 255 </alpha>
@@ -456,22 +369,23 @@
 		<_brightness> 128 </_brightness>
 	</image>
 
+	<!-- Map Window Background -->
 	<image name="Background">
 		<visible> 1 </visible>
 		<alpha> 200 </alpha>
 		<depth> -1 </depth>
 		<x>
 			<copy> 0 </copy>
-			<sub src="parent()" trait="_background_pad" />
+			<sub src="parent()" trait="_background_padding" />
 		</x>
 		<y>
 			<copy> 0 </copy>
-			<sub src="parent()" trait="_background_pad" />
+			<sub src="parent()" trait="_background_padding" />
 		</y>
 		<width>
 			<copy src="parent()" trait="_width" />
 			<add>
-				<copy src="parent()" trait="_background_pad" />
+				<copy src="parent()" trait="_background_padding" />
 				<mul> 2 </mul>
 			</add>
 		</width>
@@ -481,6 +395,112 @@
 		<systemcolor> 0 </systemcolor>
 		<filename> Interface\Shared\solid_black.dds </filename>
 	</image>
+
+	<!-- Headlines -->
+	<image name="Headline_VL">
+		<x>
+			<copy> 0 </copy>
+			<sub src="parent()" trait="_line_thickness" />
+		</x>
+		<width> <copy src="parent()" trait="_line_thickness" /> </width>
+		<height> <copy src="parent()" trait="_width" /> </height>
+		<systemcolor> <copy src="parent()" trait="_systemcolor" /> </systemcolor>
+		<brightness> 255 </brightness>
+		<filename> Interface\Shared\solid.dds </filename>
+	</image>
+	<image name="Headline_VR">
+		<x> <copy src="parent()" trait="_width" /> </x>
+		<width> <copy src="parent()" trait="_line_thickness" /> </width>
+		<height> <copy src="parent()" trait="_width" /> </height>
+		<systemcolor> <copy src="parent()" trait="_systemcolor" /> </systemcolor>
+		<brightness> 255 </brightness>
+		<filename> Interface\Shared\solid.dds </filename>
+	</image>
+	<image name="Headline_HT">
+		<x> <copy src="sibling(Headline_VL)" trait="x" /> </x>
+		<y> <copy src="me()" trait="x" /> </y>
+		<width>
+			<copy src="parent()" trait="_width" />
+			<add src="parent()" trait="_line_thickness" />
+			<add src="parent()" trait="_line_thickness" />
+		</width>
+		<height> <copy src="parent()" trait="_line_thickness" /> </height>
+		<systemcolor> <copy src="parent()" trait="_systemcolor" /> </systemcolor>
+		<brightness> 255 </brightness>
+		<filename> Interface\Shared\solid.dds </filename>
+	</image>
+	<image name="Headline_HB">
+		<x> <copy src="sibling(Headline_VL)" trait="x" /> </x>
+		<y> <copy src="parent()" trait="_width" /> </y>
+		<width>
+			<copy src="parent()" trait="_width" />
+			<add src="parent()" trait="_line_thickness" />
+			<add src="parent()" trait="_line_thickness" />
+		</width>
+		<height> <copy src="parent()" trait="_line_thickness" /> </height>
+		<systemcolor> <copy src="parent()" trait="_systemcolor" /> </systemcolor>
+		<brightness> 255 </brightness>
+		<filename> Interface\Shared\solid.dds </filename>
+	</image>
+	<image name="Headline_VC">
+		<visible> 0 </visible>
+		<alpha> 102 </alpha>
+		<x>
+			<copy src="parent()" trait="_width" />
+			<div> 2 </div>
+			<sub src="parent()" trait="_line_thickness" />
+		</x>
+		<y>
+			<copy> 0 </copy>
+			<sub src="parent()" trait="_width" />
+			<div> 2 </div>
+		</y>
+		<width> <copy src="parent()" trait="_line_thickness" /> </width>
+		<height> <copy src="parent()" trait="_width" /> <mul> 2 </mul> </height>
+		<clips> 1 </clips>
+		<rotateaxisx>
+			<copy src="me()" trait="width" />
+			<div> 2 </div>
+		</rotateaxisx>
+		<rotateaxisy>
+			<copy src="me()" trait="height" />
+			<div> 2 </div>
+		</rotateaxisy>
+		<rotateangle> <copy src="sibling(MapRender)" trait="rotateangle" /> </rotateangle>
+		<brightness> 153 </brightness>
+		<filename> Interface\Shared\solid.dds </filename>
+	</image>
+	<image name="Headline_HC">
+		<visible> 0 </visible>
+		<alpha> 102 </alpha>
+		<x> <copy src="sibling(Headline_VC)" trait="y" /> </x>
+		<y> <copy src="sibling(Headline_VC)" trait="x" /> </y>
+		<width> <copy src="sibling(Headline_VC)" trait="height" /> </width>
+		<height> <copy src="parent()" trait="_line_thickness" /> </height>
+		<clips> 1 </clips>
+		<rotateaxisx>
+			<copy src="me()" trait="width" />
+			<div> 2 </div>
+		</rotateaxisx>
+		<rotateaxisy>
+			<copy src="me()" trait="height" />
+			<div> 2 </div>
+		</rotateaxisy>
+		<rotateangle> <copy src="sibling(MapRender)" trait="rotateangle" /> </rotateangle>
+		<brightness> 153 </brightness>
+		<filename> Interface\Shared\solid.dds </filename>
+	</image>
+
+	<hotrect name="Scan">
+		<include src="vertical_fade_line.xml" />
+		<visible> 0 </visible>
+		<alpha> 204 </alpha>
+		<depth> 501 </depth>
+		<y> 0 </y>
+		<width> <copy src="parent()" trait="_width" /> </width>
+		<height> 24 </height>
+		<clips> 1 </clips>
+	</hotrect>
 
 	<hotrect name="Player">
 		<visible> 1 </visible>
@@ -497,13 +517,7 @@
 		<depth> 500 </depth>
 		<width>
 			<copy> 36 </copy>
-			<mul>
-				<copy src="ModernMinimap" trait="_MapScale" />
-				<min> 1 </min>
-				<sub> 1 </sub>
-				<div> 2 </div>
-				<add> 1 </add>
-			</mul>
+			<mul src="parent()" trait="_IconScaleMul" />
 		</width>
 		<height> <copy src="me()" trait="width" /> </height>
 		<zoom> &scale; </zoom>
@@ -517,6 +531,7 @@
 
 		<image name="Icon">
 			<visible> <copy src="parent()" trait="visible" /> </visible>
+			<depth> 0 </depth>
 			<rotateaxisx>
 				<copy src="me()" trait="width" />
 				<div> 2 </div>
@@ -566,6 +581,7 @@
 
 	</hotrect>
 
+	<!-- Map Text Display -->
 	<text name="InfoText">
 		<visible> 1 </visible>
 		<alpha> 0 </alpha>
@@ -578,7 +594,6 @@
 		<font> 7 </font>
 		<string> 1x </string>
 	</text>
-
 	<text name="LocationText">
 		<visible> 0 </visible>
 		<alpha> 255 </alpha>
@@ -602,7 +617,7 @@
 
 	<!-- Cardinal Directions -->
 	<text name="NorthText">
-		<include src="Stentorious\ModernMinimap\CardinalText.xml"/>
+		<include src="Stentorious\ModernMinimap\CardinalText.xml" />
 		<string> N </string>
 		<_x>
 			<copy> 0.5 </copy>
@@ -620,7 +635,7 @@
 		</_y>
 	</text>
 	<text name="SouthText">
-		<include src="Stentorious\ModernMinimap\CardinalText.xml"/>
+		<include src="Stentorious\ModernMinimap\CardinalText.xml" />
 		<string> S </string>
 		<_x>
 			<copy> 0.5 </copy>
@@ -638,7 +653,7 @@
 		</_y>
 	</text>
 	<text name="EastText">
-		<include src="Stentorious\ModernMinimap\CardinalText.xml"/>
+		<include src="Stentorious\ModernMinimap\CardinalText.xml" />
 		<x>
 			<copy src="me()" trait="_x" />
 			<mul src="parent()" trait="width" />
@@ -661,7 +676,7 @@
 		</_y>
 	</text>
 	<text name="WestText">
-		<include src="Stentorious\ModernMinimap\CardinalText.xml"/>
+		<include src="Stentorious\ModernMinimap\CardinalText.xml" />
 		<string> W </string>
 		<_x>
 			<copy> 0.5 </copy>
@@ -681,6 +696,7 @@
 
 </rect>
 
+<!-- Icon Rect -->
 <template name="Minimap_Icon_Rect">
 	<rect name="Minimap_Icon_Rect">
 		<visible> 1 </visible>
@@ -689,9 +705,10 @@
 	</rect>
 </template>
 
+<!-- Icon Template -->
 <template name="Minimap_Icon_Template">
 	<hotrect name="Minimap_Icon_Template">
-		<include src="Stentorious\ModernMinimap\Icon.xml"/>
+		<include src="Stentorious\ModernMinimap\Icon.xml" />
 		<visible>
 			<copy src="ModernMinimap" trait="_DistCalc" />
 			<gte src="me()" trait="_Dist" />
@@ -723,20 +740,14 @@
 		</y>
 		<width>
 			<copy> 24 </copy>
-			<mul>
-				<copy src="ModernMinimap" trait="_MapScale" />
-				<min> 1 </min>
-				<sub> 1 </sub>
-				<div> 2 </div>
-				<add> 1 </add>
-			</mul>
+			<mul src="ModernMinimap" trait="_IconScaleMul" />
 		</width>
 		<height> <copy src="me()" trait="width" /> </height>
 		<filename> Interface\Stentorious\ModernMinimap\Actor.dds </filename>
 	</hotrect>
 </template>
 
-<!-- Quest/Player Marker -->
+<!-- Quest/Player Marker Template -->
 <template name="Minimap_Marker_Template">
 	<hotrect name="Minimap_Marker_Template">
 		<visible> 1 </visible>
@@ -752,7 +763,7 @@
 			<max> 3 </max>
 			<min>
 				<add src="parent()" trait="width" />
-				<sub src="me()" trait="width"/>
+				<sub src="me()" trait="width" />
 				<sub> 3 </sub>
 			</min>
 		</x>
@@ -766,19 +777,13 @@
 			<max> 2 </max>
 			<min>
 				<add src="parent()" trait="width" />
-				<sub src="me()" trait="height"/>
+				<sub src="me()" trait="height" />
 				<sub> 2 </sub>
 			</min>
 		</y>
 		<width>
 			<copy> 18 </copy>
-			<mul>
-				<copy src="ModernMinimap" trait="_MapScale" />
-				<min> 1 </min>
-				<sub> 1 </sub>
-				<div> 2 </div>
-				<add> 1 </add>
-			</mul>
+			<mul src="ModernMinimap" trait="_IconScaleMul" />
 		</width>
 		<height>
 			<copy src="me()" trait="width" />
