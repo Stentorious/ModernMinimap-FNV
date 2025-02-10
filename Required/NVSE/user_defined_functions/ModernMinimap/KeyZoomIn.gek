@@ -6,7 +6,7 @@ begin Function {iKeyID}
 
 	if eval !MenuMode
 		fScale = GetUIFloatAlt "HUDMainMenu\ModernMinimap\_MapScale"
-		if eval fScale < 1.5
+		if eval fScale < 2
 			fScale += 0.25
 			SetUIStringAlt "HUDMainMenu\ModernMinimap\InfoText\string" "%.2fx" fScale
 			SetUIFloatAlt "HUDMainMenu\ModernMinimap\_MapScale" fScale
