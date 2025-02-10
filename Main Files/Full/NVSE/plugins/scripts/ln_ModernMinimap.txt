@@ -77,6 +77,8 @@ if eval Goo1.AuxVarGetFlt "*Minimap_Init" 0 == 0
 	SetUIFloatAlt "HUDMainMenu\ModernMinimap\_y" (GetINIFloat_Cached "Map:fOffsetY" "Stentorious\ModernMinimap.ini")
 	SetUIFloatAlt "HUDMainMenu\ModernMinimap\_TileScale" (GetINIFloat_Cached "Map:fSize" "Stentorious\ModernMinimap.ini")
 	SetUIFloatAlt "HUDMainMenu\ModernMinimap\Background\alpha" ((GetINIFloat_Cached "Map:fBackgroundAlpha" "Stentorious\ModernMinimap.ini") * 255)
+	SetUIFloatAlt "HUDMainMenu\ModernMinimap\_background_padding" (GetINIFloat_Cached "Map:fBackgroundPadding" "Stentorious\ModernMinimap.ini")
+	SetUIFloatAlt "HUDMainMenu\ModernMinimap\_line_thickness" (GetINIFloat_Cached "Map:fLineThickness" "Stentorious\ModernMinimap.ini")
 	SetUIFloatAlt "HUDMainMenu\ModernMinimap\MapRender\_brightness" (((GetINIFloat_Cached "Map:fRenderBrightness" "Stentorious\ModernMinimap.ini") * 255) - 255)
 	Goo1.AuxVarSetFlt "*Minimap_INI" (GetMaxOf 0.5 (GetMinOf 1.5 (GetINIFloat_Cached "Map:fInteriorZoom" "Stentorious\ModernMinimap.ini"))) 0
 	Goo1.AuxVarSetFlt "*Minimap_INI" (GetMaxOf 0.5 (GetMinOf 1.5 (GetINIFloat_Cached "Map:fExteriorZoom" "Stentorious\ModernMinimap.ini"))) 1
@@ -90,6 +92,7 @@ if eval Goo1.AuxVarGetFlt "*Minimap_Init" 0 == 0
 	SetUIFloatAlt "HUDMainMenu\ModernMinimap\SouthText\visible" (eval GetINIFloat_Cached "Map:bSouthText" "Stentorious\ModernMinimap.ini")
 	SetUIFloatAlt "HUDMainMenu\ModernMinimap\EastText\visible" (eval GetINIFloat_Cached "Map:bEastText" "Stentorious\ModernMinimap.ini")
 	SetUIFloatAlt "HUDMainMenu\ModernMinimap\WestText\visible" (eval GetINIFloat_Cached "Map:bWestText" "Stentorious\ModernMinimap.ini")
+	SetUIFloatAlt "HUDMainMenu\ModernMinimap\_CompassTextScale" (GetINIFloat_Cached "Map:fCompassTextSize" "Stentorious\ModernMinimap.ini")
 	; Scan animation
 	if eval GetINIFloat_Cached "Map:bScanEffect" "Stentorious\ModernMinimap.ini"
 		SetUIFloatAlt "HUDMainMenu\ModernMinimap\Scan\visible" 1
