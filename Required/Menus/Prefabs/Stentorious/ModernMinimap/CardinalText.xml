@@ -4,14 +4,23 @@
 <x>
 	<copy src="me()" trait="_x" />
 	<mul src="parent()" trait="width" />
-	<sub> 11 </sub>
+	<sub>
+		<copy> 11 </copy>
+		<mul src="parent()" trait="_CompassTextScale" />
+	</sub>
 </x>
 <y>
 	<copy src="me()" trait="_y" />
 	<mul src="parent()" trait="width" />
-	<sub> 9.5 </sub>
+	<sub>
+		<copy> 9.5 </copy>
+		<mul src="parent()" trait="_CompassTextScale" />
+	</sub>
 </y>
-<zoom> 80 </zoom>
+<zoom>
+	<copy> 80 </copy>
+	<mul src="parent()" trait="_CompassTextScale" />
+</zoom>
 <brightness> 204 </brightness>
 <font> 7 </font>
 <justify> &left; </justify>

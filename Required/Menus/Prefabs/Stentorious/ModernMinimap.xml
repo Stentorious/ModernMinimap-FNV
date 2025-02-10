@@ -6,6 +6,7 @@
 	<_corner> 0 </_corner>					<!-- Map screen corner -->
 	<_background_padding> 8 </_background_padding> <!-- Padding between map window and main background edge -->
 	<_line_thickness> 2 </_line_thickness>	<!-- Headline thickness -->
+	<_CompassTextScale> 1 </_CompassTextScale> <!-- Direction text scale -->
 	<_Drop> 0 </_Drop>						<!-- Icon drop shadow -->
 	<_Fade> 0 </_Fade>						<!-- Icon alpha fade -->
 	<_Height> 0 </_Height>					<!-- Icon height indicator -->
@@ -657,7 +658,10 @@
 		<x>
 			<copy src="me()" trait="_x" />
 			<mul src="parent()" trait="width" />
-			<sub> 8.5 </sub>
+			<sub>
+				<copy> 8.5 </copy>
+				<mul src="parent()" trait="_CompassTextScale" />
+			</sub>
 		</x>
 		<string> E </string>
 		<_x>
