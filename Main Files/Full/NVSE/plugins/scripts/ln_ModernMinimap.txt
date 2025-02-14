@@ -51,6 +51,9 @@ if eval Goo1.AuxVarGetFlt "*Minimap_Init" 0 == 0
 		MessageBoxEx "Modern Minimap missing requirement!%rInstall latest ySI - Sorting Ycons."
 		return
 	endif
+	if eval GetINIFloat "Main:iResScale" "..\NVSE\Plugins\HighResLocalMaps.ini" < 2
+		MessageBoxEx "Modern Minimap overwrite detected!%rLoad after High Res Local Maps."
+	endif
 	Goo1.AuxVarSetFlt "*Minimap_Init" 1 1
 
 	; Load key binds
