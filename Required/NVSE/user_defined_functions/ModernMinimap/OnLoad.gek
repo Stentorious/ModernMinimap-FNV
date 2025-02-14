@@ -22,9 +22,21 @@ begin Function {}
 	if eval GetCellFlag (Player.GPC) 0
 		SetUIFloatAlt "HUDMainMenu\ModernMinimap\_MapScale" (Goo1.AuxVarGetFlt "*Minimap_INI" 0)
 		SetUIFloatAlt "HUDMainMenu\ModernMinimap\_Interior" 1
+		iTemp = Goo1.AuxVarGetFlt "*Minimap_INI" 7
+		if eval iTemp == 1
+			SetUIFloatAlt "HUDMainMenu\ModernMinimap\_visible" 0
+		elseif eval iTemp == 2
+			SetUIFloatAlt "HUDMainMenu\ModernMinimap\_visible" 1
+		endif
 	else
 		SetUIFloatAlt "HUDMainMenu\ModernMinimap\_MapScale" (Goo1.AuxVarGetFlt "*Minimap_INI" 1)
 		SetUIFloatAlt "HUDMainMenu\ModernMinimap\_Interior" 0
+		iTemp = Goo1.AuxVarGetFlt "*Minimap_INI" 7
+		if eval iTemp == 2
+			SetUIFloatAlt "HUDMainMenu\ModernMinimap\_visible" 0
+		elseif eval iTemp == 1
+			SetUIFloatAlt "HUDMainMenu\ModernMinimap\_visible" 1
+		endif
 	endif
 
 	; Update render
