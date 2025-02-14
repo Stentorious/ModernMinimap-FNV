@@ -73,6 +73,10 @@ if eval Goo1.AuxVarGetFlt "*Minimap_Init" 0 == 0
 	if iTemp > 0
 		SetOnKeyDownEventHandler (CompileScript "ModernMinimap\KeyZoomOut.gek") 1 iTemp
 	endif
+	iTemp = GetINIFloat_Cached "KeyBinds:iMarkerVisibility" "Stentorious\ModernMinimap.ini"
+	if iTemp > 0
+		SetOnKeyDownEventHandler (CompileScript "ModernMinimap\KeyToggleMarker.gek") 1 iTemp
+	endif
 
 	; Load map settings
 	SetUIFloatAlt "HUDMainMenu\ModernMinimap\_corner" (GetINIFloat_Cached "Map:iPosition" "Stentorious\ModernMinimap.ini")
@@ -396,14 +400,14 @@ if eval Goo1.AuxVarGetFlt "*Minimap_Init" 0 == 0
 	CloseFileSO "Stentorious\ModernMinimap.ini" 0
 
 	; Add custom quest marker template
-	AddTileFromTemplate "HUDMainMenu\ModernMinimap|Minimap_Marker_Template|CustomMarker"
-	SetUIFloatAlt "HUDMainMenu\ModernMinimap\CustomMarker\depth" 499
+	AddTileFromTemplate "HUDMainMenu\ModernMinimap\CustomMarker|Minimap_Marker_Template|Icon"
+	SetUIFloatAlt "HUDMainMenu\ModernMinimap\CustomMarker\Icon\depth" 499
 	if eval GetUIFloatAlt "HUDMainMenu\ModernMinimap\_QuestHeight"
-		SetUIStringAlt "HUDMainMenu\ModernMinimap\CustomMarker\_filename_0" "Interface\Stentorious\ModernMinimap\MarkerPlayerNeutral.dds"
-		SetUIStringAlt "HUDMainMenu\ModernMinimap\CustomMarker\_filename_1" "Interface\Stentorious\ModernMinimap\MarkerPlayerBelow.dds"
-		SetUIStringAlt "HUDMainMenu\ModernMinimap\CustomMarker\_filename_2" "Interface\Stentorious\ModernMinimap\MarkerPlayerAbove.dds"
+		SetUIStringAlt "HUDMainMenu\ModernMinimap\CustomMarker\Icon\_filename_0" "Interface\Stentorious\ModernMinimap\MarkerPlayerNeutral.dds"
+		SetUIStringAlt "HUDMainMenu\ModernMinimap\CustomMarker\Icon\_filename_1" "Interface\Stentorious\ModernMinimap\MarkerPlayerBelow.dds"
+		SetUIStringAlt "HUDMainMenu\ModernMinimap\CustomMarker\Icon\_filename_2" "Interface\Stentorious\ModernMinimap\MarkerPlayerAbove.dds"
 	else
-		SetUIStringAlt "HUDMainMenu\ModernMinimap\CustomMarker\filename" "Interface\Stentorious\ModernMinimap\MarkerPlayerAbove.dds"
+		SetUIStringAlt "HUDMainMenu\ModernMinimap\CustomMarker\Icon\filename" "Interface\Stentorious\ModernMinimap\MarkerPlayerAbove.dds"
 	endif
 
 	; Init event handlers

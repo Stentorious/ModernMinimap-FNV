@@ -12,6 +12,11 @@ begin Function {}
 	AddTileFromTemplate "HUDMainMenu\ModernMinimap|Minimap_Icon_Rect|Followers"
 	AddTileFromTemplate "HUDMainMenu\ModernMinimap|Minimap_Icon_Rect|Markers"
 
+	; Quest marker visibility
+	if eval GetUIFloatAlt "HUDMainMenu\ModernMinimap\CustomMarker\visible" == 0
+		SetUIFloatAlt "HUDMainMenu\ModernMinimap\Markers\visible" 0
+	endif
+
 	; Update player Perception
 	SetUIFloatAlt "HUDMainMenu\ModernMinimap\_PlrAV6" (GetMaxOf 1 (GetMinOf 10 (Player.GetAV Perception)))
 
@@ -46,7 +51,7 @@ begin Function {}
 	Call (CompileScript "ModernMinimap\MainLoop.gek")
 
 	; Fix custom marker texture
-	SetUIFloatAlt "HUDMainMenu\ModernMinimap\CustomMarker\_PosZ" -99999
+	SetUIFloatAlt "HUDMainMenu\ModernMinimap\CustomMarker\Icon\_PosZ" -99999
 
 	; Update worldspace cache
 	Goo1.AuxVarSetFlt "*Minimap_Travel" 0 0

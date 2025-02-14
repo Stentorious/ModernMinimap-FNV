@@ -14,7 +14,8 @@
 	<_DistMode> 0 </_DistMode>				<!-- Perception based icon distance -->
 
 	<!-- ### Script Traits ### -->
-	<_visible> 1 </_visible>				<!-- Toggle map visibility -->
+	<_visible> 1 </_visible>				<!-- General visibility flag -->
+	<_visible_pa> 1 </_visible_pa>			<!-- Power armor visibility flag -->
 	<_PlrX> 0 </_PlrX>						<!-- Player X world coordinate -->
 	<_PlrY> 0 </_PlrY>						<!-- Player Y world coordinate -->
 	<_PlrZ> 0 </_PlrZ>						<!-- Player Z world coordinate -->
@@ -219,6 +220,7 @@
 		<or src="ActionPoints" trait="visible" />
 		<or src="HitPoints" trait="visible" />
 		<and src="me()" trait="_visible" />
+		<and src="me()" trait="_visible_pa" />
 	</visible>
 	<x>
 		<copy src="me()" trait="_background_padding" />
@@ -697,6 +699,12 @@
 			</sub>
 		</_y>
 	</text>
+
+	<rect name="CustomMarker">
+		<visible> 1 </visible>
+		<width> <copy src="parent()" trait="width" /> </width>
+		<height> <copy src="parent()" trait="height" /> </height>
+	</rect>
 
 </rect>
 

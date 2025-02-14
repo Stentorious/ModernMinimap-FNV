@@ -155,9 +155,9 @@ begin Function {}
 	; Update custom marker tile
 	if eval IsFormValid (rIcon = GetCustomMapMarker)
 		Goo1.AuxVarSetRef "*Minimap_Custom" rIcon
-		SetUIFloatAlt "HUDMainMenu\ModernMinimap\CustomMarker\visible" 1
+		SetUIFloatAlt "HUDMainMenu\ModernMinimap\CustomMarker\Icon\visible" 1
 	else
-		SetUIFloatAlt "HUDMainMenu\ModernMinimap\CustomMarker\visible" 0
+		SetUIFloatAlt "HUDMainMenu\ModernMinimap\CustomMarker\Icon\visible" 0
 	endif
 
 	; Update door icon tiles

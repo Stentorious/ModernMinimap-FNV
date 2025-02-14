@@ -195,9 +195,9 @@ begin Function {}
 
 	; Update custom marker
 	if eval IsFormValid (rIcon = Goo1.AuxVarGetRef "*Minimap_Custom")
-		SetUIFloatAlt "HUDMainMenu\ModernMinimap\CustomMarker\_PosX" (rIcon.GetPos X)
-		SetUIFloatAlt "HUDMainMenu\ModernMinimap\CustomMarker\_PosY" (rIcon.GetPos Y)
-		SetUIFloatAlt "HUDMainMenu\ModernMinimap\CustomMarker\_PosZ" (rIcon.GetPos Z)
+		SetUIFloatAlt "HUDMainMenu\ModernMinimap\CustomMarker\Icon\_PosX" (rIcon.GetPos X)
+		SetUIFloatAlt "HUDMainMenu\ModernMinimap\CustomMarker\Icon\_PosY" (rIcon.GetPos Y)
+		SetUIFloatAlt "HUDMainMenu\ModernMinimap\CustomMarker\Icon\_PosZ" (rIcon.GetPos Z)
 	endif
 
 
