@@ -4,10 +4,12 @@ begin Function {}
 
 	; Reset Minimap rect
 	UnloadUIComponent "HUDMainMenu\ModernMinimap\Doors"
+	UnloadUIComponent "HUDMainMenu\ModernMinimap\Basic"
 	UnloadUIComponent "HUDMainMenu\ModernMinimap\Actors"
 	UnloadUIComponent "HUDMainMenu\ModernMinimap\Followers"
 	UnloadUIComponent "HUDMainMenu\ModernMinimap\Markers"
 	AddTileFromTemplate "HUDMainMenu\ModernMinimap|Minimap_Icon_Rect|Doors"
+	AddTileFromTemplate "HUDMainMenu\ModernMinimap|Minimap_Icon_Rect|Basic"
 	AddTileFromTemplate "HUDMainMenu\ModernMinimap|Minimap_Icon_Rect|Actors"
 	AddTileFromTemplate "HUDMainMenu\ModernMinimap|Minimap_Icon_Rect|Followers"
 	AddTileFromTemplate "HUDMainMenu\ModernMinimap|Minimap_Icon_Rect|Markers"
