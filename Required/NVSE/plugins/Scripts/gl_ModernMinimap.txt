@@ -1,4 +1,0 @@
-; On game load
-if eval Goo1.AuxVarGetFlt "*Minimap_Init" 1
-	Call (CompileScript "ModernMinimap\OnLoad.gek")
-endif

@@ -195,3 +195,34 @@ if eval Goo1.AuxVarGetFlt "*Minimap_Init" 0 == 0
 	end) 1
 
 endif
+
+if eval Goo1.AuxVarGetFlt "*Minimap_Init" 1
+
+	; Reset icon arrays
+	Goo1.AuxVarErase "*Minimap_Doors"
+	Goo1.AuxVarErase "*Minimap_Basic"
+	Goo1.AuxVarErase "*Minimap_Actors"
+	Goo1.AuxVarErase "*Minimap_Followers"
+	Goo1.AuxVarErase "*Minimap_Markers"
+	Goo1.AuxVarErase "*Minimap_Custom"
+
+	; Reset Minimap rect
+	UnloadUIComponent "HUDMainMenu\ModernMinimap\Doors"
+	UnloadUIComponent "HUDMainMenu\ModernMinimap\Basic"
+	UnloadUIComponent "HUDMainMenu\ModernMinimap\Actors"
+	UnloadUIComponent "HUDMainMenu\ModernMinimap\Followers"
+	UnloadUIComponent "HUDMainMenu\ModernMinimap\Markers"
+	AddTileFromTemplate "HUDMainMenu\ModernMinimap|Minimap_Icon_Rect|Doors"
+	AddTileFromTemplate "HUDMainMenu\ModernMinimap|Minimap_Icon_Rect|Basic"
+	AddTileFromTemplate "HUDMainMenu\ModernMinimap|Minimap_Icon_Rect|Actors"
+	AddTileFromTemplate "HUDMainMenu\ModernMinimap|Minimap_Icon_Rect|Followers"
+	AddTileFromTemplate "HUDMainMenu\ModernMinimap|Minimap_Icon_Rect|Markers"
+
+	; Quest marker visibility
+	if eval GetUIFloatAlt "HUDMainMenu\ModernMinimap\CustomMarker\visible" == 0
+		SetUIFloatAlt "HUDMainMenu\ModernMinimap\Markers\visible" 0
+	endif
+
+	CallAfterFrames 0 (CompileScript "ModernMinimap\OnLoad.gek")
+
+endif
