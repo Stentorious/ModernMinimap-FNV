@@ -20,13 +20,13 @@ begin Function {}
 	; Update door icons
 	if eval (iSize = Goo1.AuxVarSize "*Minimap_Doors") > 0
 		while (iSize -= 1) > -1
-			if eval IsFormValid (rIcon = Goo1.AuxVarGetRef "*Minimap_Doors" iSize)
+			if eval IsReference (rIcon = Goo1.AuxVarGetRef "*Minimap_Doors" iSize)
 
 				; Assign interior/exterior door icon
 				sFilename = "interface\icons\Misc_Door.dds"
 				if eval rIcon.IsLoadDoor && rIcon.IsInInterior
 					rTemp = rIcon.GetTeleportDoor
-					if eval IsFormValid rTemp && rTemp.IsInInterior == 0
+					if eval IsReference rTemp && rTemp.IsInInterior == 0
 						sFilename = "interface\icons\Misc_Door_Ext.dds"
 					endif
 				endif
@@ -51,7 +51,7 @@ begin Function {}
 		iCorpse = Goo1.AuxVarGetFlt "*Minimap_INI" 4
 
 		while (iSize -= 1) > -1
-			if eval IsFormValid (rIcon = Goo1.AuxVarGetRef "*Minimap_Actors" iSize)
+			if eval IsReference (rIcon = Goo1.AuxVarGetRef "*Minimap_Actors" iSize)
 
 				iState = -1
 				fAngle = -1
@@ -93,7 +93,7 @@ begin Function {}
 		iCorpse = Goo1.AuxVarGetFlt "*Minimap_INI" 4
 
 		while (iSize -= 1) > -1
-			if eval IsFormValid (rIcon = Goo1.AuxVarGetRef "*Minimap_Followers" iSize)
+			if eval IsReference (rIcon = Goo1.AuxVarGetRef "*Minimap_Followers" iSize)
 
 				iState = -1
 				fAngle = -1
@@ -135,7 +135,7 @@ begin Function {}
 	; Update quest markers
 	if eval (iSize = Goo1.AuxVarSize "*Minimap_Markers") > 0
 		while (iSize -= 1) > -1
-			if eval IsFormValid (rIcon = Goo1.AuxVarGetRef "*Minimap_Markers" iSize)
+			if eval IsReference (rIcon = Goo1.AuxVarGetRef "*Minimap_Markers" iSize)
 				sUIPath = Sv_Construct "HUDMainMenu\ModernMinimap\Markers\Icon:%g\" iSize
 				SetUIFloatAlt (sUIPath + "_PosX") (rIcon.GetPos X)
 				SetUIFloatAlt (sUIPath + "_PosY") (rIcon.GetPos Y)
@@ -146,7 +146,7 @@ begin Function {}
 
 
 	; Update custom marker
-	if eval IsFormValid (rIcon = Goo1.AuxVarGetRef "*Minimap_Custom")
+	if eval IsReference (rIcon = Goo1.AuxVarGetRef "*Minimap_Custom")
 		SetUIFloatAlt "HUDMainMenu\ModernMinimap\CustomMarker\Icon\_PosX" (rIcon.GetPos X)
 		SetUIFloatAlt "HUDMainMenu\ModernMinimap\CustomMarker\Icon\_PosY" (rIcon.GetPos Y)
 		SetUIFloatAlt "HUDMainMenu\ModernMinimap\CustomMarker\Icon\_PosZ" (rIcon.GetPos Z)

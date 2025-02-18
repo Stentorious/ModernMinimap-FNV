@@ -30,7 +30,7 @@ begin Function {}
 	if eval (iSize = Ar_Size aRefs) > 0
 		while (iSize -= 1) > -1
 			rIcon = aRefs[iSize]
-			if eval IsFormValid rIcon && IsReference rIcon && rIcon.GetDisabled == 0 && rIcon.HasLoaded3D && rIcon.IsLoadDoor
+			if eval IsReference rIcon && rIcon.GetDisabled == 0 && rIcon.HasLoaded3D && rIcon.IsLoadDoor
 				Goo1.AuxVarSetRef "*Minimap_Doors" rIcon -1
 			endif
 		loop
@@ -63,7 +63,7 @@ begin Function {}
 			; Checks if actor is a follow and assigns them to the respective aux
 			while (iSize -= 1) > -1
 				rIcon = aRefs[iSize]
-				if eval IsFormValid rIcon && IsReference rIcon && rIcon.GetDisabled == 0 && rIcon.HasLoaded3D && rIcon.IsActorsAIOff == 0 && rIcon.IsActorInvisibleToPlayer == 0
+				if eval IsReference rIcon && rIcon.GetDisabled == 0 && rIcon.HasLoaded3D && rIcon.IsActorsAIOff == 0 && rIcon.IsActorInvisibleToPlayer == 0
 					if eval (Ar_Find rIcon aFollowers) == Ar_BadNumericIndex
 						Goo1.AuxVarSetRef "*Minimap_Actors" rIcon -1
 					else
@@ -79,7 +79,7 @@ begin Function {}
 	if eval (iSize = Ar_Size aRefs) > 0
 		while (iSize -= 1) > -1
 			rIcon = aRefs[iSize][0]
-			if eval IsFormValid rIcon && IsReference rIcon
+			if eval IsReference rIcon
 				Ar_Append aMarkerRefs rIcon
 			endif
 		loop
