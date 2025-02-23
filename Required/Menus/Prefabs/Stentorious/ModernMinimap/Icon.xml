@@ -76,7 +76,6 @@
 		<mul src="ModernMinimap" trait="_IconDegCos" />
 	</sub>
 </_y>
-<_Pulse> 0 </_Pulse>
 <_Height> <copy src="ModernMinimap" trait="_Height"/> </_Height>
 
 <image name="Icon">
@@ -95,13 +94,6 @@
 		</sub>
 		<max> 0 </max>
 		<min> 255 </min>
-		<mul>
-			<copy> 1 </copy>
-			<sub>
-				<copy src="ModernMinimap" trait="_AlphaPulseMax" />
-				<onlyif src="parent()" trait="_Pulse" />
-			</sub>
-		</mul>
 	</alpha>
 	<depth> 0 </depth>
 	<x>	0 </x>

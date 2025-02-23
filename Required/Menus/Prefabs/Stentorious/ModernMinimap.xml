@@ -12,6 +12,7 @@
 	<_Height> 0 </_Height>					<!-- Icon height indicator -->
 	<_QuestHeight> 0 </_QuestHeight>		<!-- Marker height indicator -->
 	<_DistMode> 0 </_DistMode>				<!-- Perception based icon distance -->
+	<_RadIndicator> 0 </_RadIndicator>		<!-- Radiation indicator -->
 
 	<!-- ### Script Traits ### -->
 	<_visible> 1 </_visible>				<!-- General visibility flag -->
@@ -107,11 +108,14 @@
 	</_WorldScale>
 
 	<!-- Quest marker alpha pulse -->
-	<_AlphaPulse> 0 </_AlphaPulse>
-	<_AlphaPulseMax>
-		<copy src="me()" trait="_AlphaPulse" />
+	<_MarkerPulse> 0 </_MarkerPulse>
+	<_MarkerPulseMax>
+		<copy src="me()" trait="_MarkerPulse" />
 		<max> 0 </max>
-	</_AlphaPulseMax>
+	</_MarkerPulseMax>
+
+	<!-- Radiation icon alpha pulse -->
+	<_RadiationPulse> 0 </_RadiationPulse>
 
 	<!-- Icon size -->
 	<_IconScale> 1 </_IconScale>
@@ -336,7 +340,7 @@
 				<onlyifnot src="parent()" trait="_ColorMode" />
 			</add>
 		</brightness>
-		<filename> Interface\Shared\solid_black.dds </filename>
+		<filename> Interface\Shared\solid.dds </filename>
 		<_x>
 			<copy> 0.5 </copy>
 			<add>
@@ -394,9 +398,11 @@
 		</width>
 		<height> <copy src="me()" trait="width" /> </height>
 		<zoom> &scale; </zoom>
-		<brightness> 128 </brightness>
 		<systemcolor> 0 </systemcolor>
-		<filename> Interface\Shared\solid_black.dds </filename>
+		<red> 0 </red>
+		<green> 0 </green>
+		<blue> 0 </blue>
+		<filename> Interface\Shared\solid.dds </filename>
 	</image>
 
 	<!-- Headlines -->
@@ -588,7 +594,7 @@
 	<text name="InfoText">
 		<visible> 1 </visible>
 		<alpha> 0 </alpha>
-		<depth> 502 </depth>
+		<depth> 504 </depth>
 		<x>	5 </x>
 		<y> 10 </y>
 		<zoom> 60 </zoom>
@@ -600,7 +606,7 @@
 	<text name="LocationText">
 		<visible> 0 </visible>
 		<alpha> 255 </alpha>
-		<depth> 502 </depth>
+		<depth> 504 </depth>
 		<x>	5 </x>
 		<y>
 			<copy src="parent()" trait="_width" />
@@ -698,6 +704,78 @@
 				<mul src="parent()" trait="_CellPlrDegSin" />
 			</sub>
 		</_y>
+	</text>
+
+	<image name="RadiationIcon">
+		<visible> <copy src="parent()" trait="_RadIndicator" /> </visible>
+		<alpha>
+			<copy src="radiation_text_value" trait="alpha" />
+			<mul src="parent()" trait="_RadiationPulse" />
+		</alpha>
+		<locus> 1 </locus>
+		<depth> 504 </depth>
+		<x>
+			<copy src="parent()" trait="_width" />
+			<sub> 5 </sub>
+			<sub src="me()" trait="width" />
+		</x>
+		<y> 4 </y>
+		<width> 24 </width>
+		<height> 24 </height>
+		<zoom> &scale; </zoom>
+		<systemcolor> 2 </systemcolor>
+		<filename> Interface\Stentorious\ModernMinimap\Radiation.dds  </filename>
+		<image name="DropShadow">
+			<visible> 1 </visible>
+			<alpha>
+				<copy src="parent()" trait="alpha" />
+				<div> 2 </div>
+			</alpha>
+			<depth> -1 </depth>
+			<x>	1 </x>
+			<y> 1 </y>
+			<height> <copy src="parent()" trait="height" /> </height>
+			<width> <copy src="parent()" trait="width" /> </width>
+			<zoom> &scale; </zoom>
+			<systemcolor> 0 </systemcolor>
+			<red> 0 </red>
+			<green> 0 </green>
+			<blue> 0 </blue>
+			<filename> <copy src="parent()" trait="filename" /> </filename>
+		</image>
+	</image>
+	<text name="RadiationLabel">
+		<visible> <copy src="parent()" trait="_RadIndicator" /> </visible>
+		<alpha> <copy src="radiation_text" trait="alpha" /> </alpha>
+		<depth> 504 </depth>
+		<x>
+			<copy src="sibling(RadiationIcon)" trait="x" />
+			<sub> 7 </sub>
+		</x>
+		<y> 10 </y>
+		<zoom> 60 </zoom>
+		<systemcolor> 2 </systemcolor>
+		<font> 7 </font>
+		<justify> &right; </justify>
+		<string> /SEC </string>
+	</text>
+	<text name="RadiationValue">
+		<visible> <copy src="parent()" trait="_RadIndicator" /> </visible>
+		<alpha> <copy src="radiation_text_value" trait="alpha" /> </alpha>
+		<depth> 504 </depth>
+		<x>
+			<copy src="sibling(RadiationLabel)" trait="x" />
+			<sub>
+				<copy src="sibling(RadiationLabel)" trait="width" />
+				<mul> 1.1 </mul>
+			</sub>
+		</x>
+		<y> 10 </y>
+		<zoom> 60 </zoom>
+		<systemcolor> 2 </systemcolor>
+		<font> 7 </font>
+		<justify>&right;</justify>
+		<string> <copy src="radiation_text_value" trait="string" /> </string>
 	</text>
 
 	<rect name="CustomMarker">
@@ -928,7 +1006,7 @@
 				<copy> 255 </copy>
 				<mul>
 					<copy> 1 </copy>
-					<sub src="ModernMinimap" trait="_AlphaPulseMax" />
+					<sub src="ModernMinimap" trait="_MarkerPulseMax" />
 				</mul>
 			</alpha>
 			<x>	0 </x>
