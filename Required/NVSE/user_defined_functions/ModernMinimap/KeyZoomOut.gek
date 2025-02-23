@@ -8,10 +8,10 @@ begin Function {iKeyID}
 		fScale = GetUIFloatAlt "HUDMainMenu\ModernMinimap\_MapScale"
 		if eval fScale > 0.5
 			fScale -= 0.25
-			SetUIStringAlt "HUDMainMenu\ModernMinimap\InfoText\string" "%.2fx" fScale
 			SetUIFloatAlt "HUDMainMenu\ModernMinimap\_MapScale" fScale
 			SetUIFloatAlt "HUDMainMenu\ModernMinimap\_MapOriginX" -999999
 		endif
+		SetUIStringAlt "HUDMainMenu\ModernMinimap\InfoText\string" "Zoom: %.2fx" fScale
 		SetUIFloatGradual "HUDMainMenu\ModernMinimap\InfoText\alpha" 400 0 0.5
 	endif
 
