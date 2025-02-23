@@ -50,21 +50,23 @@ begin Function {}
 		; Get actor settings
 		iCorpse = Goo1.AuxVarGetFlt "*Minimap_INI" 4
 
+		; Process refs and update any valid icons
 		while (iSize -= 1) > -1
 			if eval IsReference (rIcon = Goo1.AuxVarGetRef "*Minimap_Actors" iSize)
 
 				iState = -1
 				fAngle = -1
 
-				; Give corpse icon or hide if dead
+				; Dead icons
 				if eval rIcon.GetDead
-					if eval iCorpse && rIcon.GetContainerInventoryCount == 0 && (Ar_Size (rIcon.GetDroppedRefs)) == -1
+					if eval iCorpse && (Ar_Size (rIcon.GetAllItems 0 1 0 0)) == -1 && (Ar_Size (rIcon.GetDroppedRefs)) == -1
 						iState = -2
 					else
 						iState = 0
 						sFilename = "Interface\Stentorious\ModernMinimap\ActorDead.dds"
 					endif
 
+				; Basic icon
 				else
 					fAngle = rIcon.GetAngle Z
 					iState = rIcon.IsCompassHostile
@@ -77,9 +79,9 @@ begin Function {}
 				SetUIFloatAlt (sUIPath + "_PosY") (rIcon.GetPos Y)
 				SetUIFloatAlt (sUIPath + "_PosZ") (rIcon.GetPos Z)
 				SetUIFloatAlt (sUIPath + "_Dist") (Player.GetDistance3D rIcon)
-				SetUIStringAlt (sUIPath + "filename") (sFilename)
 				SetUIFloatAlt (sUIPath + "_Deg") fAngle
 				SetUIFloatAlt (sUIPath + "_Hostile") iState
+				SetUIStringAlt (sUIPath + "filename") (sFilename)
 
 			endif
 		loop
@@ -123,9 +125,9 @@ begin Function {}
 				SetUIFloatAlt (sUIPath + "_PosY") (rIcon.GetPos Y)
 				SetUIFloatAlt (sUIPath + "_PosZ") (rIcon.GetPos Z)
 				SetUIFloatAlt (sUIPath + "_Dist") (Player.GetDistance3D rIcon)
-				SetUIStringAlt (sUIPath + "filename") (sFilename)
 				SetUIFloatAlt (sUIPath + "_Deg") fAngle
 				SetUIFloatAlt (sUIPath + "_Hostile") iState
+				SetUIStringAlt (sUIPath + "filename") (sFilename)
 
 			endif
 		loop

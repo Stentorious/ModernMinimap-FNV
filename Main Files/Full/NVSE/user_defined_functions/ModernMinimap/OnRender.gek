@@ -112,7 +112,7 @@ begin Function {}
 						sFilename = "interface\icons\Misc_BottleCap.dds"
 					endif
 
-				; Basic Icon
+				; Basic icon
 				else
 					fAngle = rIcon.GetAngle Z
 					iState = rIcon.IsCompassHostile
@@ -141,7 +141,6 @@ begin Function {}
 		iCorpse = Goo1.AuxVarGetFlt "*Minimap_INI" 4
 
 		while (iSize -= 1) > -1
-
 			if eval IsReference (rIcon = Goo1.AuxVarGetRef "*Minimap_Followers" iSize)
 
 				iState = -1
@@ -149,7 +148,7 @@ begin Function {}
 
 				; Give corpse icon or hide if dead
 				if eval rIcon.GetDead
-					if eval iCorpse && rIcon.GetContainerInventoryCount == 0 && (Ar_Size (rIcon.GetDroppedRefs)) == -1
+					if eval iCorpse && (Ar_Size (rIcon.GetAllItems 0 1 0 0)) == -1 && (Ar_Size (rIcon.GetDroppedRefs)) == -1
 						iState = -2
 					else
 						sFilename = "interface\icons\Misc_Skull.dds"
@@ -171,9 +170,9 @@ begin Function {}
 				SetUIFloatAlt (sUIPath + "_PosY") (rIcon.GetPos Y)
 				SetUIFloatAlt (sUIPath + "_PosZ") (rIcon.GetPos Z)
 				SetUIFloatAlt (sUIPath + "_Dist") (Player.GetDistance3D rIcon)
-				SetUIStringAlt (sUIPath + "filename") (sFilename)
 				SetUIFloatAlt (sUIPath + "_Deg") fAngle
 				SetUIFloatAlt (sUIPath + "_Hostile") iState
+				SetUIStringAlt (sUIPath + "filename") (sFilename)
 
 			endif
 		loop
