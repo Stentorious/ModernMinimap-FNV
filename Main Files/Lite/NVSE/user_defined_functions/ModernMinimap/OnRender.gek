@@ -72,7 +72,7 @@ begin Function {}
 				endif
 
 				; Update UI traits
-				sUIPath = Sv_Construct "HUDMainMenu\ModernMinimap\Icons\Icon:%g\" iSize
+				sUIPath = Sv_Construct "HUDMainMenu\ModernMinimap\Actors\Icon:%g\" iSize
 				SetUIFloatAlt (sUIPath + "_PosX") (rIcon.GetPos X)
 				SetUIFloatAlt (sUIPath + "_PosY") (rIcon.GetPos Y)
 				SetUIFloatAlt (sUIPath + "_PosZ") (rIcon.GetPos Z)
