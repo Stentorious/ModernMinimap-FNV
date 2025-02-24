@@ -4,6 +4,8 @@ int iSize
 int iIndex
 int iType
 int iBitIcon
+float fPlrX
+float fPlrY
 ref rIcon
 array_var aRefs
 array_var aTemp
@@ -234,6 +236,23 @@ begin Function {}
 		loop
 	endif
 	Goo1.AuxVarSetFromArr "*Minimap_Markers" aMarkerRefs
+
+	; Update player path
+	if eval Goo1.AuxVarGetFlt "*Minimap_INI" 8
+		if eval (iSize = (GetUIFloatAlt "HUDMainMenu\ModernMinimap\PlayerPath\childcount" - 1)) > -1
+			if eval GetUIFloatAlt ("HUDMainMenu\ModernMinimap\PlayerPath\Icon:" + $iSize + "\alpha") == 0
+				UnloadUIComponent ("HUDMainMenu\ModernMinimap\PlayerPath\Icon:" + $iSize)
+			endif
+		endif
+		fPlrX = GetUIFloatAlt "HUDMainMenu\ModernMinimap\_PlrX"
+		fPlrY = GetUIFloatAlt "HUDMainMenu\ModernMinimap\_PlrY"
+		if eval (fPlrX - (GetUIFloatAlt "HUDMainMenu\ModernMinimap\PlayerPath\Icon:0\_PosX"))^2 + (fPlrY - (GetUIFloatAlt "HUDMainMenu\ModernMinimap\PlayerPath\Icon:0\_PosY"))^2 > 8100
+			AddTileFromTemplate "HUDMainMenu\ModernMinimap\PlayerPath|Player_Path_Template|Icon"
+			SetUIFloatAlt "HUDMainMenu\ModernMinimap\PlayerPath\Icon:0\_PosX" fPlrX
+			SetUIFloatAlt "HUDMainMenu\ModernMinimap\PlayerPath\Icon:0\_PosY" fPlrY
+			SetUIFloatGradual "HUDMainMenu\ModernMinimap\PlayerPath\Icon:0\_Fade" 510 0 3
+		endif
+	endif
 
 	aRefs = aTemp = aFollowers = aMarkerRefs = ar_Null
 

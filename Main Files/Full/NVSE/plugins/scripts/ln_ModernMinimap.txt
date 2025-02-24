@@ -183,6 +183,7 @@ if eval Goo1.AuxVarGetFlt "*Minimap_Init" 0 == 0
 
 	; Post release updates
 	Goo1.AuxVarSetFlt "*Minimap_INI" (GetINIFloat_Cached "Map:iCellVisibility" "Stentorious\ModernMinimap.ini") 7
+	Goo1.AuxVarSetFlt "*Minimap_INI" (GetINIFloat_Cached "Icons:bPlayerPath" "Stentorious\ModernMinimap.ini") 8
 
 	; Marker alpha pulse
 	SetUIFloatGradual "HUDMainMenu\ModernMinimap\_MarkerPulse" -1.5 0.75 3 2
@@ -450,11 +451,13 @@ if eval Goo1.AuxVarGetFlt "*Minimap_Init" 1
 	UnloadUIComponent "HUDMainMenu\ModernMinimap\Actors"
 	UnloadUIComponent "HUDMainMenu\ModernMinimap\Followers"
 	UnloadUIComponent "HUDMainMenu\ModernMinimap\Markers"
+	UnloadUIComponent "HUDMainMenu\ModernMinimap\PlayerPath"
 	AddTileFromTemplate "HUDMainMenu\ModernMinimap|Minimap_Icon_Rect|Doors"
 	AddTileFromTemplate "HUDMainMenu\ModernMinimap|Minimap_Icon_Rect|Basic"
 	AddTileFromTemplate "HUDMainMenu\ModernMinimap|Minimap_Icon_Rect|Actors"
 	AddTileFromTemplate "HUDMainMenu\ModernMinimap|Minimap_Icon_Rect|Followers"
 	AddTileFromTemplate "HUDMainMenu\ModernMinimap|Minimap_Icon_Rect|Markers"
+	AddTileFromTemplate "HUDMainMenu\ModernMinimap|Minimap_Icon_Rect|PlayerPath"
 
 	; Quest marker visibility
 	if eval GetUIFloatAlt "HUDMainMenu\ModernMinimap\CustomMarker\visible" == 0

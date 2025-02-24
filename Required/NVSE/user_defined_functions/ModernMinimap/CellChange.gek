@@ -55,6 +55,8 @@ begin Function {rCellExit}
 		if eval iUpdate
 			SetUIFloatAlt "HUDMainMenu\ModernMinimap\_MapOriginX" -999999
 			SetUIFloatAlt "HUDMainMenu\ModernMinimap\_CellDeg" (ABS (GetCellNorthRotation (rCellEnter)))
+			UnloadUIComponent "HUDMainMenu\ModernMinimap\PlayerPath"
+			AddTileFromTemplate "HUDMainMenu\ModernMinimap|Minimap_Icon_Rect|PlayerPath"
 			Call (CompileScript "ModernMinimap\MainLoop.gek")
 		endif
 

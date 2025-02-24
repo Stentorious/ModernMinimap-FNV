@@ -36,6 +36,8 @@ begin Function {rCellExit}
 	SetUIFloatAlt "HUDMainMenu\ModernMinimap\_CellDeg" (ABS (GetCellNorthRotation (rCellEnter)))
 
 	; Update icons
+	UnloadUIComponent "HUDMainMenu\ModernMinimap\PlayerPath"
+	AddTileFromTemplate "HUDMainMenu\ModernMinimap|Minimap_Icon_Rect|PlayerPath"
 	Call (CompileScript "ModernMinimap\MainLoop.gek")
 
 	Goo1.AuxVarSetRef "*Minimap_Travel" (Player.GPW) 1

@@ -1021,3 +1021,73 @@
 
 	</hotrect>
 </template>
+
+<template name="Player_Path_Template">
+	<image name="Player_Path_Template">
+		<visible> 1 </visible>
+		<alpha>
+			<copy src="me()" trait="_Fade" />
+			<min> 255 </min>
+		</alpha>
+		<depth> 1 </depth>
+		<x>
+			<copy src="me()" trait="_x" />
+			<mul src="parent()" trait="width" />
+			<sub>
+				<copy src="me()" trait="width" />
+				<div> 2 </div>
+			</sub>
+		</x>
+		<y>
+			<copy src="me()" trait="_y" />
+			<mul src="parent()" trait="height" />
+			<sub>
+				<copy src="me()" trait="height" />
+				<div> 2 </div>
+			</sub>
+		</y>
+		<width>
+			<copy> 6 </copy>
+			<mul src="ModernMinimap" trait="_IconScaleMul" />
+		</width>
+		<height> <copy src="me()" trait="width" /> </height>
+		<zoom> &scale; </zoom>
+		<clips> 1 </clips>
+		<filename> Interface\Stentorious\ModernMinimap\PlayerPath.dds </filename>
+		<_PosX> 0 </_PosX>
+		<_PosY> 0 </_PosY>
+		<_Fade> 255 </_Fade>
+		<_PosXOffset>
+			<copy src="me()" trait="_PosX" />
+			<sub src="ModernMinimap" trait="_PlrX" />
+			<mul src="ModernMinimap" trait="_WorldScale" />
+		</_PosXOffset>
+		<_PosYOffset>
+			<copy src="me()" trait="_PosY" />
+			<sub src="ModernMinimap" trait="_PlrY" />
+			<mul src="ModernMinimap" trait="_WorldScale" />
+		</_PosYOffset>
+		<_x>
+			<copy> 0.5 </copy>
+			<add>
+				<copy src="me()" trait="_PosXOffset" />
+				<mul src="ModernMinimap" trait="_IconDegCos" />
+			</add>
+			<sub>
+				<copy src="me()" trait="_PosYOffset" />
+				<mul src="ModernMinimap" trait="_IconDegSin" />
+			</sub>
+		</_x>
+		<_y>
+			<copy> 0.5 </copy>
+			<sub>
+				<copy src="me()" trait="_PosXOffset" />
+				<mul src="ModernMinimap" trait="_IconDegSin" />
+			</sub>
+			<sub>
+				<copy src="me()" trait="_PosYOffset" />
+				<mul src="ModernMinimap" trait="_IconDegCos" />
+			</sub>
+		</_y>
+	</image>
+</template>
