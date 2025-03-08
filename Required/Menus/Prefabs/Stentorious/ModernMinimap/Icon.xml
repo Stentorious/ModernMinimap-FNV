@@ -27,7 +27,6 @@
 	<copy> 0 </copy>
 	<add>
 		<copy src="ModernMinimap" trait="_PlrDeg" />
-		<sub src="ModernMinimap" trait="_CellDeg" />
 		<onlyif src="ModernMinimap" trait="_RotationMode" />
 	</add>
 	<add>
