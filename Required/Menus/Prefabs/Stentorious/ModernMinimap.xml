@@ -126,6 +126,7 @@
 		<div> 2 </div>
 		<add> 1 </add>
 		<mul src="me()" trait="_IconScale" />
+		<mul src="me()" trait="_TileScale" />
 	</_IconScaleMul>
 
 	<!-- Rotation calculations -->
@@ -216,6 +217,16 @@
 	<_blue_1> 255 </_blue_1>
 	<_blue_2> 255 </_blue_2>
 	<_blue_3> 255 </_blue_3>
+
+	<!-- Text Scale -->
+	<_info_text_zoom>
+		<copy> 60 </copy>
+		<mul src="me()" trait="_TileScale" />
+	</_info_text_zoom>
+	<_compass_text_zoom>
+		<copy src="me()" trait="_CompassTextScale" />
+		<mul src="me()" trait="_TileScale" />
+	</_compass_text_zoom>
 
 	<!-- Interface Control (DO NOT TOUCH) -->
 	<visible>
@@ -464,7 +475,10 @@
 			<sub src="parent()" trait="_width" />
 			<div> 2 </div>
 		</y>
-		<width> <copy src="parent()" trait="_line_thickness" /> </width>
+		<width>
+			<copy src="parent()" trait="_line_thickness" />
+			<mul src="parent()" trait="_TileScale" />
+		</width>
 		<height> <copy src="parent()" trait="_width" /> <mul> 2 </mul> </height>
 		<clips> 1 </clips>
 		<rotateaxisx>
@@ -485,7 +499,7 @@
 		<x> <copy src="sibling(Headline_VC)" trait="y" /> </x>
 		<y> <copy src="sibling(Headline_VC)" trait="x" /> </y>
 		<width> <copy src="sibling(Headline_VC)" trait="height" /> </width>
-		<height> <copy src="parent()" trait="_line_thickness" /> </height>
+		<height> <copy src="sibling(Headline_VC)" trait="width" /> </height>
 		<clips> 1 </clips>
 		<rotateaxisx>
 			<copy src="me()" trait="width" />
@@ -505,9 +519,20 @@
 		<visible> 0 </visible>
 		<alpha> 204 </alpha>
 		<depth> 501 </depth>
+		<x>
+			<copy src="parent()" trait="_width" />
+			<div> 2 </div>
+			<mul> -1 </mul>
+		</x>
 		<y> 0 </y>
-		<width> <copy src="parent()" trait="_width" /> </width>
-		<height> 24 </height>
+		<width>
+			<copy src="parent()" trait="_width" />
+			<mul> 2 </mul>
+		</width>
+		<height>
+			<copy> 24 </copy>
+			<mul src="parent()" trait="_TileScale" />
+		</height>
 		<clips> 1 </clips>
 	</hotrect>
 
@@ -596,8 +621,12 @@
 		<alpha> 0 </alpha>
 		<depth> 504 </depth>
 		<x>	5 </x>
-		<y> 10 </y>
-		<zoom> 60 </zoom>
+		<y>
+			<copy> 5 </copy>
+			<mul src="parent()" trait="_TileScale" />
+			<add> 5 </add>
+		</y>
+		<zoom> <copy src="parent()" trait="_info_text_zoom" /> </zoom>
 		<systemcolor> <copy src="parent()" trait="_systemcolor" /> </systemcolor>
 		<brightness> 204 </brightness>
 		<font> 7 </font>
@@ -607,13 +636,15 @@
 		<visible> 0 </visible>
 		<alpha> 255 </alpha>
 		<depth> 504 </depth>
-		<x>	5 </x>
+		<x>	<copy src="sibling(InfoText)" trait="x" /> </x>
 		<y>
-			<copy src="parent()" trait="_width" />
+			<copy> 5 </copy>
+			<mul src="parent()" trait="_TileScale" />
+			<add src="parent()" trait="_width" />
 			<sub src="me()" trait="height" />
-			<add> 2 </add>
+			<sub> 3 </sub>
 		</y>
-		<zoom> 60 </zoom>
+		<zoom> <copy src="parent()" trait="_info_text_zoom" /> </zoom>
 		<systemcolor> <copy src="parent()" trait="_systemcolor" /> </systemcolor>
 		<brightness> 204 </brightness>
 		<font> 7 </font>
@@ -668,7 +699,7 @@
 			<mul src="parent()" trait="width" />
 			<sub>
 				<copy> 8.5 </copy>
-				<mul src="parent()" trait="_CompassTextScale" />
+				<mul src="parent()" trait="_compass_text_zoom" />
 			</sub>
 		</x>
 		<string> E </string>
@@ -720,8 +751,11 @@
 			<sub src="me()" trait="width" />
 		</x>
 		<y> 4 </y>
-		<width> 24 </width>
-		<height> 24 </height>
+		<width>
+			<copy> 24 </copy>
+			<mul src="parent()" trait="_TileScale" />
+		</width>
+		<height> <copy src="me()" trait="width" /> </height>
 		<zoom> &scale; </zoom>
 		<systemcolor> 2 </systemcolor>
 		<filename> Interface\Stentorious\ModernMinimap\Radiation.dds  </filename>
@@ -750,10 +784,13 @@
 		<depth> 504 </depth>
 		<x>
 			<copy src="sibling(RadiationIcon)" trait="x" />
-			<sub> 7 </sub>
+			<sub>
+				<copy> 7 </copy>
+				<mul src="parent()" trait="_TileScale" />
+			</sub>
 		</x>
-		<y> 10 </y>
-		<zoom> 60 </zoom>
+		<y> <copy src="sibling(InfoText)" trait="y" /> </y>
+		<zoom> <copy src="parent()" trait="_info_text_zoom" /> </zoom>
 		<systemcolor> 2 </systemcolor>
 		<font> 7 </font>
 		<justify> &right; </justify>
@@ -770,11 +807,11 @@
 				<mul> 1.1 </mul>
 			</sub>
 		</x>
-		<y> 10 </y>
-		<zoom> 60 </zoom>
+		<y> <copy src="sibling(InfoText)" trait="y" /> </y>
+		<zoom> <copy src="parent()" trait="_info_text_zoom" /> </zoom>
 		<systemcolor> 2 </systemcolor>
 		<font> 7 </font>
-		<justify>&right;</justify>
+		<justify> &right; </justify>
 		<string> <copy src="radiation_text_value" trait="string" /> </string>
 	</text>
 

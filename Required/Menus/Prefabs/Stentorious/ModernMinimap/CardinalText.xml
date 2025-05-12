@@ -6,7 +6,7 @@
 	<mul src="parent()" trait="width" />
 	<sub>
 		<copy> 11 </copy>
-		<mul src="parent()" trait="_CompassTextScale" />
+		<mul src="parent()" trait="_compass_text_zoom" />
 	</sub>
 </x>
 <y>
@@ -14,12 +14,12 @@
 	<mul src="parent()" trait="width" />
 	<sub>
 		<copy> 9.5 </copy>
-		<mul src="parent()" trait="_CompassTextScale" />
+		<mul src="parent()" trait="_compass_text_zoom" />
 	</sub>
 </y>
 <zoom>
 	<copy> 80 </copy>
-	<mul src="parent()" trait="_CompassTextScale" />
+	<mul src="parent()" trait="_compass_text_zoom" />
 </zoom>
 <brightness> 204 </brightness>
 <font> 7 </font>
