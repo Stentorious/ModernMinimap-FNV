@@ -2,15 +2,17 @@ int	iKeyID
 
 begin Function {iKeyID}
 
-	if eval !MenuMode
-		if eval GetUIFloatAlt "HUDMainMenu\ModernMinimap\_RotationMode"
-			SetUIFloatAlt "HUDMainMenu\ModernMinimap\_RotationMode" 0
-			SetUIStringAlt "HUDMainMenu\ModernMinimap\InfoText\string" "Rotation: North"
-		else
-			SetUIFloatAlt "HUDMainMenu\ModernMinimap\_RotationMode" 1
-			SetUIStringAlt "HUDMainMenu\ModernMinimap\InfoText\string" "Rotation: Player"
-		endif
-		SetUIFloatGradual "HUDMainMenu\ModernMinimap\InfoText\alpha" 400 0 0.5
+	if eval MenuMode
+		return
 	endif
+
+	if eval GetUIFloatAlt "HUDMainMenu\ModernMinimap\_RotationMode"
+		SetUIFloatAlt "HUDMainMenu\ModernMinimap\_RotationMode" 0
+		SetUIStringAlt "HUDMainMenu\ModernMinimap\InfoText\string" "Rotation: North"
+	else
+		SetUIFloatAlt "HUDMainMenu\ModernMinimap\_RotationMode" 1
+		SetUIStringAlt "HUDMainMenu\ModernMinimap\InfoText\string" "Rotation: Player"
+	endif
+	SetUIFloatGradual "HUDMainMenu\ModernMinimap\InfoText\alpha" 400 0 0.5
 
 end
