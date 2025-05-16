@@ -23,6 +23,7 @@
 	<_PlrDeg> 0 </_PlrDeg>					<!-- Player world rotation -->
 	<_PlrAV6> 0 </_PlrAV6>					<!-- Player perception -->
 	<_PlrDetect> 0 </_PlrDetect>			<!-- Player detection state -->
+	<_PlrSneak> 0 </_PlrSneak>				<!-- Player sneak state -->
 	<_Dist> 0 </_Dist>						<!-- Max icon distance -->
 	<_TileScale> 1 </_TileScale>			<!-- Minimap UI tile scale -->
 	<_MapScale> 1 </_MapScale>				<!-- Minimap image scale -->
@@ -337,13 +338,7 @@
 		</width>
 		<height> <copy src="me()" trait="width" /> </height>
 		<zoom> &scale; </zoom>
-		<systemcolor>
-			<copy> 1 </copy>
-			<sub>
-				<copy> 1 </copy>
-				<onlyif src="parent()" trait="_ColorMode" />
-			</sub>
-		</systemcolor>
+		<systemcolor> <not src="parent()" trait="_ColorMode" /> </systemcolor>
 		<brightness>
 			<copy> 255 </copy>
 			<add>

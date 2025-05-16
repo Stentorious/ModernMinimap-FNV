@@ -15,6 +15,7 @@ begin Function {}
 
 	; Update player info
 	SetUIFloatAlt "HUDMainMenu\ModernMinimap\_PlrDetect" (GetPCDetectionState)
+	SetUIFloatAlt "HUDMainMenu\ModernMinimap\_PlrSneak" (Player.IsSneaking)
 
 	; Reset tracked refs
 	aMarkerRefs = Ar_Construct "array"
