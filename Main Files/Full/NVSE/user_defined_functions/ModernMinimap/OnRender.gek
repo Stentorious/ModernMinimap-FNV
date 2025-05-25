@@ -98,7 +98,7 @@ begin Function {}
 
 			; Dead icons
 			if eval rIcon.GetDead
-				if eval iCorpse && (Ar_Size (rIcon.GetAllItems 0 1 0 0)) == -1 && (Ar_Size (rIcon.GetDroppedRefs)) == -1
+				if eval iCorpse == 0 || (iCorpse == 1 && (Ar_Size (rIcon.GetAllItems 0 1 0 0)) == -1 && (Ar_Size (rIcon.GetDroppedRefs)) == -1)
 					iState = -2
 				else
 					sFilename = "interface\icons\Misc_Skull.dds"
@@ -153,7 +153,7 @@ begin Function {}
 
 			; Give corpse icon or hide if dead
 			if eval rIcon.GetDead
-				if eval iCorpse && (Ar_Size (rIcon.GetAllItems 0 1 0 0)) == -1 && (Ar_Size (rIcon.GetDroppedRefs)) == -1
+				if eval iCorpse == 0 || (iCorpse == 1 && (Ar_Size (rIcon.GetAllItems 0 1 0 0)) == -1 && (Ar_Size (rIcon.GetDroppedRefs)) == -1)
 					iState = -2
 				else
 					sFilename = "interface\icons\Misc_Skull.dds"

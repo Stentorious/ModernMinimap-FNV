@@ -168,7 +168,7 @@ if eval GetINIFloat_Cached "Actors:bHostileColor" "Stentorious\ModernMinimap.ini
 	SetUIFloatAlt "HUDMainMenu\ModernMinimap\_Color2" 2
 endif
 Goo1.AuxVarSetFlt "*Minimap_INI" (GetMaxOf 0 (GetMinOf 3 (GetINIFloat_Cached "Actors:iMode" "Stentorious\ModernMinimap.ini"))) 3
-Goo1.AuxVarSetFlt "*Minimap_INI" (eval GetINIFloat_Cached "Actors:bHideEmptyCorpses" "Stentorious\ModernMinimap.ini") 4
+Goo1.AuxVarSetFlt "*Minimap_INI" (GetMaxOf 0 (GetMinOf 2 (GetINIFloat_Cached "Actors:iCorpse" "Stentorious\ModernMinimap.ini"))) 4
 
 ; Teammate color
 string_var sINI = GetINIString_Cached "Companions:sColor" "Stentorious\ModernMinimap.ini"
