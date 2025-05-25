@@ -5,7 +5,7 @@
 	<copy src="me()" trait="_x" />
 	<mul src="parent()" trait="width" />
 	<sub>
-		<copy> 11 </copy>
+		<copy> 4.25 </copy>
 		<mul src="parent()" trait="_compass_text_zoom" />
 	</sub>
 </x>
@@ -13,7 +13,7 @@
 	<copy src="me()" trait="_y" />
 	<mul src="parent()" trait="width" />
 	<sub>
-		<copy> 9.5 </copy>
+		<copy> 9.75 </copy>
 		<mul src="parent()" trait="_compass_text_zoom" />
 	</sub>
 </y>
@@ -23,4 +23,4 @@
 </zoom>
 <brightness> 204 </brightness>
 <font> 7 </font>
-<justify> &left; </justify>
+<justify> &center; </justify>
