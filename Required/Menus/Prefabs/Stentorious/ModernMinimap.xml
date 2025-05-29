@@ -36,6 +36,7 @@
 	<_MapOriginX> 0 </_MapOriginX>			<!-- Map center Y world coordinate -->
 	<_MapOriginY> 0 </_MapOriginY>			<!-- Map center X world coordinate -->
 	<_ForceUpdate> 0 </_ForceUpdate>		<!-- Force render update every frame -->
+	<_ToggleUpdate> <copy src="me()" trait="visible" /> </_ToggleUpdate>
 
 	<!-- Update render when current texture leaves bounds of the window -->
 	<_CellPlrDeg>
@@ -62,19 +63,27 @@
 	</_UpdateWidth>
 	<_Render>
 		<copy src="me()" trait="_ForceUpdate" />
-		<gt> 0 </gt>
 		<or>
 			<copy src="child(MapRender)" trait="_x" />
 			<sub> 0.5 </sub>
 			<abs></abs>
-			<gt src="me()" trait="_UpdateWidth" />
+			<gt>
+				<copy src="me()" trait="_UpdateWidth" />
+				<sub src="me()" trait="_RenderUpdateX" />
+				<add> 0.5 </add>
+			</gt>
 		</or>
 		<or>
 			<copy src="child(MapRender)" trait="_y" />
 			<sub> 0.5 </sub>
 			<abs></abs>
-			<gt src="me()" trait="_UpdateWidth" />
+			<gt>
+				<copy src="me()" trait="_UpdateWidth" />
+				<sub src="me()" trait="_RenderUpdateY" />
+				<add> 0.5 </add>
+			</gt>
 		</or>
+		<and src="me()" trait="_ToggleUpdate" />
 	</_Render>
 
 	<!-- Render width / 2 (Game units) -->
@@ -229,6 +238,38 @@
 		<mul src="me()" trait="_TileScale" />
 	</_compass_text_zoom>
 
+	<!-- Realtime Pip-Boy -->
+	<_CardinalOffset> 0.5 </_CardinalOffset>
+	<_RenderUpdateX> 0.5 </_RenderUpdateX>
+	<_RenderUpdateY> 0.5 </_RenderUpdateY>
+	<_WidthRatio> 1 </_WidthRatio>
+	<_HeightRatio> 1 </_HeightRatio>
+	<_ScalerWidth>
+		<copy> 0.5 </copy>
+		<mul src="me()" trait="_WidthRatio" />
+	</_ScaleWidth>
+	<_ScalerHeight>
+		<copy> 0.5 </copy>
+		<mul src="me()" trait="_HeightRatio" />
+	</_ScaleHeight>
+	<_MarkerMaxX>
+		<copy src="me()" trait="width" />
+		<sub>
+			<copy src="me()" trait="width" />
+			<mul src="me()" trait="_WidthRatio" />
+		</sub>
+		<div> 2 </div>
+		<add> 3 </add>
+	</_MarkerMaxX>
+	<_MarkerMinX>
+		<copy src="me()" trait="width" />
+		<sub src="me()" trait="_MarkerMaxX" />
+		<sub>
+			<copy> 18 </copy>
+			<mul src="me()" trait="_IconScaleMul" />
+		</sub>
+	</_MarkerMinX>
+
 	<!-- Interface Control (DO NOT TOUCH) -->
 	<visible>
 		<copy src="ReticleCenter" trait="visible" />
@@ -292,7 +333,7 @@
 
 	<!-- Map Render Texture -->
 	<image name="MapRender">
-		<visible> 1 </visible>
+		<visible> <copy src="parent()" trait="_ToggleUpdate" /> </visible>
 		<alpha> 255 </alpha>
 		<depth> 0 </depth>
 		<x>
@@ -462,11 +503,11 @@
 		<alpha> 102 </alpha>
 		<x>
 			<copy src="parent()" trait="_width" />
+			<sub src="me()" trait="width" />
 			<div> 2 </div>
-			<sub src="parent()" trait="_line_thickness" />
 		</x>
 		<y>
-			<copy> 0 </copy>
+			<copy src="me()" trait="width" />
 			<sub src="parent()" trait="_width" />
 			<div> 2 </div>
 		</y>
@@ -536,11 +577,8 @@
 		<locus> 1 </locus>
 		<x>
 			<copy src="parent()" trait="_width" />
+			<sub src="me()" trait="width" />
 			<div> 2 </div>
-			<sub>
-				<copy src="me()" trait="width" />
-				<div> 2 </div>
-			</sub>
 		</x>
 		<y> <copy src="me()" trait="x" /> </y>
 		<depth> 500 </depth>
@@ -657,14 +695,14 @@
 		<_x>
 			<copy> 0.5 </copy>
 			<sub>
-				<copy> 0.5 </copy>
+				<copy src="parent()" trait="_CardinalOffset" />
 				<mul src="parent()" trait="_CellPlrDegSin" />
 			</sub>
 		</_x>
 		<_y>
 			<copy> 0.5 </copy>
 			<sub>
-				<copy> 0.5 </copy>
+				<copy src="parent()" trait="_CardinalOffset" />
 				<mul src="parent()" trait="_CellPlrDegCos" />
 			</sub>
 		</_y>
@@ -674,17 +712,17 @@
 		<string> S </string>
 		<_x>
 			<copy> 0.5 </copy>
-			<sub>
-				<copy> -0.5 </copy>
+			<add>
+				<copy src="parent()" trait="_CardinalOffset" />
 				<mul src="parent()" trait="_CellPlrDegSin" />
-			</sub>
+			</add>
 		</_x>
 		<_y>
 			<copy> 0.5 </copy>
-			<sub>
-				<copy> -0.5 </copy>
+			<add>
+				<copy src="parent()" trait="_CardinalOffset" />
 				<mul src="parent()" trait="_CellPlrDegCos" />
-			</sub>
+			</add>
 		</_y>
 	</text>
 	<text name="EastText">
@@ -693,7 +731,7 @@
 			<copy src="me()" trait="_x" />
 			<mul src="parent()" trait="width" />
 			<sub>
-				<copy> 8.5 </copy>
+				<copy> 3.25 </copy>
 				<mul src="parent()" trait="_compass_text_zoom" />
 			</sub>
 		</x>
@@ -701,14 +739,14 @@
 		<_x>
 			<copy> 0.5 </copy>
 			<add>
-				<copy> 0.5 </copy>
+				<copy src="parent()" trait="_CardinalOffset" />
 				<mul src="parent()" trait="_CellPlrDegCos" />
 			</add>
 		</_x>
 		<_y>
 			<copy> 0.5 </copy>
 			<sub>
-				<copy> 0.5 </copy>
+				<copy src="parent()" trait="_CardinalOffset" />
 				<mul src="parent()" trait="_CellPlrDegSin" />
 			</sub>
 		</_y>
@@ -718,17 +756,17 @@
 		<string> W </string>
 		<_x>
 			<copy> 0.5 </copy>
-			<add>
-				<copy> -0.5 </copy>
+			<sub>
+				<copy src="parent()" trait="_CardinalOffset" />
 				<mul src="parent()" trait="_CellPlrDegCos" />
-			</add>
+			</sub>
 		</_x>
 		<_y>
 			<copy> 0.5 </copy>
-			<sub>
-				<copy> -0.5 </copy>
+			<add>
+				<copy src="parent()" trait="_CardinalOffset" />
 				<mul src="parent()" trait="_CellPlrDegSin" />
-			</sub>
+			</add>
 		</_y>
 	</text>
 
@@ -745,7 +783,13 @@
 			<sub> 5 </sub>
 			<sub src="me()" trait="width" />
 		</x>
-		<y> 4 </y>
+		<y>
+			<copy src="sibling(InfoText)" trait="y" />
+			<sub>
+				<copy src="me()" trait="width" />
+				<div> 4 </div>
+			</sub>
+		</y>
 		<width>
 			<copy> 24 </copy>
 			<mul src="parent()" trait="_TileScale" />
@@ -821,7 +865,7 @@
 <!-- Icon Rect -->
 <template name="Minimap_Icon_Rect">
 	<rect name="Minimap_Icon_Rect">
-		<visible> 1 </visible>
+		<visible> <copy src="parent()" trait="_ToggleUpdate" /> </visible>
 		<width> <copy src="parent()" trait="width" /> </width>
 		<height> <copy src="parent()" trait="height" /> </height>
 	</rect>
@@ -882,12 +926,8 @@
 				<copy src="me()" trait="width" />
 				<div> 2 </div>
 			</sub>
-			<max> 3 </max>
-			<min>
-				<add src="parent()" trait="width" />
-				<sub src="me()" trait="width" />
-				<sub> 3 </sub>
-			</min>
+			<max src="ModernMinimap" trait="_MarkerMaxX" />
+			<min src="ModernMinimap" trait="_MarkerMinX" />
 		</x>
 		<y>
 			<copy src="me()" trait="_y" />
@@ -945,13 +985,13 @@
 			</sub>
 		</_y1>
 		<_scaler>
-			<copy> 0.5 </copy>
+			<copy src="ModernMinimap" trait="_ScalerWidth" />
 			<div>
 				<copy src="me()" trait="_x1" />
 				<abs></abs>
 			</div>
 			<min>
-				<copy> 0.5 </copy>
+				<copy src="ModernMinimap" trait="_ScalerHeight" />
 				<div>
 					<copy src="me()" trait="_y1" />
 					<abs></abs>
