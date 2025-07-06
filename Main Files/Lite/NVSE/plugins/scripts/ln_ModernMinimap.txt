@@ -49,9 +49,8 @@ Goo1.AuxVarSetFlt "*Minimap_Init" 1
 ; "*Minimap_Markers"	Quest marker refs
 
 ; Check for requirements
-if eval GetNVSEVersion > 5 && GetNVSERevision > 2 && GetNVSEBeta > 5
-else
-	MessageBoxEx "Modern Minimap missing requirement!%rInstall xNVSE 6.3.6+."
+if eval GetNVSEVersion < 6 || (GetNVSEVersion == 6 && GetNVSERevision < 4)
+	MessageBoxEx "Modern Minimap missing requirement!%rInstall xNVSE 6.4.0+."
 	return
 endif
 if eval GetPluginVersion "JohnnyGuitarNVSE" < 390
