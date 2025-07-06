@@ -1,0 +1,101 @@
+int iSize
+int iIndex
+float fTemp
+float fPosX
+float fPosY
+float fPlrX
+float fPlrY
+float fDist
+float fDistMax
+float fDistTemp
+ref rIcon
+ref rNearest
+array_var aRefs
+string_var sUIPath
+string_var sName
+
+begin Function {}
+
+	; Disable map marker updates
+	if eval GetUIFloatAlt "HUDMainMenu\ModernMinimap\_ToggleUpdate" == 0 || GetUIFloatAlt "HUDMainMenu\ModernMinimap\_MapMode" == 1
+		return
+	endif
+
+	; Get valid markers refs
+	fDistTemp = 1
+	fPlrX = GetUIFloatAlt "HUDMainMenu\ModernMinimap\_PlrWldX"
+	fPlrY = GetUIFloatAlt "HUDMainMenu\ModernMinimap\_PlrWldY"
+	aRefs = Goo1.AuxVarGetAsArr ("*_" + (Goo1.AuxVarGetStr "*_WorldMap_Texture"))
+	fDistMax = 0.055 / (GetUIFloatAlt "HUDMainMenu\ModernMinimap\_MapScaleWorld")
+	if eval (iSize = Ar_Size aRefs) > 0
+		while (iSize -= 1) > -1
+			rIcon = aRefs[iSize]
+			rIcon.GetWorldMapPosMults (fPosX) (fPosY)
+			if eval ABS (fDist = GetVector3DDistance fPlrX fPlrY 0 fPosX fPosY 0) < fDistMax && rIcon.GetDisabled == 0 && rIcon.GetMapMarkerVisible > 0
+				if eval fDist < fDistTemp
+					fDistTemp = fDist
+					rNearest = rIcon
+				endif
+				Goo1.AuxVarSetRef "*Minimap_MapMarkers" rIcon -1
+			endif
+		loop
+	endif
+
+	; Update map markers tiles
+	iIndex = GetMaxOf 0 (GetUIFloatAlt "HUDMainMenu\ModernMinimap\WorldMarkers\childcount" - 1)
+	iSize = (Goo1.AuxVarSize "*Minimap_MapMarkers") - iIndex
+	if iSize > 0
+		while (iSize -= 1) > -1
+			AddTileFromTemplate "HUDMainMenu\ModernMinimap\WorldMarkers|Minimap_Icon_World_Template|Icon"
+			SetUIFloatAlt "HUDMainMenu\ModernMinimap\WorldMarkers\Icon:0\_DepthMod" (iIndex += 1)
+		loop
+	elseif iSize < 0
+		while (iSize += 1) < 1
+			UnloadUIComponent "HUDMainMenu\ModernMinimap\WorldMarkers\Icon:0"
+		loop
+	endif
+
+	; Update map markers
+	if eval (iSize = Goo1.AuxVarSize "*Minimap_MapMarkers") > 0
+		while (iSize -= 1) > -1
+			rIcon = Goo1.AuxVarGetRef "*Minimap_MapMarkers" iSize
+			sUIPath = Sv_Construct "HUDMainMenu\ModernMinimap\WorldMarkers\Icon:%g\" iSize
+			rIcon.GetWorldMapPosMults (fPosX) (fPosY)
+			SetUIFloatAlt (sUIPath + "_PosX") fPosX
+			SetUIFloatAlt (sUIPath + "_PosY") fPosY
+			SetUIFloatAlt (sUIPath + "_visible") (rIcon.GetMapMarkerVisible)
+			SetUIFloatAlt (sUIPath + "_type") (rIcon.GetMapMarkerType)
+			SetUIStringAlt (sUIPath + "_location") (rIcon.GetMapMarkerName)
+		loop
+	endif
+	Goo1.AuxVarErase "*Minimap_MapMarkers"
+
+	; Update nearest location name
+	if eval GetUIFloatAlt "HUDMainMenu\ModernMinimap\WorldMarkers\Discover\_timeline" == 1 && ((fTemp = GetUIFloatAlt "HUDMainMenu\ModernMinimap\WorldMarkers\Discover\_fade") == 0 || fTemp == 1)
+		if eval IsFormValid rNearest && fDistTemp < 0.015
+			sName = rNearest.GetMapMarkerName
+			if eval fTemp == 0
+				rNearest.GetWorldMapPosMults (fPosX) (fPosY)
+				SetUIFloatAlt "HUDMainMenu\ModernMinimap\WorldMarkers\Discover\_PosX" fPosX
+				SetUIFloatAlt "HUDMainMenu\ModernMinimap\WorldMarkers\Discover\_PosY" fPosY
+				SetUIStringAlt "HUDMainMenu\ModernMinimap\WorldMarkers\Discover\_location" (sName)
+				SetUIFloatGradual "HUDMainMenu\ModernMinimap\WorldMarkers\Discover\_fade" 0 1 1
+			elseif eval (GetUIString "HUDMainMenu\ModernMinimap\WorldMarkers\Discover\_location") != (sName)
+				SetUIFloatGradual "HUDMainMenu\ModernMinimap\WorldMarkers\Discover\_fade" 1 0 0.5
+				CallAfter 0.51 (begin function {ref rTemp}
+					rTemp.GetWorldMapPosMults (float fTemp0) (float fTemp1)
+					SetUIFloatAlt "HUDMainMenu\ModernMinimap\WorldMarkers\Discover\_PosX" fTemp0
+					SetUIFloatAlt "HUDMainMenu\ModernMinimap\WorldMarkers\Discover\_PosY" fTemp1
+					SetUIStringAlt "HUDMainMenu\ModernMinimap\WorldMarkers\Discover\_location" (rTemp.GetMapMarkerName)
+					SetUIFloatGradual "HUDMainMenu\ModernMinimap\WorldMarkers\Discover\_fade" 0 1 0.5
+				end) 1 rNearest
+			endif
+		elseif eval GetUIFloatAlt "HUDMainMenu\ModernMinimap\WorldMarkers\Discover\_fade" == 1
+			SetUIFloatGradual "HUDMainMenu\ModernMinimap\WorldMarkers\Discover\_fade" 1 0 1
+		endif
+	endif
+
+	aRefs = ar_Null
+	sv_Destruct sUIPath sName
+
+end

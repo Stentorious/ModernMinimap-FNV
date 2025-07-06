@@ -21,6 +21,7 @@
 	<copy> 80 </copy>
 	<mul src="parent()" trait="_compass_text_zoom" />
 </zoom>
+<systemcolor> <copy src="parent()" trait="_systemcolor_0" /> </systemcolor>
 <brightness> 204 </brightness>
 <font> 7 </font>
 <justify> &center; </justify>

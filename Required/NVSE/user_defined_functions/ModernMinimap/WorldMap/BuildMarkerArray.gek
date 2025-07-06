@@ -1,0 +1,44 @@
+int iSize
+int iIndex
+ref rWorldSpace
+ref rWorldSpaceTemp
+ref rCell
+string_var sTexture
+array_var aWorldSpaces
+array_var aMapMarkers
+
+begin Function {}
+
+	;if eval Goo1.AuxVarSize "*_interface\worldmap\wasteland_nv_1024_no_map.dds" > 0
+	;	return
+	;endif
+
+	aWorldSpaces = GLTA 65
+	if eval (iSize = Ar_Size aWorldSpaces) == 0
+		return
+	endif
+
+	while (iSize -= 1) > -1
+		rWorldSpace = aWorldSpaces[iSize]
+		if eval IsFormValid (rCell = GetWorldspacePersistentCell rWorldSpace) == 0 || (iIndex = (ar_Size (aMapMarkers = GetRefsInCell rCell 32 0 1 0 0 MapMarker))) == 0
+			continue
+		endif
+		while IsFormValid (rWorldSpace = GetWorldParentWorld (rWorldSpaceTemp = rWorldSpace))
+		loop
+		rWorldSpace = rWorldSpaceTemp
+		if eval (TestExpr GetWorldSpaceMapTexture rWorldSpace) == 0
+			continue
+		endif
+		sTexture = "*_" + (GetWorldSpaceMapTexture rWorldSpace)
+		while (iIndex -= 1) > -1
+			if eval (aMapMarkers[iIndex]).GetMapMarkerType == 0
+				continue
+			endif
+			Goo1.AuxVarSetRef (sTexture) (aMapMarkers[iIndex]) -1
+		loop
+	loop
+
+	sv_Destruct sTexture
+	aWorldSpaces = aMapMarkers = Ar_Null
+
+end

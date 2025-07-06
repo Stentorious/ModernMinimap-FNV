@@ -1,0 +1,73 @@
+int iKeyID
+
+float fScale
+string_var sTemp
+string_var sInfoText
+
+begin Function {iKeyID}
+
+	if eval MenuMode
+		return
+	elseif eval iKeyID == Goo1.AuxVarGetFlt "*Minimap_Key" 0
+		if eval GetUIFloatAlt "HUDMainMenu\ModernMinimap\_visible" == 0
+			SetUIFloatAlt "HUDMainMenu\ModernMinimap\_visible" 1
+			if eval GetUIFloatAlt "HUDMainMenu\ModernMinimap\_MapMode"
+				Call (CompileScript "ModernMinimap\MainLoop.gek")
+			else
+				Call (CompileScript "ModernMinimap\WorldMap\MainLoop.gek")
+			endif
+		else
+			AuxTimerStart "*Minimap_Key" 0.5
+		endif
+		return
+	elseif eval GetUIFloatAlt "HUDMainMenu\ModernMinimap\visible" == 0
+		return
+	endif
+
+	; Toggle map rotation
+	if eval iKeyID == Goo1.AuxVarGetFlt "*Minimap_Key" 1
+		if eval GetUIFloatAlt "HUDMainMenu\ModernMinimap\_RotationMode"
+			SetUIFloatAlt "HUDMainMenu\ModernMinimap\_RotationMode" 0
+			sInfoText = "Rotation: North"
+		else
+			SetUIFloatAlt "HUDMainMenu\ModernMinimap\_RotationMode" 1
+			sInfoText = "Rotation: Player"
+		endif
+
+	; Modify map zoom
+	elseif eval iKeyID == Goo1.AuxVarGetFlt "*Minimap_Key" 2 || iKeyID == Goo1.AuxVarGetFlt "*Minimap_Key" 3
+		sTemp = "HUDMainMenu\ModernMinimap\_MapScale"
+		if eval GetUIFloatAlt "HUDMainMenu\ModernMinimap\_MapMode"
+			sTemp += "Local"
+		else
+			sTemp += "World"
+		endif
+		if eval iKeyID == Goo1.AuxVarGetFlt "*Minimap_Key" 2
+			if eval (fScale = GetUIFloatAlt (sTemp)) < 2
+				fScale += 0.25
+			endif
+		elseif eval (fScale = GetUIFloatAlt (sTemp)) > 0.5
+			fScale -= 0.25
+		endif
+		SetUIFloatAlt (sTemp) fScale
+		SetUIFloatAlt "HUDMainMenu\ModernMinimap\_MapOriginX" -999999
+		sInfoText = sv_Construct "Zoom: %.2fx" fScale
+		Call (CompileScript "ModernMinimap\WorldMap\MainLoop.gek")
+
+	; Toggle quest markers
+	elseif eval iKeyID == Goo1.AuxVarGetFlt "*Minimap_Key" 4
+		if eval GetUIFloatAlt "HUDMainMenu\ModernMinimap\_ShowQuest"
+			SetUIFloatAlt "HUDMainMenu\ModernMinimap\_ShowQuest" 0
+			sInfoText = "Markers: Hide"
+		else
+			SetUIFloatAlt "HUDMainMenu\ModernMinimap\_ShowQuest" 1
+			sInfoText = "Markers: Show"
+		endif
+	endif
+
+	SetUIStringAlt "HUDMainMenu\ModernMinimap\InfoText\string" (sInfoText)
+	SetUIFloatGradual "HUDMainMenu\ModernMinimap\InfoText\alpha" 400 0 0.5
+
+	sv_Destruct sTemp sInfoText
+
+end

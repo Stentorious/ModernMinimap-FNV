@@ -1,0 +1,32 @@
+ref rWorldSpace
+
+ref rWorldSpaceTemp
+string_var sTexture
+
+begin Function {rWorldSpace}
+
+	; Get current world map texture
+	if eval Player.IsInInterior
+		if eval IsReference (rWorldSpace = GetPCLastExteriorDoor) == 0
+			return
+		endif
+		rWorldSpace = rWorldSpace.GPW
+	else
+		rWorldSpace = Player.GPW
+	endif
+	while IsFormValid (rWorldSpace = GetWorldParentWorld (rWorldSpaceTemp = rWorldSpace))
+	loop
+	rWorldSpace = rWorldSpaceTemp
+	if eval (TestExpr GetWorldSpaceMapTexture rWorldSpace) == 0
+		return
+	endif
+	sTexture = GetWorldSpaceMapTexture rWorldSpace
+
+	; Update map
+	Goo1.AuxVarSetStr "*_WorldMap_Texture" (sTexture)
+	SetUIStringAlt "HUDMainMenu\ModernMinimap\_WorldMap" (sTexture)
+	Call (CompileScript "ModernMinimap\WorldMap\MainLoop.gek")
+
+	sv_Destruct sTexture
+
+end

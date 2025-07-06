@@ -1,0 +1,17 @@
+string_var sName
+ref rOwner
+
+begin Function {sName, rOwner}
+
+	if eval MenuMode
+		return
+	endif
+
+	; Toggle map visibility
+	if eval sName == "*Minimap_Key"
+		if eval IsKeyPressed (Goo1.AuxVarGetFlt "*Minimap_Key" 0) 2
+			SetUIFloatAlt "HUDMainMenu\ModernMinimap\_visible" 0
+		endif
+	endif
+
+end

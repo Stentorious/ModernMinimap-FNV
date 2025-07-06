@@ -2,17 +2,25 @@ ref	rCellExit
 
 int iTemp
 int iEnterInterior
+float fPosX
+float fPosY
 ref	rCellEnter
+ref rDoor
 
 begin Function {rCellExit}
 
 	rCellEnter = Player.GPC
 	iEnterInterior = GetCellFlag rCellEnter 0
 
+	; Update world map position
+	Player.GetWorldMapPosMults (fPosX) (fPosY)
+	SetUIFloatAlt "HUDMainMenu\ModernMinimap\_PlrWldX" fPosX
+	SetUIFloatAlt "HUDMainMenu\ModernMinimap\_PlrWldY" fPosY
+
 	; Swapped between interior/exterior cells
 	if eval iEnterInterior != GetCellFlag rCellExit 0
 		if eval iEnterInterior
-			SetUIFloatAlt "HUDMainMenu\ModernMinimap\_MapScale" (Goo1.AuxVarGetFlt "*Minimap_INI" 0)
+			SetUIFloatAlt "HUDMainMenu\ModernMinimap\_MapScaleLocal" (Goo1.AuxVarGetFlt "*Minimap_INI" 0)
 			SetUIFloatAlt "HUDMainMenu\ModernMinimap\_Interior" 1
 			iTemp = Goo1.AuxVarGetFlt "*Minimap_INI" 7
 			if eval iTemp == 1
@@ -20,8 +28,18 @@ begin Function {rCellExit}
 			elseif eval iTemp == 2
 				SetUIFloatAlt "HUDMainMenu\ModernMinimap\_visible" 1
 			endif
+			if eval Goo1.AuxVarGetFlt "*Minimap_INI" 9
+				SetUIFloatAlt "HUDMainMenu\ModernMinimap\_MapMode" 1
+			endif
+			fPosX = -1
+			fPosY = -1
+			if eval IsReference (rDoor = GetPCLastExteriorDoor)
+				rDoor.GetWorldMapPosMults (fPosX) (fPosY)
+			endif
+			SetUIFloatAlt "HUDMainMenu\ModernMinimap\_PlrWldX" fPosX
+			SetUIFloatAlt "HUDMainMenu\ModernMinimap\_PlrWldY" fPosY
 		else
-			SetUIFloatAlt "HUDMainMenu\ModernMinimap\_MapScale" (Goo1.AuxVarGetFlt "*Minimap_INI" 1)
+			SetUIFloatAlt "HUDMainMenu\ModernMinimap\_MapScaleLocal" (Goo1.AuxVarGetFlt "*Minimap_INI" 1)
 			SetUIFloatAlt "HUDMainMenu\ModernMinimap\_Interior" 0
 			iTemp = Goo1.AuxVarGetFlt "*Minimap_INI" 7
 			if eval iTemp == 2
@@ -29,16 +47,22 @@ begin Function {rCellExit}
 			elseif eval iTemp == 1
 				SetUIFloatAlt "HUDMainMenu\ModernMinimap\_visible" 1
 			endif
+			if eval Goo1.AuxVarGetFlt "*Minimap_INI" 9
+				SetUIFloatAlt "HUDMainMenu\ModernMinimap\_MapMode" 0
+			endif
 		endif
 	endif
 
+	; Update interface
 	SetUIFloatAlt "HUDMainMenu\ModernMinimap\_MapOriginX" -999999
+	SetUIFloatGradual "HUDMainMenu\ModernMinimap\WorldMarkers\Discover\_fade" 0
 	SetUIFloatAlt "HUDMainMenu\ModernMinimap\_CellDeg" (ABS (GetCellNorthRotation (rCellEnter)))
 
 	; Update icons
 	UnloadUIComponent "HUDMainMenu\ModernMinimap\PlayerPath"
 	AddTileFromTemplate "HUDMainMenu\ModernMinimap|Minimap_Icon_Rect|PlayerPath"
 	Call (CompileScript "ModernMinimap\MainLoop.gek")
+	Call (CompileScript "ModernMinimap\WorldMap\UpdateTiles.gek") rCellEnter
 
 	Goo1.AuxVarSetRef "*Minimap_Travel" (Player.GPW) 1
 

@@ -3,8 +3,8 @@ int	iTemp
 int iSize
 int iIndex
 int iType
-float fPlrX
-float fPlrY
+float fPosX
+float fPosY
 ref rIcon
 array_var aRefs
 array_var aTemp
@@ -13,16 +13,70 @@ array_var aFollowers
 
 begin Function {}
 
+	; Disable tile updates
+	if eval GetUIFloatAlt "HUDMainMenu\ModernMinimap\_ToggleUpdate" == 0
+		return
+	endif
+
 	; Update player info
 	SetUIFloatAlt "HUDMainMenu\ModernMinimap\_PlrDetect" (GetPCDetectionState)
 	SetUIFloatAlt "HUDMainMenu\ModernMinimap\_PlrSneak" (Player.IsSneaking)
+
+	; Update custom marker tile
+	if eval IsFormValid (rIcon = GetCustomMapMarker)
+		SetUIFloatAlt "HUDMainMenu\ModernMinimap\_ShowCustom" 1
+		SetUIFloatAlt "HUDMainMenu\ModernMinimap\CustomMarkerLocal\Icon\_PosX" (rIcon.GetPos X)
+		SetUIFloatAlt "HUDMainMenu\ModernMinimap\CustomMarkerLocal\Icon\_PosY" (rIcon.GetPos Y)
+		SetUIFloatAlt "HUDMainMenu\ModernMinimap\CustomMarkerLocal\Icon\_PosZ" (rIcon.GetPos Z)
+		rIcon.GetWorldMapPosMults (fPosX) (fPosY)
+		SetUIFloatAlt "HUDMainMenu\ModernMinimap\CustomMarkerWorld\Icon\_PosX" fPosX
+		SetUIFloatAlt "HUDMainMenu\ModernMinimap\CustomMarkerWorld\Icon\_PosY" fPosY
+	else
+		SetUIFloatAlt "HUDMainMenu\ModernMinimap\_ShowCustom" 0
+	endif
+
+	; Quest objective markers
+	Goo1.AuxVarErase "*Minimap_Markers"
+	aMarkerRefs = Ar_Construct "array"
+	aRefs = GetCurrentQuestObjectiveTeleportLinks
+	if eval (iSize = Ar_Size aRefs) > 0
+		while (iSize -= 1) > -1
+			if eval IsReference (rIcon = aRefs[iSize][0])
+				Ar_Append aMarkerRefs rIcon
+			endif
+		loop
+		aMarkerRefs = Ar_Unique aMarkerRefs
+	endif
+
+	; Update quest marker tiles
+	iIndex = GetMaxOf 0 (GetUIFloatAlt "HUDMainMenu\ModernMinimap\QuestLocal\childcount")
+	iSize = (Ar_Size aMarkerRefs) - iIndex
+	iIndex = 400
+	if iSize > 0
+		while (iSize -= 1) > -1
+			AddTileFromTemplate "HUDMainMenu\ModernMinimap\QuestLocal|Minimap_Quest_Local_Template|Icon"
+			AddTileFromTemplate "HUDMainMenu\ModernMinimap\QuestWorld|Minimap_Quest_World_Template|Icon"
+			SetUIFloatAlt "HUDMainMenu\ModernMinimap\QuestLocal\Icon:0\_DepthMod" (iIndex += 1)
+			SetUIFloatAlt "HUDMainMenu\ModernMinimap\QuestWorld\Icon:0\_DepthMod" (iIndex + 200)
+		loop
+	elseif iSize < 0
+		while (iSize += 1) < 1
+			UnloadUIComponent "HUDMainMenu\ModernMinimap\QuestLocal\Icon:0"
+			UnloadUIComponent "HUDMainMenu\ModernMinimap\QuestWorld\Icon:0"
+		loop
+	endif
+	Goo1.AuxVarSetFromArr "*Minimap_Markers" aMarkerRefs
+
+	; Update player world map coordinates
+	if eval GetUIFloatAlt "HUDMainMenu\ModernMinimap\_MapMode" == 0
+		return
+	endif
 
 	; Reset tracked refs
 	aMarkerRefs = Ar_Construct "array"
 	Goo1.AuxVarErase "*Minimap_Doors"
 	Goo1.AuxVarErase "*Minimap_Actors"
 	Goo1.AuxVarErase "*Minimap_Followers"
-	Goo1.AuxVarErase "*Minimap_Markers"
 
 	; Get global settings
 	iDist = GetUIFloatAlt "HUDMainMenu\ModernMinimap\_Dist"
@@ -76,32 +130,12 @@ begin Function {}
 		endif
 	endif
 
-	; Quest objective markers
-	aRefs = GetCurrentQuestObjectiveTeleportLinks
-	if eval (iSize = Ar_Size aRefs) > 0
-		while (iSize -= 1) > -1
-			rIcon = aRefs[iSize][0]
-			if eval IsReference rIcon
-				Ar_Append aMarkerRefs rIcon
-			endif
-		loop
-		aMarkerRefs = Ar_Unique aMarkerRefs
-	endif
-
-	; Update custom marker tile
-	if eval IsFormValid (rIcon = GetCustomMapMarker)
-		Goo1.AuxVarSetRef "*Minimap_Custom" rIcon
-		SetUIFloatAlt "HUDMainMenu\ModernMinimap\CustomMarker\Icon\visible" 1
-	else
-		SetUIFloatAlt "HUDMainMenu\ModernMinimap\CustomMarker\Icon\visible" 0
-	endif
-
 	; Update door icon tiles
 	iIndex = GetMaxOf 0 (GetUIFloatAlt "HUDMainMenu\ModernMinimap\Doors\childcount")
 	iSize = (Goo1.AuxVarSize "*Minimap_Doors") - iIndex
 	if iSize > 0
 		while (iSize -= 1) > -1
-			AddTileFromTemplate "HUDMainMenu\ModernMinimap\Doors|Minimap_Icon_Template|Icon"
+			AddTileFromTemplate "HUDMainMenu\ModernMinimap\Doors|Minimap_Icon_Local_Template|Icon"
 			SetUIFloatAlt "HUDMainMenu\ModernMinimap\Doors\Icon:0\_DepthMod" (iIndex += 1)
 		loop
 	elseif iSize < 0
@@ -116,7 +150,7 @@ begin Function {}
 	iIndex += 25
 	if iSize > 0
 		while (iSize -= 1) > -1
-			AddTileFromTemplate "HUDMainMenu\ModernMinimap\Actors|Minimap_Icon_Template|Icon"
+			AddTileFromTemplate "HUDMainMenu\ModernMinimap\Actors|Minimap_Icon_Local_Template|Icon"
 			SetUIFloatAlt "HUDMainMenu\ModernMinimap\Actors\Icon:0\_DepthMod" (iIndex += 1)
 		loop
 	elseif iSize < 0
@@ -131,7 +165,7 @@ begin Function {}
 	iIndex += 75
 	if iSize > 0
 		while (iSize -= 1) > -1
-			AddTileFromTemplate "HUDMainMenu\ModernMinimap\Followers|Minimap_Icon_Template|Icon"
+			AddTileFromTemplate "HUDMainMenu\ModernMinimap\Followers|Minimap_Icon_Local_Template|Icon"
 			SetUIFloatAlt "HUDMainMenu\ModernMinimap\Followers\Icon:0\_DepthMod" (iIndex += 1)
 		loop
 	elseif iSize < 0
@@ -140,22 +174,6 @@ begin Function {}
 		loop
 	endif
 
-	; Update quest marker tiles
-	iIndex = GetMaxOf 0 (GetUIFloatAlt "HUDMainMenu\ModernMinimap\Markers\childcount")
-	iSize = (Ar_Size aMarkerRefs) - iIndex
-	iIndex += 200
-	if iSize > 0
-		while (iSize -= 1) > -1
-			AddTileFromTemplate "HUDMainMenu\ModernMinimap\Markers|Minimap_Marker_Template|Icon"
-			SetUIFloatAlt "HUDMainMenu\ModernMinimap\Markers\Icon:0\_DepthMod" (iIndex += 1)
-		loop
-	elseif iSize < 0
-		while (iSize += 1) < 1
-			UnloadUIComponent "HUDMainMenu\ModernMinimap\Markers\Icon:0"
-		loop
-	endif
-	Goo1.AuxVarSetFromArr "*Minimap_Markers" aMarkerRefs
-
 	; Update player path
 	if eval Goo1.AuxVarGetFlt "*Minimap_INI" 8
 		if eval (iSize = (GetUIFloatAlt "HUDMainMenu\ModernMinimap\PlayerPath\childcount" - 1)) > -1
@@ -163,12 +181,12 @@ begin Function {}
 				UnloadUIComponent ("HUDMainMenu\ModernMinimap\PlayerPath\Icon:" + $iSize)
 			endif
 		endif
-		fPlrX = GetUIFloatAlt "HUDMainMenu\ModernMinimap\_PlrX"
-		fPlrY = GetUIFloatAlt "HUDMainMenu\ModernMinimap\_PlrY"
-		if eval (fPlrX - (GetUIFloatAlt "HUDMainMenu\ModernMinimap\PlayerPath\Icon:0\_PosX"))^2 + (fPlrY - (GetUIFloatAlt "HUDMainMenu\ModernMinimap\PlayerPath\Icon:0\_PosY"))^2 > 8100
-			AddTileFromTemplate "HUDMainMenu\ModernMinimap\PlayerPath|Player_Path_Template|Icon"
-			SetUIFloatAlt "HUDMainMenu\ModernMinimap\PlayerPath\Icon:0\_PosX" fPlrX
-			SetUIFloatAlt "HUDMainMenu\ModernMinimap\PlayerPath\Icon:0\_PosY" fPlrY
+		fPosX = GetUIFloatAlt "HUDMainMenu\ModernMinimap\_PlrX"
+		fPosY = GetUIFloatAlt "HUDMainMenu\ModernMinimap\_PlrY"
+		if eval (fPosX - (GetUIFloatAlt "HUDMainMenu\ModernMinimap\PlayerPath\Icon:0\_PosX"))^2 + (fPosY - (GetUIFloatAlt "HUDMainMenu\ModernMinimap\PlayerPath\Icon:0\_PosY"))^2 > 8100
+			AddTileFromTemplate "HUDMainMenu\ModernMinimap\PlayerPath|Minimap_Player_Path_Template|Icon"
+			SetUIFloatAlt "HUDMainMenu\ModernMinimap\PlayerPath\Icon:0\_PosX" fPosX
+			SetUIFloatAlt "HUDMainMenu\ModernMinimap\PlayerPath\Icon:0\_PosY" fPosY
 			SetUIFloatGradual "HUDMainMenu\ModernMinimap\PlayerPath\Icon:0\_Fade" 510 0 3
 		endif
 	endif

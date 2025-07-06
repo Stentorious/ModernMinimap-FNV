@@ -3,6 +3,8 @@ int iSize
 int iCorpse
 int iVendor
 int iState
+float fPosX
+float fPosY
 float fAngle
 ref rIcon
 ref rTemp
@@ -11,11 +13,44 @@ string_var sFilename
 
 begin Function {}
 
+	; Disable render updates
+	if eval GetUIFloatAlt "HUDMainMenu\ModernMinimap\_ToggleUpdate" == 0
+		return
+	endif
+
+	; Update map rotation
+	SetUIFloatAlt "HUDMainMenu\ModernMinimap\_PlrDeg" (Player.GetAngle Z)
+
+	; Update world map
+	if eval GetUIFloatAlt "HUDMainMenu\ModernMinimap\_MapMode" == 0
+		if eval GetUIFloatAlt "HUDMainMenu\ModernMinimap\_Interior" == 1
+			return
+		endif
+
+		; Update player coordinates
+		Player.GetWorldMapPosMults (fPosX) (fPosY)
+		SetUIFloatAlt "HUDMainMenu\ModernMinimap\_PlrWldX" fPosX
+		SetUIFloatAlt "HUDMainMenu\ModernMinimap\_PlrWldY" fPosY
+
+		; Update quest markers
+		if eval (iSize = Goo1.AuxVarSize "*Minimap_Markers") > 0
+			while (iSize -= 1) > -1
+				if eval IsReference (rIcon = Goo1.AuxVarGetRef "*Minimap_Markers" iSize) == 0
+					continue
+				endif
+				sUIPath = Sv_Construct "HUDMainMenu\ModernMinimap\QuestWorld\Icon:%g\" iSize
+				rIcon.GetWorldMapPosMults (fPosX) (fPosY)
+				SetUIFloatAlt (sUIPath + "_PosX") fPosX
+				SetUIFloatAlt (sUIPath + "_PosY") fPosY
+			loop
+		endif
+		return
+	endif
+
 	; Update player position
 	SetUIFloatAlt "HUDMainMenu\ModernMinimap\_PlrX" (Player.GetPos X)
 	SetUIFloatAlt "HUDMainMenu\ModernMinimap\_PlrY" (Player.GetPos Y)
 	SetUIFloatAlt "HUDMainMenu\ModernMinimap\_PlrZ" (Player.GetPos Z)
-	SetUIFloatAlt "HUDMainMenu\ModernMinimap\_PlrDeg" (Player.GetAngle Z)
 
 
 	; Update door/container icons
@@ -189,21 +224,12 @@ begin Function {}
 			if eval IsReference (rIcon = Goo1.AuxVarGetRef "*Minimap_Markers" iSize) == 0
 				continue
 			endif
-			sUIPath = Sv_Construct "HUDMainMenu\ModernMinimap\Markers\Icon:%g\" iSize
+			sUIPath = Sv_Construct "HUDMainMenu\ModernMinimap\QuestLocal\Icon:%g\" iSize
 			SetUIFloatAlt (sUIPath + "_PosX") (rIcon.GetPos X)
 			SetUIFloatAlt (sUIPath + "_PosY") (rIcon.GetPos Y)
 			SetUIFloatAlt (sUIPath + "_PosZ") (rIcon.GetPos Z)
 		loop
 	endif
-
-
-	; Update custom marker
-	if eval IsReference (rIcon = Goo1.AuxVarGetRef "*Minimap_Custom")
-		SetUIFloatAlt "HUDMainMenu\ModernMinimap\CustomMarker\Icon\_PosX" (rIcon.GetPos X)
-		SetUIFloatAlt "HUDMainMenu\ModernMinimap\CustomMarker\Icon\_PosY" (rIcon.GetPos Y)
-		SetUIFloatAlt "HUDMainMenu\ModernMinimap\CustomMarker\Icon\_PosZ" (rIcon.GetPos Z)
-	endif
-
 
 	sv_Destruct sUIPath sFilename
 

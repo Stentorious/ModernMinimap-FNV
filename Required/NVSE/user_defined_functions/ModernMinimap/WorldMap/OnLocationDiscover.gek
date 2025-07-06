@@ -1,0 +1,26 @@
+ref rMapMarker
+
+float fPosX
+float fPosY
+
+begin Function {rMapMarker}
+
+	; Validate marker
+	if eval IsReference rMapMarker == 0 || rMapMarker.GetMapMarkerType == 0 || GetUIFloatAlt "HUDMainMenu\ModernMinimap\_MapMode" == 1
+		return
+	endif
+
+	; Play animation
+	rMapMarker.GetWorldMapPosMults (fPosX) (fPosY)
+	SetUIFloatAlt "HUDMainMenu\ModernMinimap\WorldMarkers\Discover\_PosX" fPosX
+	SetUIFloatAlt "HUDMainMenu\ModernMinimap\WorldMarkers\Discover\_PosY" fPosY
+	SetUIFloatAlt "HUDMainMenu\ModernMinimap\WorldMarkers\Discover\_Type" (rMapMarker.GetMapMarkerType)
+	SetUIStringAlt "HUDMainMenu\ModernMinimap\WorldMarkers\Discover\_location" (rMapMarker.GetMapMarkerName)
+	SetUIFloatGradual "HUDMainMenu\ModernMinimap\WorldMarkers\Discover\_fade" 1
+	SetUIFloatGradual "HUDMainMenu\ModernMinimap\WorldMarkers\Discover\_timeline" 0
+	SetUIFloatGradual "HUDMainMenu\ModernMinimap\WorldMarkers\Discover\_timeline" 0 1 1.5
+
+	; Update map
+	Call (CompileScript "ModernMinimap\WorldMap\MainLoop.gek")
+
+end
