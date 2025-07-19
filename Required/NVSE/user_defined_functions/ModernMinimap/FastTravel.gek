@@ -28,7 +28,7 @@ begin Function {rCellExit}
 			elseif eval iTemp == 2
 				SetUIFloatAlt "HUDMainMenu\ModernMinimap\_visible" 1
 			endif
-			if eval Goo1.AuxVarGetFlt "*Minimap_INI" 9
+			if eval Goo1.AuxVarGetFlt "*Minimap_INI" 9 == 2
 				SetUIFloatAlt "HUDMainMenu\ModernMinimap\_MapMode" 1
 			endif
 			fPosX = -1
@@ -47,7 +47,7 @@ begin Function {rCellExit}
 			elseif eval iTemp == 1
 				SetUIFloatAlt "HUDMainMenu\ModernMinimap\_visible" 1
 			endif
-			if eval Goo1.AuxVarGetFlt "*Minimap_INI" 9
+			if eval Goo1.AuxVarGetFlt "*Minimap_INI" 9 == 2
 				SetUIFloatAlt "HUDMainMenu\ModernMinimap\_MapMode" 0
 			endif
 		endif

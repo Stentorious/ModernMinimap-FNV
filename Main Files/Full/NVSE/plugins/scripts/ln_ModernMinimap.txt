@@ -209,7 +209,10 @@ endif
 ; Post release updates
 Goo1.AuxVarSetFlt "*Minimap_INI" (GetINIFloat_Cached "Map:iCellVisibility" "Stentorious\ModernMinimap.ini") 7
 Goo1.AuxVarSetFlt "*Minimap_INI" (eval GetINIFloat_Cached "Icons:bPlayerPath" "Stentorious\ModernMinimap.ini") 8
-Goo1.AuxVarSetFlt "*Minimap_INI" (eval GetINIFloat_Cached "Map:bCellMode" "Stentorious\ModernMinimap.ini") 9
+Goo1.AuxVarSetFlt "*Minimap_INI" (GetINIFloat_Cached "Map:iMapMode" "Stentorious\ModernMinimap.ini" 2) 9
+if eval Goo1.AuxVarGetFlt "*Minimap_INI" 9 == 1
+	SetUIFloatAlt "HUDMainMenu\ModernMinimap\_MapMode" 0
+endif
 
 ; Marker alpha pulse
 SetUIFloatGradual "HUDMainMenu\ModernMinimap\_IconQuestPulse" -1.5 0.75 3 2
