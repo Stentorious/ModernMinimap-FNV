@@ -69,7 +69,7 @@ if eval GetPluginVersion "HighResLocalMaps" < 12
 	MessageBoxEx "Modern Minimap missing requirement!%rInstall High Res Local Maps."
 	return
 endif
-if eval GetPluginVersion "EngineOptimizations" < 100
+if eval GetPluginVersion "Engine Optimizations" < 100
 	MessageBoxEx "Modern Minimap missing requirement!%rInstall lStewieAl's Engine Optimizations."
 	return
 endif
