@@ -1103,7 +1103,7 @@
 			<height> <copy src="me()" trait="width" /> </height>
 			<filename>
 				<copy src="me()" trait="_type" />
-				<copy src="grandparent" trait="_MapMarker_" />
+				<copy src="grandparent()" trait="_MapMarker_" />
 			</filename>
 			<_location> Location </_location>
 			<_timeline> 1 </_timeline>
@@ -1294,7 +1294,7 @@
 				<copy src="me()" trait="_visible" />
 				<eq> 2 </eq>
 			</onlyif>
-			<copy src="grandparent" trait="_MapMarker_" />
+			<copy src="grandparent()" trait="_MapMarker_" />
 		</_filename>
 
 		<image name="Icon">
@@ -1699,7 +1699,7 @@
 			<copy> 3 </copy>
 			<onlyif src="me()" trait="_Custom" />
 			<add src="me()" trait="_Level" />
-			<copy src="grandparent" trait="_QuestMarker_" />
+			<copy src="grandparent()" trait="_QuestMarker_" />
 		</filename>
 
 		<_Custom> 0 </_Custom>
