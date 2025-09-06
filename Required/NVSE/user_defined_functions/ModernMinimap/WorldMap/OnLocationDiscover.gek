@@ -14,7 +14,7 @@ begin Function {rMapMarker}
 	rMapMarker.GetWorldMapPosMults (fPosX) (fPosY)
 	SetUIFloatAlt "HUDMainMenu\ModernMinimap\WorldMarkers\Discover\_PosX" fPosX
 	SetUIFloatAlt "HUDMainMenu\ModernMinimap\WorldMarkers\Discover\_PosY" fPosY
-	SetUIFloatAlt "HUDMainMenu\ModernMinimap\WorldMarkers\Discover\_Type" (rMapMarker.GetMapMarkerType)
+	SetUIStringAlt "HUDMainMenu\ModernMinimap\WorldMarkers\Discover\_filename" (rMapMarker.GetCustomMapMarkerIcon)
 	SetUIStringAlt "HUDMainMenu\ModernMinimap\WorldMarkers\Discover\_location" (rMapMarker.GetMapMarkerName)
 	SetUIFloatGradual "HUDMainMenu\ModernMinimap\WorldMarkers\Discover\_fade" 1
 	SetUIFloatGradual "HUDMainMenu\ModernMinimap\WorldMarkers\Discover\_timeline" 0

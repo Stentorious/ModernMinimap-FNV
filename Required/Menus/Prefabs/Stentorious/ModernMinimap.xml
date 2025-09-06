@@ -1101,14 +1101,10 @@
 				<mul src="grandparent()" trait="_IconScaleMul" />
 			</width>
 			<height> <copy src="me()" trait="width" /> </height>
-			<filename>
-				<copy src="me()" trait="_type" />
-				<copy src="grandparent()" trait="_MapMarker_" />
-			</filename>
+			<_filename> interface\icons\world map\icon_map_undiscovered.dds </_filename>
 			<_location> Location </_location>
 			<_timeline> 1 </_timeline>
 			<_fade> 1 </_fade>
-			<_type> 0 </_type>
 			<_PosX> 0 </_PosX>
 			<_PosY> 0 </_PosY>
 			<_PosXOffset>
@@ -1160,7 +1156,7 @@
 				<zoom> &scale; </zoom>
 				<systemcolor> <copy src="ModernMinimap" trait="_systemcolor_-1" /> </systemcolor>
 				<brightness> 255 </brightness>
-				<filename> <copy src="parent()" trait="filename" /> </filename>
+				<filename> <copy src="parent()" trait="_filename" /> </filename>
 			</image>
 
 			<text name="LocationName">
@@ -1253,7 +1249,6 @@
 		<clips> 1 </clips>
 		<_show_location> 0 </_show_location>
 		<_location> Location </_location>
-		<_type> 0 </_type>
 		<_visible> 0 </_visible>
 		<_PosX> 0 </_PosX>
 		<_PosY> 0 </_PosY>
@@ -1288,13 +1283,11 @@
 				<mul src="grandparent()" trait="_CellPlrDegCos" />
 			</sub>
 		</_y>
+		<_filename_0> interface\icons\world map\icon_map_undiscovered.dds </_filename_0>
+		<_filename_1> interface\icons\world map\icon_map_undiscovered.dds </_filename_1>
 		<_filename>
-			<copy src="me()" trait="_type" />
-			<onlyif>
-				<copy src="me()" trait="_visible" />
-				<eq> 2 </eq>
-			</onlyif>
-			<copy src="grandparent()" trait="_MapMarker_" />
+			<copy src="me()" trait="_visible" /> <eq> 2 </eq>
+			<copy src="me()" trait="_filename_" />
 		</_filename>
 
 		<image name="Icon">

@@ -63,9 +63,10 @@ begin Function {}
 			rIcon.GetWorldMapPosMults (fPosX) (fPosY)
 			SetUIFloatAlt (sUIPath + "_PosX") fPosX
 			SetUIFloatAlt (sUIPath + "_PosY") fPosY
-			SetUIFloatAlt (sUIPath + "_visible") (rIcon.GetMapMarkerVisible)
-			SetUIFloatAlt (sUIPath + "_type") (rIcon.GetMapMarkerType)
 			SetUIStringAlt (sUIPath + "_location") (rIcon.GetMapMarkerName)
+			SetUIStringAlt (sUIPath + "_filename_1") (rIcon.GetCustomMapMarkerIcon)
+			SetUIFloatAlt (sUIPath + "_visible") 0
+			SetUIFloatAlt (sUIPath + "_visible") (rIcon.GetMapMarkerVisible)
 		loop
 	endif
 	Goo1.AuxVarErase "*Minimap_MapMarkers"
