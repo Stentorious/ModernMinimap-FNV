@@ -1,5 +1,4 @@
 int iTemp
-
 float fPosX
 float fPosY
 ref rDoor
@@ -12,7 +11,7 @@ begin Function {}
 	endif
 
 	; Update player Perception
-	SetUIFloatAlt "HUDMainMenu\ModernMinimap\_PlrAV6" (GetMaxOf 1 (GetMinOf 10 (Player.GetAV Perception)))
+	SetUIFloatAlt "HUDMainMenu\ModernMinimap\_PlrAV6"(Player.GetThresholdAV Perception)
 
 	; Update cell rotation
 	SetUIFloatAlt "HUDMainMenu\ModernMinimap\_CellDeg" (ABS (GetCellNorthRotation (Player.GPC)))
