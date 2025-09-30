@@ -56,7 +56,7 @@ if eval GetNVSEVersion < 6 || (GetNVSEVersion == 6 && GetNVSERevision < 4)
 	MessageBoxEx "Modern Minimap missing requirement!%rInstall xNVSE 6.4.0+."
 	return
 endif
-if eval GetPluginVersion "JohnnyGuitarNVSE" < 390
+if eval GetPluginVersion "JohnnyGuitarNVSE" < 517
 	MessageBoxEx "Modern Minimap missing requirement!%rInstall latest JohnnyGuitar NVSE plugin."
 	return
 endif
