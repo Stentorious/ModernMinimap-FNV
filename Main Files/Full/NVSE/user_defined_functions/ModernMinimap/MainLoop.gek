@@ -99,7 +99,7 @@ begin Function {}
 	if eval (iSize = Ar_Size aRefs) > 0
 		while (iSize -= 1) > -1
 			rIcon = aRefs[iSize]
-			if eval IsReference rIcon && rIcon.GetDisabled == 0 && rIcon.HasLoaded3D && ((Goo1.AuxVarGetFlt "*Minimap_ySI" 9 && rIcon.GetLocked > 0) || HasKeyword rIcon "MinimapIcon" || AuxVarGetFlt "*MinimapIcon" 0 (rIcon.GBO))
+			if eval IsReference rIcon && rIcon.GetDisabled == 0 && rIcon.HasLoaded3D && ((Goo1.AuxVarGetFlt "*Minimap_ySI" 9 && rIcon.GetLocked > 0) || AuxVarGetFlt "*MinimapIcon" 0 (rIcon.GBO) || HasKeyword rIcon "MinimapIcon")
 				Goo1.AuxVarSetRef "*Minimap_Doors" rIcon -1
 			endif
 		loop
@@ -112,7 +112,7 @@ begin Function {}
 			rIcon = aRefs[iSize]
 			if eval IsReference rIcon && rIcon.GetDisabled == 0 && rIcon.HasLoaded3D
 				iType = rIcon.GetType
-				if eval (iType == 49 && Goo1.AuxVarGetFlt "*Minimap_ySI" 3) || (iType == 46 && Goo1.AuxVarGetFlt "*Minimap_ySI" 4) || (iType == 115 && Goo1.AuxVarGetFlt "*Minimap_ySI" 6) || (Goo1.AuxVarGetFlt "*Minimap_ySI" 7 && rIcon.IsQuestItem) || (Goo1.AuxVarGetFlt "*Minimap_ySI" 5 && IsItemUnique (rIcon.gbo)) || HasKeyword rIcon "MinimapIcon" || AuxVarGetFlt "*MinimapIcon" 0 (rIcon.GBO)
+				if eval (iType == 49 && Goo1.AuxVarGetFlt "*Minimap_ySI" 3) || (iType == 46 && Goo1.AuxVarGetFlt "*Minimap_ySI" 4) || (iType == 115 && Goo1.AuxVarGetFlt "*Minimap_ySI" 6) || (Goo1.AuxVarGetFlt "*Minimap_ySI" 7 && rIcon.IsQuestItem) || (Goo1.AuxVarGetFlt "*Minimap_ySI" 5 && IsItemUnique (rIcon.gbo)) || AuxVarGetFlt "*MinimapIcon" 0 (rIcon.GBO) || HasKeyword rIcon "MinimapIcon"
 					Goo1.AuxVarSetRef "*Minimap_Basic" rIcon -1
 				endif
 			endif
@@ -124,7 +124,7 @@ begin Function {}
 	if eval (iSize = Ar_Size aRefs) > 0
 		while (iSize -= 1) > -1
 			rIcon = aRefs[iSize]
-			if eval IsReference rIcon && rIcon.GetDisabled == 0 && rIcon.HasLoaded3D && rIcon.GetDestroyed == 0 && (HasKeyword rIcon "MinimapIcon" || AuxVarGetFlt "*MinimapIcon" 0 (rIcon.GBO))
+			if eval IsReference rIcon && rIcon.GetDisabled == 0 && rIcon.HasLoaded3D && rIcon.GetDestroyed == 0 && (AuxVarGetFlt "*MinimapIcon" 0 (rIcon.GBO) || HasKeyword rIcon "MinimapIcon")
 				Goo1.AuxVarSetRef "*Minimap_Basic" rIcon -1
 			endif
 		loop
