@@ -879,7 +879,7 @@
 
 	<!-- Cardinal Directions -->
 	<text name="NorthText">
-		<include src="Stentorious\ModernMinimap\CardinalText.xml" />
+		<include src="Stentorious\ModernMinimap\CompassText.xml" />
 		<visible>
 			<copy src="io()" trait="_Minimap+CompassText" />
 			<gt> 0 </gt>
@@ -901,7 +901,7 @@
 		</_y>
 	</text>
 	<text name="SouthText">
-		<include src="Stentorious\ModernMinimap\CardinalText.xml" />
+		<include src="Stentorious\ModernMinimap\CompassText.xml" />
 		<visible>
 			<copy src="io()" trait="_Minimap+CompassText" />
 			<gt> 1 </gt>
@@ -923,7 +923,7 @@
 		</_y>
 	</text>
 	<text name="EastText">
-		<include src="Stentorious\ModernMinimap\CardinalText.xml" />
+		<include src="Stentorious\ModernMinimap\CompassText.xml" />
 		<visible> <copy src="sibling(SouthText)" trait="visible" /> </visible>
 		<x>
 			<copy src="me()" trait="_x" />
@@ -950,7 +950,7 @@
 		</_y>
 	</text>
 	<text name="WestText">
-		<include src="Stentorious\ModernMinimap\CardinalText.xml" />
+		<include src="Stentorious\ModernMinimap\CompassText.xml" />
 		<visible> <copy src="sibling(SouthText)" trait="visible" /> </visible>
 		<string> W </string>
 		<_x>

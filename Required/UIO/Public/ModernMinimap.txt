@@ -1,4 +1,4 @@
-Stentorious\ModernMinimap.xml::HUDMainMenu
+Stentorious\ModernMinimap\Main.xml::HUDMainMenu
 true
 Stentorious\ModernMinimap\MCM\Main.xml::StartMenu
 true
