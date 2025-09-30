@@ -1,0 +1,1094 @@
+<!-- ### Configuration Traits ### -->
+<_Minimap+OffsetX> <copy src="sibling(HUDMainMenu)" trait="_Minimap+OffsetX" /> </_Minimap+OffsetX>
+<_Minimap+OffsetY> <copy src="sibling(HUDMainMenu)" trait="_Minimap+OffsetY" /> </_Minimap+OffsetY>
+<_Minimap+AnchorX> <copy src="sibling(HUDMainMenu)" trait="_Minimap+AnchorX" /> </_Minimap+AnchorX>
+<_Minimap+AnchorY> <copy src="sibling(HUDMainMenu)" trait="_Minimap+AnchorY" /> </_Minimap+AnchorY>
+<_Minimap+BackgroundAlpha> <copy src="sibling(HUDMainMenu)" trait="_Minimap+BackgroundAlpha" /> </_Minimap+BackgroundAlpha>
+<_Minimap+BackgroundPad> <copy src="sibling(HUDMainMenu)" trait="_Minimap+BackgroundPad" /> </_Minimap+BackgroundPad>
+<_Minimap+RenderBrightness> <copy src="sibling(HUDMainMenu)" trait="_Minimap+RenderBrightness" /> </_Minimap+RenderBrightness>
+<_Minimap+RadIndicator> <copy src="sibling(HUDMainMenu)" trait="_Minimap+RadIndicator" /> </_Minimap+RadIndicator>
+<_Minimap+TileScale> <copy src="sibling(HUDMainMenu)" trait="_Minimap+TileScale" /> </_Minimap+TileScale>
+<_Minimap+CompassRose> <copy src="sibling(HUDMainMenu)" trait="_Minimap+CompassRose" /> </_Minimap+CompassRose>
+<_Minimap+CompassText> <copy src="sibling(HUDMainMenu)" trait="_Minimap+CompassText" /> </_Minimap+CompassText>
+<_Minimap+Scan> <copy src="sibling(HUDMainMenu)" trait="_Minimap+Scan" /> </_Minimap+Scan>
+<_Minimap+CombatIndicator> <copy src="sibling(HUDMainMenu)" trait="_Minimap+CombatIndicator" /> </_Minimap+CombatIndicator>
+<_Minimap+LocationText> <copy src="sibling(HUDMainMenu)" trait="_Minimap+LocationText" /> </_Minimap+LocationText>
+<_Minimap+HostileColor> <copy src="sibling(HUDMainMenu)" trait="_Minimap+HostileColor" /> </_Minimap+HostileColor>
+<_Minimap+RotationMode> <copy src="sibling(HUDMainMenu)" trait="_Minimap+RotationMode" /> </_Minimap+RotationMode>
+<_Minimap+PlayerPath> <copy src="sibling(HUDMainMenu)" trait="_Minimap+PlayerPath" /> </_Minimap+PlayerPath>
+<_Minimap+DistanceMax> <copy src="sibling(HUDMainMenu)" trait="_Minimap+DistanceMax" /> </_Minimap+DistanceMax>
+<_Minimap+DistanceMode> <copy src="sibling(HUDMainMenu)" trait="_Minimap+DistanceMode" /> </_Minimap+DistanceMode>
+
+<!-- ### Other Traits ### -->
+<_Minimap+ScanY> <copy src="sibling(HUDMainMenu)" trait="_Minimap+ScanY" />  </_Minimap+ScanY>
+<_Minimap+ScanBrightness> <copy src="sibling(HUDMainMenu)" trait="_Minimap+ScanBrightness" />  </_Minimap+ScanBrightness>
+<_Minimap+RadPulse> <copy src="sibling(HUDMainMenu)" trait="_Minimap+RadPulse" /> </_Minimap+RadPulse>
+
+<!-- ### Icon Traits ### -->
+<_Minimap+IconScale> <copy src="sibling(HUDMainMenu)" trait="_Minimap+IconScale" /> </_Minimap+IconScale>
+<_Minimap+IconHeight> <copy src="sibling(HUDMainMenu)" trait="_Minimap+IconHeight" /> </_Minimap+IconHeight>
+<_Minimap+QuestHeight> <copy src="sibling(HUDMainMenu)" trait="_Minimap+QuestHeight" /> </_Minimap+QuestHeight>
+
+<rect name="ModernMinimap">
+
+	<!-- MCM traits -->
+	<_MCM_Scale>
+		<copy src="sibling(MCM)" trait="_ShowScale" />
+		<eq> 3 </eq>
+	</_MCM_Scale>
+	<_MCM_OffsetX> <copy src="io()" trait="_Minimap+OffsetX" /> </_MCM_OffsetX>
+	<_MCM_OffsetY> <copy src="io()" trait="_Minimap+OffsetY" /> </_MCM_OffsetY>
+	<_MCM_TileScale> <copy src="io()" trait="_Minimap+TileScale" /> </_MCM_TileScale>
+	<_MCM_BackgroundAlpha> <copy src="io()" trait="_Minimap+BackgroundAlpha" /> </_MCM_BackgroundAlpha>
+	<_MCM_BackgroundPad> <copy src="io()" trait="_Minimap+BackgroundPad" /> </_MCM_BackgroundPad>
+	<_MCM_RenderBrightness> <copy src="io()" trait="_Minimap+RenderBrightness" /> </_MCM_RenderBrightness>
+	<_MCM_IconScale> <copy src="io()" trait="_Minimap+IconScale" /> </_MCM_IconScale>
+	<_MCM_DistanceMax> <copy src="io()" trait="_Minimap+DistanceMax" /> </_MCM_DistanceMax>
+
+	<!-- ### Configuration Traits ### -->
+	<_x>
+		<copy src="io()" trait="_Minimap+OffsetX" />
+		<onlyifnot src="me()" trait="_MCM_Scale" />
+		<add>
+			<copy src="me()" trait="_MCM_OffsetX" />
+			<onlyif src="me()" trait="_MCM_Scale" />
+		</add>
+	</_x>
+	<_y>
+		<copy src="io()" trait="_Minimap+OffsetY" />
+		<onlyifnot src="me()" trait="_MCM_Scale" />
+		<add>
+			<copy src="me()" trait="_MCM_OffsetY" />
+			<onlyif src="me()" trait="_MCM_Scale" />
+		</add>
+	</_y>
+	<_TileScale>
+		<copy> 0 </copy>
+		<add>
+			<copy src="io()" trait="_Minimap+TileScale" />
+			<onlyifnot src="me()" trait="_MCM_Scale" />
+			<add>
+				<copy src="me()" trait="_MCM_TileScale" />
+				<onlyif src="me()" trait="_MCM_Scale" />
+			</add>
+			<onlyif src="me()" trait="_submenu" />
+		</add>
+		<add>
+			<copy> 1 </copy>
+			<onlyifnot src="me()" trait="_submenu" />
+		</add>
+	</_TileScale>
+	<_BackgroundPad>
+		<copy src="io()" trait="_Minimap+BackgroundPad" />
+		<onlyifnot src="me()" trait="_MCM_Scale" />
+		<add>
+			<copy src="me()" trait="_MCM_BackgroundPad" />
+			<onlyif src="me()" trait="_MCM_Scale" />
+		</add>
+		<add> 2 </add>
+	</_BackgroundPad>
+	<_Dist>
+		<copy src="io()" trait="_Minimap+DistanceMax" />
+		<onlyifnot src="me()" trait="_MCM_Scale" />
+		<add>
+			<copy src="me()" trait="_MCM_DistanceMax" />
+			<onlyif src="me()" trait="_MCM_Scale" />
+		</add>
+		<mul> 69.99104 </mul>
+	</_Dist>
+
+	<!-- ### Script Traits ### -->
+	<_visible> 0 </_visible>				<!-- General visibility flag -->
+	<_PlrX> 0 </_PlrX>						<!-- Player X world coordinate -->
+	<_PlrY> 0 </_PlrY>						<!-- Player Y world coordinate -->
+	<_PlrZ> 0 </_PlrZ>						<!-- Player Z world coordinate -->
+	<_PlrDeg> -1 </_PlrDeg>					<!-- Player world rotation -->
+	<_PlrAV6> 4 </_PlrAV6>					<!-- Player perception -->
+	<_PlrDetect> 0 </_PlrDetect>			<!-- Player detection state -->
+	<_PlrSneak> 0 </_PlrSneak>				<!-- Player sneak state -->
+	<_Interior> 0 </_Interior>				<!-- Player is in interior cell -->
+	<_CellDeg> 0 </_CellDeg>				<!-- Cell rotation -->
+	<_MapMode> 1 </_MapMode>				<!-- World/Local map mode -->
+	<_MapScaleLocal> 1 </_MapScaleLocal>	<!-- Local map image scale -->
+	<_MapScaleWorld> 1 </_MapScaleWorld>	<!-- World map image scale -->
+	<_ShowQuest> 1 </_ShowQuest>			<!-- Show quest markers -->
+
+	<!-- ### Texture Path Traits ### -->
+	<_QuestMarker_0> Interface\Stentorious\ModernMinimap\MarkerQuestNeutral.dds </_QuestMarker_0>
+	<_QuestMarker_1> Interface\Stentorious\ModernMinimap\MarkerQuestBelow.dds </_QuestMarker_1>
+	<_QuestMarker_2> Interface\Stentorious\ModernMinimap\MarkerQuestAbove.dds </_QuestMarker_2>
+	<_QuestMarker_3> Interface\Stentorious\ModernMinimap\MarkerPlayerNeutral.dds </_QuestMarker_3>
+	<_QuestMarker_4> Interface\Stentorious\ModernMinimap\MarkerPlayerBelow.dds </_QuestMarker_4>
+	<_QuestMarker_5> Interface\Stentorious\ModernMinimap\MarkerPlayerAbove.dds </_QuestMarker_5>
+
+	<!-- ### Icon Traits ### -->
+	<_IconScaleMul>
+		<copy src="me()" trait="_MapScaleWorld" />
+		<onlyifnot src="me()" trait="_MapMode" />
+		<add>
+			<copy src="me()" trait="_MapScaleLocal" />
+			<onlyif src="me()" trait="_MapMode" />
+		</add>
+		<min> 1 </min>
+		<sub> 1 </sub>
+		<div> 2 </div>
+		<add> 1 </add>
+		<mul>
+			<copy src="io()" trait="_Minimap+IconScale" />
+			<onlyifnot src="me()" trait="_MCM_Scale" />
+			<add>
+				<copy src="me()" trait="_MCM_IconScale" />
+				<onlyif src="me()" trait="_MCM_Scale" />
+			</add>
+		</mul>
+		<mul src="me()" trait="_TileScale" />
+	</_IconScaleMul>
+	<_PlayerPathSize>
+		<copy> 6 </copy>
+		<mul src="me()" trait="_IconScaleMul" />
+	</_PlayerPathSize>
+	<_IconWorldSize>
+		<copy> 40 </copy>
+		<mul src="me()" trait="_IconScaleMul" />
+	</_IconWorldSize>
+	<_IconLocalSize>
+		<copy> 24 </copy>
+		<mul src="me()" trait="_IconScaleMul" />
+	</_IconLocalSize>
+	<_IconQuestSize>
+		<copy> 18 </copy>
+		<mul src="me()" trait="_IconScaleMul" />
+	</_IconQuestSize>
+	<_DropShadowOffset>
+		<copy> 1.25 </copy>
+		<mul src="me()" trait="_TileScale" />
+	</_DropShadowOffset>
+	<_IconQuestPulse> 0 </_IconQuestPulse>
+	<_IconQuestAlpha>
+		<copy> 1 </copy>
+		<sub src="me()" trait="_IconQuestPulse" />
+		<mul> 255 </mul>
+		<max> 0 </max>
+	</_IconQuestAlpha>
+
+	<!-- ### ModernMinimap.dll Traits ### -->
+	<_ColorMode> 0 </_ColorMode>			<!-- Render Mode: Classic (0) or Full Color (1) -->
+	<_MapOriginX> 0 </_MapOriginX>			<!-- Map center Y world coordinate -->
+	<_MapOriginY> 0 </_MapOriginY>			<!-- Map center X world coordinate -->
+	<_ToggleUpdate> <copy src="me()" trait="visible" /> </_ToggleUpdate>
+
+	<!-- Update render when current texture leaves bounds of the window -->
+	<_CellPlrDeg>
+		<copy> 0 </copy>
+		<sub>
+			<copy src="me()" trait="_CellDeg" />
+			<sub src="me()" trait="_PlrDeg" />
+			<onlyif src="io()" trait="_Minimap+RotationMode" />
+		</sub>
+	</_CellPlrDeg>
+	<_CellPlrDegCos> <cos src="me()" trait="_CellPlrDeg" /> </_CellPlrDegCos>
+	<_CellPlrDegSin> <sin src="me()" trait="_CellPlrDeg" /> </_CellPlrDegSin>
+
+	<!-- Render width / 2 (Game units) -->
+	<_Frustum> 2048 </_Frustum>
+	<_FrustumSize>
+		<copy src="me()" trait="_Frustum" />
+		<div src="me()" trait="_MapScaleLocal" />
+	</_FrustumSize>
+
+	<!-- Map window size -->
+	<_width>
+		<copy> 256 </copy>
+		<mul src="me()" trait="_TileScale" />
+	</_width>
+
+	<!-- World to map coordinates translation -->
+	<_WorldScale>
+		<copy src="me()" trait="_MapScaleLocal" />
+		<div src="me()" trait="_Frustum" />
+	</_WorldScale>
+
+	<!-- Rotation calculations -->
+	<_CellDegCos> <cos src="me()" trait="_CellDeg" /> </_CellDegCos>
+	<_CellDegSin> <sin src="me()" trait="_CellDeg" /> </_CellDegSin>
+	<_PlrDegCos> <cos src="me()" trait="_PlrDeg" /> </_PlrDegCos>
+	<_PlrDegSin> <sin src="me()" trait="_PlrDeg" /> </_PlrDegSin>
+	<_IconDegCos>
+		<copy> 0 </copy>
+		<add>
+			<copy src="me()" trait="_PlrDegCos" />
+			<onlyif src="io()" trait="_Minimap+RotationMode" />
+		</add>
+		<add>
+			<copy src="me()" trait="_CellDegCos" />
+			<onlyifnot src="io()" trait="_Minimap+RotationMode" />
+		</add>
+	</_IconDegCos>
+	<_IconDegSin>
+		<copy> 0 </copy>
+		<add>
+			<copy src="me()" trait="_PlrDegSin" />
+			<onlyif src="io()" trait="_Minimap+RotationMode" />
+		</add>
+		<add>
+			<copy src="me()" trait="_CellDegSin" />
+			<onlyifnot src="io()" trait="_Minimap+RotationMode" />
+		</add>
+	</_IconDegSin>
+
+	<!-- Calculates distance from player where icons become visible -->
+	<_DistCalc>
+		<copy> 0 </copy>
+		<add src="me()" trait="_Dist" />
+		<onlyifnot src="io()" trait="_Minimap+DistanceMode" />
+		<add>
+			<copy src="me()" trait="_Dist" />
+			<div> 1680 </div>
+			<mul>
+				<log src="me()" trait="_PlrAV6" />
+				<div> <log> 4 </log> </div>
+				<mul> 1000 </mul>
+				<add> 1100 </add>
+				<div> 1.65 </div>
+			</mul>
+			<onlyif src="io()" trait="_Minimap+DistanceMode" />
+		</add>
+	</_DistCalc>
+
+	<!-- Map color control -->
+	<_systemcolor>
+		<copy src="me()" trait="_systemcolor_0" />
+		<onlyif>
+			<not src="io()" trait="_Minimap+CombatIndicator" />
+			<or> <not src="me()" trait="_submenu" /> </or>
+		</onlyif>
+		<add>
+			<copy> &hudalt; </copy>
+			<onlyif>
+				<copy src="io()" trait="_Minimap+CombatIndicator" />
+				<and src="me()" trait="_submenu" />
+			</onlyif>
+		</add>
+	</_systemcolor>
+
+	<!-- Icon color control -->
+	<_systemcolor_map>
+		<copy src="me()" trait="_systemcolor_0" />
+		<onlyifnot src="io()" trait="_ColorfulMapMarkerFix" />
+	</_systemcolor_map>
+	<_systemcolor_-1>
+		<copy src="me()" trait="_systemcolor_0" />
+		<onlyifnot src="io()" trait="_ySIColorfulIconsFix" />
+	</_systemcolor_-1>
+	<_systemcolor_0> &hudmain; </_systemcolor_0>
+	<_systemcolor_1>
+		<copy src="me()" trait="_systemcolor_0" />
+		<onlyifnot src="io()" trait="_Minimap+HostileColor" />
+		<add>
+			<copy> &hudalt; </copy>
+			<onlyif src="io()" trait="_Minimap+HostileColor" />
+		</add>
+	</_systemcolor_1>
+	<_systemcolor_2> 0 </_systemcolor_2>
+	<_systemcolor_3> 0 </_systemcolor_3>
+	<_red_-1> 255 </_red_-1>
+	<_red_0> 255 </_red_0>
+	<_red_1> 255 </_red_1>
+	<_red_2> 255 </_red_2>
+	<_red_3> 255 </_red_3>
+	<_green_-1> 255 </_green_-1>
+	<_green_0> 255 </_green_0>
+	<_green_1> 255 </_green_1>
+	<_green_2> 255 </_green_2>
+	<_green_3> 255 </_green_3>
+	<_blue_-1> 255 </_blue_-1>
+	<_blue_0> 255 </_blue_0>
+	<_blue_1> 255 </_blue_1>
+	<_blue_2> 255 </_blue_2>
+	<_blue_3> 255 </_blue_3>
+
+	<!-- Text Scale -->
+	<_info_text_zoom>
+		<copy> 60 </copy>
+		<mul src="me()" trait="_TileScale" />
+	</_info_text_zoom>
+	<_compass_text_zoom>
+		<copy src="me()" trait="_TileScale" />
+		<max> 0.75 </max>
+	</_compass_text_zoom>
+
+	<!-- Realtime Pip-Boy -->
+	<_CardinalOffset> 0.5 </_CardinalOffset>
+	<_RenderUpdateX> 0.5 </_RenderUpdateX>
+	<_RenderUpdateY> 0.5 </_RenderUpdateY>
+	<_WidthRatio> 1 </_WidthRatio>
+	<_HeightRatio> 1 </_HeightRatio>
+	<_ScalerWidthLocal>
+		<copy> 0.5 </copy>
+		<mul src="me()" trait="_WidthRatio" />
+	</_ScalerWidthLocal>
+	<_ScalerHeightLocal>
+		<copy> 0.5 </copy>
+		<mul src="me()" trait="_HeightRatio" />
+	</_ScalerHeightLocal>
+
+	<_MarkerMaxX>
+		<copy src="me()" trait="width" />
+		<sub>
+			<copy src="me()" trait="width" />
+			<mul src="me()" trait="_WidthRatio" />
+		</sub>
+		<div> 2 </div>
+		<add> 3 </add>
+	</_MarkerMaxX>
+	<_MarkerMinX>
+		<copy src="me()" trait="width" />
+		<sub src="me()" trait="_MarkerMaxX" />
+		<sub>
+			<copy> 18 </copy>
+			<mul src="me()" trait="_IconScaleMul" />
+		</sub>
+	</_MarkerMinX>
+
+	<!-- Interface Control (DO NOT TOUCH) -->
+	<_submenu> 0 </_submenu>
+	<visible> <copy src="me()" trait="_visible" /> </visible>
+	<x>
+		<copy> 0 </copy>
+		<add>
+			<copy src="me()" trait="_BackgroundPad" />
+			<add>
+				<copy src="me()" trait="_x" />
+				<onlyif>
+					<copy src="io()" trait="_Minimap+AnchorX" />
+					<eq> 0 </eq>
+				</onlyif>
+			</add>
+			<add>
+				<copy src="screen()" trait="width" />
+				<sub src="child(Background)" trait="width" />
+				<div> 2 </div>
+				<add src="me()" trait="_x" />
+				<onlyif>
+					<copy src="io()" trait="_Minimap+AnchorX" />
+					<eq> 1 </eq>
+				</onlyif>
+			</add>
+			<add>
+				<copy src="screen()" trait="width" />
+				<sub src="child(Background)" trait="width" />
+				<sub src="me()" trait="_x" />
+				<onlyif>
+					<copy src="io()" trait="_Minimap+AnchorX" />
+					<eq> 2 </eq>
+				</onlyif>
+			</add>
+			<onlyif src="me()" trait="_submenu" />
+		</add>
+		<add>
+			<copy src="sibling(MCM)" trait="x" />
+			<add src="sibling(MCM)" trait="width" />
+			<sub src="me()" trait="width" />
+			<sub> 65 </sub>
+			<onlyifnot src="me()" trait="_submenu" />
+		</add>
+	</x>
+	<y>
+		<copy> 0 </copy>
+		<add>
+			<copy src="me()" trait="_BackgroundPad" />
+			<add>
+				<copy src="me()" trait="_y" />
+				<onlyif>
+					<copy src="io()" trait="_Minimap+AnchorY" />
+					<eq> 0 </eq>
+				</onlyif>
+			</add>
+			<add>
+				<copy src="screen()" trait="height" />
+				<sub src="child(Background)" trait="height" />
+				<div> 2 </div>
+				<add src="me()" trait="_y" />
+				<onlyif>
+					<copy src="io()" trait="_Minimap+AnchorY" />
+					<eq> 1 </eq>
+				</onlyif>
+			</add>
+			<add>
+				<copy src="screen()" trait="height" />
+				<sub src="child(Background)" trait="height" />
+				<sub src="me()" trait="_y" />
+				<onlyif>
+					<copy src="io()" trait="_Minimap+AnchorY" />
+					<eq> 2 </eq>
+				</onlyif>
+			</add>
+			<onlyif src="me()" trait="_submenu" />
+		</add>
+		<add>
+			<copy src="sibling(MCM)" trait="height" />
+			<sub src="me()" trait="height" />
+			<div> 2 </div>
+			<add src="sibling(MCM)" trait="y" />
+			<onlyifnot src="me()" trait="_submenu" />
+		</add>
+	</y>
+	<depth> 100 </depth>
+	<locus> 1 </locus>
+	<clipwindow> 1 </clipwindow>
+	<width> <copy src="me()" trait="_width" /> </width>
+	<height> <copy src="me()" trait="_width" /> </height>
+
+	<!-- Map Render Texture -->
+	<image name="MapRender">
+		<visible> 1 </visible>
+		<alpha> 255 </alpha>
+		<depth> 0 </depth>
+		<x>
+			<copy src="me()" trait="_x" />
+			<mul src="parent()" trait="_width" />
+			<sub>
+				<copy src="me()" trait="width" />
+				<div> 2 </div>
+			</sub>
+		</x>
+		<y>
+			<copy src="me()" trait="_y" />
+			<mul src="parent()" trait="_width" />
+			<sub>
+				<copy src="me()" trait="height" />
+				<div> 2 </div>
+			</sub>
+		</y>
+		<clips> 1 </clips>
+		<_DegOffset>
+			<copy src="parent()" trait="_PlrDeg" />
+			<sub src="parent()" trait="_CellDeg" />
+			<div> 360 </div>
+		</_DegOffset>
+		<rotateaxisx>
+			<copy src="parent()" trait="_width" />
+			<div> 2 </div>
+			<sub src="me()" trait="x" />
+		</rotateaxisx>
+		<rotateaxisy>
+			<copy src="parent()" trait="_width" />
+			<div> 2 </div>
+			<sub src="me()" trait="y" />
+		</rotateaxisy>
+		<rotateangle>
+			<copy> 6.2831 </copy>
+			<mul src="me()" trait="_DegOffset" />
+			<onlyif src="io()" trait="_Minimap+RotationMode" />
+		</rotateangle>
+		<width>
+			<copy src="parent()" trait="_width" />
+			<mul> 2 </mul>
+		</width>
+		<height> <copy src="me()" trait="width" /> </height>
+		<zoom> &scale; </zoom>
+		<systemcolor>
+			<copy src="parent()" trait="_systemcolor_0" />
+			<onlyifnot src="parent()" trait="_ColorMode" />
+		</systemcolor>
+		<brightness>
+			<copy> 255 </copy>
+			<onlyif src="parent()" trait="_ColorMode" />
+			<add>
+				<copy>
+					<copy src="io()" trait="_Minimap+RenderBrightness" />
+					<onlyifnot src="parent()" trait="_MCM_Scale" />
+					<add>
+						<copy src="parent()" trait="_MCM_RenderBrightness" />
+						<onlyif src="parent()" trait="_MCM_Scale" />
+					</add>
+				</copy>
+				<mul> 255 </mul>
+				<onlyifnot src="parent()" trait="_ColorMode" />
+			</add>
+		</brightness>
+		<filename> Interface\Stentorious\ModernMinimap\MCMRender.dds </filename>
+		<_x>
+			<copy> 0.5 </copy>
+			<add>
+				<copy src="me()" trait="_PosXOffset" />
+				<mul src="Parent()" trait="_CellDegCos" />
+			</add>
+			<sub>
+				<copy src="me()" trait="_PosYOffset" />
+				<mul src="Parent()" trait="_CellDegSin" />
+			</sub>
+		</_x>
+		<_y>
+			<copy> 0.5 </copy>
+			<sub>
+				<copy src="me()" trait="_PosXOffset" />
+				<mul src="Parent()" trait="_CellDegSin" />
+			</sub>
+			<sub>
+				<copy src="me()" trait="_PosYOffset" />
+				<mul src="Parent()" trait="_CellDegCos" />
+			</sub>
+		</_y>
+		<_PosXOffset>
+			<copy src="parent()" trait="_MapOriginX" />
+			<sub src="parent()" trait="_PlrX" />
+			<mul src="parent()" trait="_WorldScale" />
+		</_PosXOffset>
+		<_PosYOffset>
+			<copy src="parent()" trait="_MapOriginY" />
+			<sub src="parent()" trait="_PlrY" />
+			<mul src="parent()" trait="_WorldScale" />
+		</_PosYOffset>
+	</image>
+
+	<!-- Map Window Background -->
+	<image name="Background">
+		<visible> 1 </visible>
+		<alpha>
+			<copy src="io()" trait="_Minimap+BackgroundAlpha" />
+			<onlyifnot src="parent()" trait="_MCM_Scale" />
+			<add>
+				<copy src="parent()" trait="_MCM_BackgroundAlpha" />
+				<onlyif src="parent()" trait="_MCM_Scale" />
+			</add>
+			<mul> 2.5 </mul>
+		</alpha>
+		<depth> -1 </depth>
+		<x>
+			<copy> 0 </copy>
+			<sub src="parent()" trait="_BackgroundPad" />
+		</x>
+		<y>
+			<copy> 0 </copy>
+			<sub src="parent()" trait="_BackgroundPad" />
+		</y>
+		<width>
+			<copy src="parent()" trait="_width" />
+			<add>
+				<copy src="parent()" trait="_BackgroundPad" />
+				<mul> 2 </mul>
+			</add>
+		</width>
+		<height> <copy src="me()" trait="width" /> </height>
+		<zoom> &scale; </zoom>
+		<systemcolor> 0 </systemcolor>
+		<red> 0 </red>
+		<green> 0 </green>
+		<blue> 0 </blue>
+		<filename> Interface\Shared\solid.dds </filename>
+	</image>
+
+	<!-- Headlines -->
+	<image name="Headline_VL">
+		<x>
+			<copy> 0 </copy>
+			<sub src="globals()" trait="_line_thickness" />
+		</x>
+		<width> <copy src="globals()" trait="_line_thickness" /> </width>
+		<height> <copy src="parent()" trait="_width" /> </height>
+		<systemcolor> <copy src="parent()" trait="_systemcolor" /> </systemcolor>
+		<brightness> 255 </brightness>
+		<filename> Interface\Shared\solid.dds </filename>
+	</image>
+	<image name="Headline_VR">
+		<x> <copy src="parent()" trait="_width" /> </x>
+		<width> <copy src="globals()" trait="_line_thickness" /> </width>
+		<height> <copy src="parent()" trait="_width" /> </height>
+		<systemcolor> <copy src="parent()" trait="_systemcolor" /> </systemcolor>
+		<brightness> 255 </brightness>
+		<filename> Interface\Shared\solid.dds </filename>
+	</image>
+	<image name="Headline_HT">
+		<x> <copy src="sibling(Headline_VL)" trait="x" /> </x>
+		<y> <copy src="me()" trait="x" /> </y>
+		<width>
+			<copy src="parent()" trait="_width" />
+			<add src="globals()" trait="_line_thickness" />
+			<add src="globals()" trait="_line_thickness" />
+		</width>
+		<height> <copy src="globals()" trait="_line_thickness" /> </height>
+		<systemcolor> <copy src="parent()" trait="_systemcolor" /> </systemcolor>
+		<brightness> 255 </brightness>
+		<filename> Interface\Shared\solid.dds </filename>
+	</image>
+	<image name="Headline_HB">
+		<x> <copy src="sibling(Headline_VL)" trait="x" /> </x>
+		<y> <copy src="parent()" trait="_width" /> </y>
+		<width>
+			<copy src="parent()" trait="_width" />
+			<add src="globals()" trait="_line_thickness" />
+			<add src="globals()" trait="_line_thickness" />
+		</width>
+		<height> <copy src="globals()" trait="_line_thickness" /> </height>
+		<systemcolor> <copy src="parent()" trait="_systemcolor" /> </systemcolor>
+		<brightness> 255 </brightness>
+		<filename> Interface\Shared\solid.dds </filename>
+	</image>
+	<image name="Headline_VC">
+		<visible>
+			<copy src="parent()" trait="_MapMode" />
+			<and src="me()" trait="_visible" />
+		</visible>
+		<alpha> 102 </alpha>
+		<x>
+			<copy src="parent()" trait="_width" />
+			<sub src="me()" trait="width" />
+			<div> 2 </div>
+		</x>
+		<y>
+			<copy src="me()" trait="width" />
+			<sub src="parent()" trait="_width" />
+			<div> 2 </div>
+		</y>
+		<width>
+			<copy src="globals()" trait="_line_thickness" />
+			<mul src="parent()" trait="_TileScale" />
+		</width>
+		<height> <copy src="parent()" trait="_width" /> <mul> 2 </mul> </height>
+		<clips> 1 </clips>
+		<rotateaxisx>
+			<copy src="me()" trait="width" />
+			<div> 2 </div>
+		</rotateaxisx>
+		<rotateaxisy>
+			<copy src="me()" trait="height" />
+			<div> 2 </div>
+		</rotateaxisy>
+		<rotateangle> <copy src="sibling(MapRender)" trait="rotateangle" /> </rotateangle>
+		<systemcolor> <copy src="parent()" trait="_systemcolor_0" /> </systemcolor>
+		<brightness> 153 </brightness>
+		<filename> Interface\Shared\solid.dds </filename>
+		<_visible> <copy src="io()" trait="_Minimap+CompassRose" /> </_visible>
+	</image>
+	<image name="Headline_HC">
+		<visible> <copy src="sibling(Headline_VC)" trait="visible" /> </visible>
+		<alpha> 102 </alpha>
+		<x> <copy src="sibling(Headline_VC)" trait="y" /> </x>
+		<y> <copy src="sibling(Headline_VC)" trait="x" /> </y>
+		<width> <copy src="sibling(Headline_VC)" trait="height" /> </width>
+		<height> <copy src="sibling(Headline_VC)" trait="width" /> </height>
+		<clips> 1 </clips>
+		<rotateaxisx>
+			<copy src="me()" trait="width" />
+			<div> 2 </div>
+		</rotateaxisx>
+		<rotateaxisy>
+			<copy src="me()" trait="height" />
+			<div> 2 </div>
+		</rotateaxisy>
+		<rotateangle> <copy src="sibling(MapRender)" trait="rotateangle" /> </rotateangle>
+		<systemcolor> <copy src="parent()" trait="_systemcolor_0" /> </systemcolor>
+		<brightness> 153 </brightness>
+		<filename> Interface\Shared\solid.dds </filename>
+	</image>
+
+	<image name="Scan">
+		<visible> <copy src="io()" trait="_Minimap+Scan" /> </visible>
+		<alpha> 204 </alpha>
+		<depth> 501 </depth>
+		<x>
+			<copy src="parent()" trait="_width" />
+			<div> 2 </div>
+			<mul> -1 </mul>
+		</x>
+		<y> <copy src="io()" trait="_Minimap+ScanY" /> </y>
+		<width>
+			<copy src="parent()" trait="_width" />
+			<mul> 2 </mul>
+		</width>
+		<height>
+			<copy> 24 </copy>
+			<mul src="parent()" trait="_TileScale" />
+		</height>
+		<clips> 1 </clips>
+		<zoom> &scale; </zoom>
+		<systemcolor> <copy src="parent()" trait="_systemcolor_0" /> </systemcolor>
+		<brightness> <copy src="io()" trait="_Minimap+ScanBrightness" /> </brightness>
+		<filename> fade_to_bottom.dds </filename>
+		<texatlas> Interface\InterfaceShared.tai </texatlas>
+	</image>
+
+	<hotrect name="Player">
+		<visible> 1 </visible>
+		<locus> 1 </locus>
+		<x>
+			<copy src="parent()" trait="_width" />
+			<sub src="me()" trait="width" />
+			<div> 2 </div>
+		</x>
+		<y> <copy src="me()" trait="x" /> </y>
+		<depth> 500 </depth>
+		<width>
+			<copy> 36 </copy>
+			<mul src="parent()" trait="_IconScaleMul" />
+		</width>
+		<height> <copy src="me()" trait="width" /> </height>
+		<zoom> &scale; </zoom>
+		<filename> Interface\Stentorious\ModernMinimap\Player.dds </filename>
+
+		<_DegOffset>
+			<copy src="parent()" trait="_CellDeg" />
+			<sub src="parent()" trait="_PlrDeg" />
+			<div> 360 </div>
+		</_DegOffset>
+
+		<image name="Icon">
+			<visible> 1 </visible>
+			<depth> 0 </depth>
+			<rotateaxisx>
+				<copy src="me()" trait="width" />
+				<div> 2 </div>
+			</rotateaxisx>
+			<rotateaxisy>
+				<copy src="me()" trait="height" />
+				<div> 2 </div>
+			</rotateaxisy>
+			<rotateangle>
+				<copy> 6.2831 </copy>
+				<mul src="parent()" trait="_DegOffset" />
+				<onlyifnot src="io()" trait="_Minimap+RotationMode" />
+				<sub> 0.385 </sub>
+			</rotateangle>
+			<height> <copy src="parent()" trait="height" /> </height>
+			<width> <copy src="parent()" trait="width" /> </width>
+			<zoom> &scale; </zoom>
+			<systemcolor> <copy src="grandparent()" trait="_systemcolor" /> </systemcolor>
+			<filename> <copy src="parent()" trait="filename" /> </filename>
+		</image>
+
+		<image name="DropShadow">
+			<visible> 1 </visible>
+			<alpha> 127.5 </alpha>
+			<depth> -1 </depth>
+			<x>	<copy src="grandparent()" trait="_DropShadowOffset" /> </x>
+			<y> <copy src="me()" trait="x" /> </y>
+			<rotateaxisx> <copy src="sibling(Icon)" trait="rotateaxisx" /> </rotateaxisx>
+			<rotateaxisy> <copy src="sibling(Icon)" trait="rotateaxisy" /> </rotateaxisy>
+			<rotateangle> <copy src="sibling(Icon)" trait="rotateangle" /> </rotateangle>
+			<height> <copy src="parent()" trait="height" /> </height>
+			<width> <copy src="parent()" trait="width" /> </width>
+			<zoom> &scale; </zoom>
+			<systemcolor> 0 </systemcolor>
+			<red> 0 </red>
+			<green> 0 </green>
+			<blue> 0 </blue>
+			<brightness> <copy src="sibling(Icon)" trait="brightness" /> </brightness>
+			<filename> <copy src="sibling(icon)" trait="filename" /> </filename>
+		</image>
+
+	</hotrect>
+
+	<!-- Map Text Display -->
+	<text name="InfoText">
+		<visible> 1 </visible>
+		<alpha> 0 </alpha>
+		<depth> 504 </depth>
+		<x>	5 </x>
+		<y>
+			<copy> 5 </copy>
+			<mul src="parent()" trait="_TileScale" />
+			<add> 5 </add>
+		</y>
+		<zoom> <copy src="parent()" trait="_info_text_zoom" /> </zoom>
+		<systemcolor> <copy src="parent()" trait="_systemcolor" /> </systemcolor>
+		<brightness> 204 </brightness>
+		<font> 7 </font>
+		<string> 1x </string>
+	</text>
+	<text name="LocationText">
+		<visible>
+			<copy src="io()" trait="_Minimap+LocationText" />
+			<gt> 0 </gt>
+		</visible>
+		<alpha> 255 </alpha>
+		<depth> 504 </depth>
+		<x>	<copy src="sibling(InfoText)" trait="x" /> </x>
+		<y>
+			<copy> 5 </copy>
+			<mul src="parent()" trait="_TileScale" />
+			<add src="parent()" trait="_width" />
+			<sub src="me()" trait="height" />
+			<sub> 3 </sub>
+		</y>
+		<zoom> <copy src="parent()" trait="_info_text_zoom" /> </zoom>
+		<systemcolor> <copy src="parent()" trait="_systemcolor" /> </systemcolor>
+		<brightness> 204 </brightness>
+		<font> 7 </font>
+		<string> Location Text </string>
+		<wrapwidth>
+			<copy src="parent()" trait="_width" />
+			<sub> 10 </sub>
+		</wrapwidth>
+	</text>
+
+	<!-- Cardinal Directions -->
+	<text name="NorthText">
+		<include src="Stentorious\ModernMinimap\CardinalText.xml" />
+		<visible>
+			<copy src="io()" trait="_Minimap+CompassText" />
+			<gt> 0 </gt>
+		</visible>
+		<string> N </string>
+		<_x>
+			<copy> 0.5 </copy>
+			<sub>
+				<copy src="parent()" trait="_CardinalOffset" />
+				<mul src="parent()" trait="_CellPlrDegSin" />
+			</sub>
+		</_x>
+		<_y>
+			<copy> 0.5 </copy>
+			<sub>
+				<copy src="parent()" trait="_CardinalOffset" />
+				<mul src="parent()" trait="_CellPlrDegCos" />
+			</sub>
+		</_y>
+	</text>
+	<text name="SouthText">
+		<include src="Stentorious\ModernMinimap\CardinalText.xml" />
+		<visible>
+			<copy src="io()" trait="_Minimap+CompassText" />
+			<gt> 1 </gt>
+		</visible>
+		<string> S </string>
+		<_x>
+			<copy> 0.5 </copy>
+			<add>
+				<copy src="parent()" trait="_CardinalOffset" />
+				<mul src="parent()" trait="_CellPlrDegSin" />
+			</add>
+		</_x>
+		<_y>
+			<copy> 0.5 </copy>
+			<add>
+				<copy src="parent()" trait="_CardinalOffset" />
+				<mul src="parent()" trait="_CellPlrDegCos" />
+			</add>
+		</_y>
+	</text>
+	<text name="EastText">
+		<include src="Stentorious\ModernMinimap\CardinalText.xml" />
+		<visible> <copy src="sibling(SouthText)" trait="visible" /> </visible>
+		<x>
+			<copy src="me()" trait="_x" />
+			<mul src="parent()" trait="width" />
+			<sub>
+				<copy> 3.25 </copy>
+				<mul src="parent()" trait="_compass_text_zoom" />
+			</sub>
+		</x>
+		<string> E </string>
+		<_x>
+			<copy> 0.5 </copy>
+			<add>
+				<copy src="parent()" trait="_CardinalOffset" />
+				<mul src="parent()" trait="_CellPlrDegCos" />
+			</add>
+		</_x>
+		<_y>
+			<copy> 0.5 </copy>
+			<sub>
+				<copy src="parent()" trait="_CardinalOffset" />
+				<mul src="parent()" trait="_CellPlrDegSin" />
+			</sub>
+		</_y>
+	</text>
+	<text name="WestText">
+		<include src="Stentorious\ModernMinimap\CardinalText.xml" />
+		<visible> <copy src="sibling(SouthText)" trait="visible" /> </visible>
+		<string> W </string>
+		<_x>
+			<copy> 0.5 </copy>
+			<sub>
+				<copy src="parent()" trait="_CardinalOffset" />
+				<mul src="parent()" trait="_CellPlrDegCos" />
+			</sub>
+		</_x>
+		<_y>
+			<copy> 0.5 </copy>
+			<add>
+				<copy src="parent()" trait="_CardinalOffset" />
+				<mul src="parent()" trait="_CellPlrDegSin" />
+			</add>
+		</_y>
+	</text>
+
+	<image name="RadiationIcon">
+		<visible> <copy src="io()" trait="_Minimap+RadIndicator" /> </visible>
+		<alpha>
+			<copy> 255 </copy>
+			<mul src="io()" trait="_Minimap+RadPulse" />
+		</alpha>
+		<locus> 1 </locus>
+		<depth> 504 </depth>
+		<x>
+			<copy src="parent()" trait="_width" />
+			<sub> 5 </sub>
+			<sub src="me()" trait="width" />
+		</x>
+		<y>
+			<copy src="sibling(InfoText)" trait="y" />
+			<sub>
+				<copy src="me()" trait="width" />
+				<div> 4 </div>
+			</sub>
+		</y>
+		<width>
+			<copy> 24 </copy>
+			<mul src="parent()" trait="_TileScale" />
+		</width>
+		<height> <copy src="me()" trait="width" /> </height>
+		<zoom> &scale; </zoom>
+		<systemcolor> 2 </systemcolor>
+		<filename> Interface\Stentorious\ModernMinimap\Radiation.dds  </filename>
+		<image name="DropShadow">
+			<visible> 1 </visible>
+			<alpha>
+				<copy src="parent()" trait="alpha" />
+				<div> 2 </div>
+			</alpha>
+			<depth> -1 </depth>
+			<x>	<copy src="grandparent()" trait="_DropShadowOffset" /> </x>
+			<y> <copy src="me()" trait="x" /> </y>
+			<height> <copy src="parent()" trait="height" /> </height>
+			<width> <copy src="parent()" trait="width" /> </width>
+			<zoom> &scale; </zoom>
+			<systemcolor> 0 </systemcolor>
+			<red> 0 </red>
+			<green> 0 </green>
+			<blue> 0 </blue>
+			<filename> <copy src="parent()" trait="filename" /> </filename>
+		</image>
+	</image>
+	<text name="RadiationLabel">
+		<visible> <copy src="io()" trait="_Minimap+RadIndicator" /> </visible>
+		<alpha> <copy src="radiation_text" trait="alpha" /> </alpha>
+		<depth> 504 </depth>
+		<x>
+			<copy src="sibling(RadiationIcon)" trait="x" />
+			<sub>
+				<copy> 7 </copy>
+				<mul src="parent()" trait="_TileScale" />
+			</sub>
+		</x>
+		<y> <copy src="sibling(InfoText)" trait="y" /> </y>
+		<zoom> <copy src="parent()" trait="_info_text_zoom" /> </zoom>
+		<systemcolor> 2 </systemcolor>
+		<font> 7 </font>
+		<justify> &right; </justify>
+		<string> /SEC </string>
+	</text>
+	<text name="RadiationValue">
+		<visible> <copy src="io()" trait="_Minimap+RadIndicator" /> </visible>
+		<alpha> <copy src="radiation_text_value" trait="alpha" /> </alpha>
+		<depth> 504 </depth>
+		<x>
+			<copy src="sibling(RadiationLabel)" trait="x" />
+			<sub>
+				<copy src="sibling(RadiationLabel)" trait="width" />
+				<mul> 1.1 </mul>
+			</sub>
+		</x>
+		<y> <copy src="sibling(InfoText)" trait="y" /> </y>
+		<zoom> <copy src="parent()" trait="_info_text_zoom" /> </zoom>
+		<systemcolor> 2 </systemcolor>
+		<font> 7 </font>
+		<justify> &right; </justify>
+		<string> +1.00 </string>
+	</text>
+
+	<rect name="Actors">
+		<visible>
+			<copy src="parent()" trait="_MapMode" />
+			<and src="parent()" trait="_ToggleUpdate" />
+		</visible>
+		<width> <copy src="parent()" trait="width" /> </width>
+		<height> <copy src="parent()" trait="height" /> </height>
+
+		<hotrect name="Icon">
+			<include src="Stentorious\ModernMinimap\MCM\IconTemplate.xml" />
+			<filename> Interface\Stentorious\ModernMinimap\Actor.dds </filename>
+			<_PosX> -500 </_PosX>
+			<_PosY> 500 </_PosY>
+			<_PosZ> 500 </_PosZ>
+			<_Deg> 135 </_Deg>
+			<_Dist> 707.1 </_Dist>
+			<_Hostile> -1 </_Hostile>
+			<_DepthMod> 100 </_DepthMod>
+		</hotrect>
+
+	</rect>
+
+	<rect name="QuestLocal">
+		<visible>
+			<copy src="parent()" trait="_MapMode" />
+			<and src="parent()" trait="_ToggleUpdate" />
+			<and src="parent()" trait="_ShowQuest" />
+		</visible>
+		<width> <copy src="parent()" trait="width" /> </width>
+		<height> <copy src="parent()" trait="height" /> </height>
+
+		<image name="Icon">
+			<include src="Stentorious\ModernMinimap\MCM\MarkerTemplate.xml" />
+			<_PosX> 2000 </_PosX>
+			<_PosY> -2000 </_PosY>
+			<_PosZ> 500 </_PosZ>
+			<_DepthMod> 100 </_DepthMod>
+		</image>
+
+	</rect>
+
+	<rect name="PlayerPath">
+		<visible>
+			<copy src="parent()" trait="_MapMode" />
+			<and src="parent()" trait="_ToggleUpdate" />
+			<and src="io()" trait="_Minimap+PlayerPath" />
+		</visible>
+		<width> <copy src="parent()" trait="width" /> </width>
+		<height> <copy src="parent()" trait="height" /> </height>
+
+		<image name="Icon">
+			<include src="Stentorious\ModernMinimap\MCM\PathTemplate.xml" />
+			<_PosX> -161 </_PosX>
+			<_PosY> -26 </_PosY>
+		</image>
+		<image name="Icon">
+			<include src="Stentorious\ModernMinimap\MCM\PathTemplate.xml" />
+			<_PosX> -309 </_PosX>
+			<_PosY> -96 </_PosY>
+		</image>
+		<image name="Icon">
+			<include src="Stentorious\ModernMinimap\MCM\PathTemplate.xml" />
+			<_PosX> -441 </_PosX>
+			<_PosY> -194 </_PosY>
+		</image>
+		<image name="Icon">
+			<include src="Stentorious\ModernMinimap\MCM\PathTemplate.xml" />
+			<_PosX> -557 </_PosX>
+			<_PosY> -310 </_PosY>
+		</image>
+		<image name="Icon">
+			<include src="Stentorious\ModernMinimap\MCM\PathTemplate.xml" />
+			<_PosX> -661 </_PosX>
+			<_PosY> -437 </_PosY>
+		</image>
+		<image name="Icon">
+			<include src="Stentorious\ModernMinimap\MCM\PathTemplate.xml" />
+			<_PosX> -756 </_PosX>
+			<_PosY> -571 </_PosY>
+		</image>
+		<image name="Icon">
+			<include src="Stentorious\ModernMinimap\MCM\PathTemplate.xml" />
+			<_PosX> -843 </_PosX>
+			<_PosY> -711 </_PosY>
+		</image>
+		<image name="Icon">
+			<include src="Stentorious\ModernMinimap\MCM\PathTemplate.xml" />
+			<_PosX> -924 </_PosX>
+			<_PosY> -854 </_PosY>
+		</image>
+
+	</rect>
+
+</rect>

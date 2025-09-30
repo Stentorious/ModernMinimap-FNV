@@ -147,8 +147,12 @@ begin Function {}
 			elseif eval rIcon.GetKnockedState
 				sFilename = "Interface\icons\typeicons\hot_keys_icon_surgerykit.dds"
 				iState = 1
-			elseif eval Goo1.AuxVarGetFlt "*Minimap_INI" 5 && rIcon.GetPlayerTeammate && (sFilename = AuxStringMapGetStr "*JIPCCC_Avatars" (GetName rIcon)) != ""
-				iState = Goo1.AuxVarGetFlt "*Minimap_INI" 6
+			elseif eval Goo1.AuxVarGetFlt "*JIPCCC_Avatars" && Goo1.AuxVarGetFlt "*Minimap_INI" 5 && rIcon.GetPlayerTeammate && (sFilename = AuxStringMapGetStr "*JIPCCC_Avatars" (GetName rIcon)) != ""
+				if eval Goo1.AuxVarGetFlt "*Minimap_INI" 6
+					iState = 2
+				else
+					iState = 3
+				endif
 			else
 				iState = 2
 				fAngle = rIcon.GetAngle Z

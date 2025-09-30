@@ -1,2 +1,4 @@
 Stentorious\ModernMinimap.xml::HUDMainMenu
 true
+Stentorious\ModernMinimap\MCM\Main.xml::StartMenu
+true

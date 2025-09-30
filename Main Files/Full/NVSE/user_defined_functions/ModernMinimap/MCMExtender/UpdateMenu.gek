@@ -1,0 +1,31 @@
+array_var aTemp
+
+begin Function {aTemp}
+
+	if eval (Ar_Find "ModernMinimap" aTemp) != Ar_BadNumericIndex
+
+		; Update icons
+		Call (CompileScript "ModernMinimap\UpdateForms.gek")
+
+		; Refresh actor icons
+		UnloadUIComponent "HUDMainMenu\ModernMinimap\Actors"
+		UnloadUIComponent "HUDMainMenu\ModernMinimap\Followers"
+		AddTileFromTemplate "HUDMainMenu\ModernMinimap|Minimap_Icon_Rect|Actors"
+		AddTileFromTemplate "HUDMainMenu\ModernMinimap|Minimap_Icon_Rect|Followers"
+
+		; Update radiation meter position
+		if eval GetUIFloatAlt "HUDMainMenu\_Minimap+RadIndicator" == 1 && GetUIFloatAlt "HUDMainMenu\RadiationMeter\y" > 0
+			ModUIFloat "HUDMainMenu\RadiationMeter\y" -3000
+			SetUIFloatAlt "HUDMainMenu\RadWrap\visible" 0
+		elseif eval GetUIFloatAlt "HUDMainMenu\RadiationMeter\y" < 0
+			ModUIFloat "HUDMainMenu\RadiationMeter\y" 3000
+			SetUIFloatAlt "HUDMainMenu\RadWrap\visible" 1
+		endif
+
+		; Update map
+		;Call (CompileScript "ModernMinimap\MainLoop.gek")
+
+	endif
+	aTemp = ar_Null
+
+end

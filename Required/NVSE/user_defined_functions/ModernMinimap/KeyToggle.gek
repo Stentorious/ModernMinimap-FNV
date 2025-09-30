@@ -20,7 +20,7 @@ begin Function {iKeyID}
 	endif
 
 	UnloadUIComponent "HUDMainMenu\ModernMinimap\PlayerPath"
-	AddTileFromTemplate "HUDMainMenu\ModernMinimap|Minimap_Icon_Rect|PlayerPath"
+	AddTileFromTemplate "HUDMainMenu\ModernMinimap|Minimap_Path_Rect|PlayerPath"
 
 	SetUIFloatGradual "HUDMainMenu\ModernMinimap\InfoText\alpha" 400 0 0.5
 

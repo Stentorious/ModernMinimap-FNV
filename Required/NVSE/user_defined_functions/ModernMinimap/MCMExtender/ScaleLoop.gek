@@ -1,0 +1,30 @@
+int iSubmenu
+int iOption
+array_var aValues
+
+begin Function {iSubmenu, iOption, aValues}
+
+	if eval iSubmenu == 2
+		if eval iOption == 7
+			SetUIFloatAlt "StartMenu/ModernMinimap/_MCM_OffsetX" (aValues[0])
+			SetUIFloatAlt "StartMenu/ModernMinimap/_MCM_OffsetY" (aValues[1])
+		elseif eval iOption == 9
+			SetUIFloatAlt "StartMenu/ModernMinimap/_MCM_TileScale" (aValues[0])
+		elseif eval iOption == 11
+			SetUIFloatAlt "StartMenu/ModernMinimap/_MCM_BackgroundAlpha" (aValues[0])
+		elseif eval iOption == 13
+			SetUIFloatAlt "StartMenu/ModernMinimap/_MCM_BackgroundPad" (aValues[0])
+		elseif eval iOption == 15
+			SetUIFloatAlt "StartMenu/ModernMinimap/_MCM_RenderBrightness" (aValues[0])
+		endif
+	elseif eval iSubmenu == 3
+		if eval iOption == 3
+			SetUIFloatAlt "StartMenu/ModernMinimap/_MCM_IconScale" (aValues[0])
+		elseif eval iOption == 5
+			SetUIFloatAlt "StartMenu/ModernMinimap/_MCM_DistanceMax" (aValues[0])
+		endif
+	endif
+
+	aValues = Ar_Null
+
+end

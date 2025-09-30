@@ -25,24 +25,14 @@ begin Function {iKeyID}
 	endif
 
 	; Toggle map rotation
-	if eval iKeyID == Goo1.AuxVarGetFlt "*Minimap_Key" 1
-		if eval GetUIFloatAlt "HUDMainMenu\ModernMinimap\_RotationMode"
-			SetUIFloatAlt "HUDMainMenu\ModernMinimap\_RotationMode" 0
-			sInfoText = "Rotation: North"
-		else
-			SetUIFloatAlt "HUDMainMenu\ModernMinimap\_RotationMode" 1
-			sInfoText = "Rotation: Player"
-		endif
-
-	; Modify map zoom
-	elseif eval iKeyID == Goo1.AuxVarGetFlt "*Minimap_Key" 2 || iKeyID == Goo1.AuxVarGetFlt "*Minimap_Key" 3
+	if eval iKeyID == Goo1.AuxVarGetFlt "*Minimap_Key" 1 || iKeyID == Goo1.AuxVarGetFlt "*Minimap_Key" 2
 		sTemp = "HUDMainMenu\ModernMinimap\_MapScale"
 		if eval GetUIFloatAlt "HUDMainMenu\ModernMinimap\_MapMode"
 			sTemp += "Local"
 		else
 			sTemp += "World"
 		endif
-		if eval iKeyID == Goo1.AuxVarGetFlt "*Minimap_Key" 2
+		if eval iKeyID == Goo1.AuxVarGetFlt "*Minimap_Key" 1
 			if eval (fScale = GetUIFloatAlt (sTemp)) < 2
 				fScale += 0.25
 			endif
@@ -55,7 +45,7 @@ begin Function {iKeyID}
 		Call (CompileScript "ModernMinimap\WorldMap\MainLoop.gek")
 
 	; Toggle quest markers
-	elseif eval iKeyID == Goo1.AuxVarGetFlt "*Minimap_Key" 4
+	elseif eval iKeyID == Goo1.AuxVarGetFlt "*Minimap_Key" 3
 		if eval GetUIFloatAlt "HUDMainMenu\ModernMinimap\_ShowQuest"
 			SetUIFloatAlt "HUDMainMenu\ModernMinimap\_ShowQuest" 0
 			sInfoText = "Markers: Hide"

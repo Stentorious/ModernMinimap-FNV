@@ -1,0 +1,611 @@
+{
+	"modName": "ModernMinimap",
+	"displayName": "$modDisplayName",
+	"description": "$modDescription",
+	"saveFile": "Stentorious/ModernMinimap.ini",
+	"minMCMVersion": 1.30,
+	"minModVersion": 1.00,
+	"requirements": [
+		{ "type": "file", "file": "NVSE/plugins/scripts/ln_ModernMinimap.txt" }
+	],
+	"submenus": {
+		"0": {
+			"listTitle": "",
+			"pageTitle": "",
+			"columns": 1,
+			"enable": 1,
+			"active": 1,
+			"options": {
+				"1": {
+					"title": "",
+					"enable": 1,
+					"type": 0,
+					"image": {
+						"filename": "Interface/Stentorious/ModernMinimap/Logo.dds",
+						"width": 700,
+						"height": 350,
+						"offsetX": -160,
+						"offsetY": 5,
+						"systemcolor": 5
+					}
+				}
+			}
+		},
+		"1": {
+			"listTitle": "$General",
+			"pageTitle": "$General",
+			"columns": 1,
+			"enable": 1,
+			"options": {
+				"1": {
+					"title": "$Keybinds",
+					"enable": 1,
+					"type": 0
+				},
+				"2": {
+					"title": "$MapControl",
+					"enable": 1,
+					"type": 3,
+					"mouse": "$MapControlMouse",
+					"vars": [ { "configINI": "KeyBinds:iMapVisibility", "default": 50 } ],
+					"call": { "type": "file", "value": "ModernMinimap/MCMExtender/UpdateOption.gek" }
+				},
+				"3": {
+					"title": "$ZoomIn",
+					"enable": 1,
+					"type": 3,
+					"mouse": "$ZoomInMouse",
+					"vars": [ { "configINI": "KeyBinds:iMapZoomIn", "default": 201 } ],
+					"call": { "type": "file", "value": "ModernMinimap/MCMExtender/UpdateOption.gek" }
+				},
+				"4": {
+					"title": "$ZoomOut",
+					"enable": 1,
+					"type": 3,
+					"mouse": "$ZoomOutMouse",
+					"vars": [ { "configINI": "KeyBinds:iMapZoomOut", "default": 209 } ],
+					"call": { "type": "file", "value": "ModernMinimap/MCMExtender/UpdateOption.gek" }
+				},
+				"5": {
+					"title": "$MarkerVisibility",
+					"enable": 1,
+					"type": 3,
+					"mouse": "$MarkerVisibilityMouse",
+					"vars": [ { "configINI": "KeyBinds:iMarkerVisibility", "default": 199 } ],
+					"call": { "type": "file", "value": "ModernMinimap/MCMExtender/UpdateOption.gek" }
+				},
+				"7": {
+					"title": "$Performance",
+					"enable": 2,
+					"type": 0
+				},
+				"8": {
+					"title": "$UpdateRateLocal",
+					"type": 2,
+					"enable": 2,
+					"mouse": "$UpdateRateLocalMouse",
+					"vars": [ { "configINI": "Performance:iUpdateRateLocal", "default": 20 }],
+					"scale": {
+						"valueDecimal": 2,
+						"valueIncrement": 1,
+						"valueMin": 1,
+						"valueMax": 50
+					}
+				},
+				"9": {
+					"title": "$UpdateRateWorld",
+					"type": 2,
+					"enable": 2,
+					"mouse": "$UpdateRateWorldMouse",
+					"vars": [ { "configINI": "Performance:iUpdateRateWorld", "default": 200 }],
+					"scale": {
+						"valueDecimal": 0,
+						"valueIncrement": 1,
+						"valueMin": 1,
+						"valueMax": 500
+					}
+				}
+			}
+		},
+		"2": {
+			"listTitle": "$Minimap",
+			"pageTitle": "$Minimap",
+			"columns": 2,
+			"enable": 1,
+			"options": {
+				"1": {
+					"title": "$Interface",
+					"enable": 1,
+					"type": 0
+				},
+				"3": {
+					"title": "$AnchorHorizontal",
+					"type": 1,
+					"enable": 1,
+					"mouse": "$AnchorHorizontalMouse",
+					"vars": [ { "uiTrait": "HUDMainMenu/_Minimap+AnchorX", "configINI": "Map:iAnchorX", "default": 2 }],
+					"strings": [ "$Left", "$Center", "$Right" ]
+				},
+				"5": {
+					"title": "$AnchorVertical",
+					"type": 1,
+					"enable": 1,
+					"mouse": "$AnchorVerticalMouse",
+					"vars": [ { "uiTrait": "HUDMainMenu/_Minimap+AnchorY", "configINI": "Map:iAnchorY", "default": 0 }],
+					"strings": [ "$Top", "$Center", "$Bottom" ]
+				},
+				"7": {
+					"title": "$PositionOffset",
+					"type": 8,
+					"enable": 1,
+					"mouse": "$PositionOffsetMouse",
+					"callOpen": { "type": "file", "value": "ModernMinimap/MCMExtender/ScaleOpen.gek" },
+					"callLoop": { "type": "file", "value": "ModernMinimap/MCMExtender/ScaleLoop.gek" },
+					"vars": [
+						{ "uiTrait": "HUDMainMenu/_Minimap+OffsetX", "configINI": "Map:fOffsetX", "default": 24 },
+						{ "uiTrait": "HUDMainMenu/_Minimap+OffsetY", "configINI": "Map:fOffsetY", "default": 24 }
+					],
+					"scale": {
+						"value1Decimal": 0,
+						"value2Decimal": 0,
+						"value1Increment": 1,
+						"value2Increment": 1,
+						"value1Min": 0,
+						"value2Min": 0,
+						"value1Max": 200,
+						"value2Max": 200
+					}
+				},
+				"9": {
+					"title": "$Scale",
+					"type": 2.5,
+					"enable": 1,
+					"suffix": "x",
+					"mouse": "$ScaleMouse",
+					"callOpen": { "type": "file", "value": "ModernMinimap/MCMExtender/ScaleOpen.gek" },
+					"callLoop": { "type": "file", "value": "ModernMinimap/MCMExtender/ScaleLoop.gek" },
+					"vars": [ { "uiTrait": "HUDMainMenu/_Minimap+TileScale", "configINI": "Map:fSize", "default": 1 }],
+					"scale": {
+						"valueDecimal": 2,
+						"valueIncrement": 0.01,
+						"valueMin": 0.5,
+						"valueMax": 1.5,
+						"suffix": "x"
+					}
+				},
+				"11": {
+					"title": "$BackgroundAlpha",
+					"type": 2,
+					"enable": 1,
+					"suffix": "%",
+					"mouse": "$BackgroundAlphaMouse",
+					"callOpen": { "type": "file", "value": "ModernMinimap/MCMExtender/ScaleOpen.gek" },
+					"callLoop": { "type": "file", "value": "ModernMinimap/MCMExtender/ScaleLoop.gek" },
+					"vars": [ { "uiTrait": "HUDMainMenu/_Minimap+BackgroundAlpha", "configINI": "Map:fBackgroundAlpha", "default": 80 }],
+					"scale": {
+						"valueDecimal": 0,
+						"valueIncrement": 1,
+						"valueMin": 0,
+						"valueMax": 100,
+						"suffix": "%"
+					}
+				},
+				"13": {
+					"title": "$BackgroundPad",
+					"type": 2.5,
+					"enable": 1,
+					"mouse": "$BackgroundPadMouse",
+					"callOpen": { "type": "file", "value": "ModernMinimap/MCMExtender/ScaleOpen.gek" },
+					"callLoop": { "type": "file", "value": "ModernMinimap/MCMExtender/ScaleLoop.gek" },
+					"vars": [ { "uiTrait": "HUDMainMenu/_Minimap+BackgroundPad", "configINI": "Map:fBackgroundPadding", "default": 6 }],
+					"scale": {
+						"valueDecimal": 1,
+						"valueIncrement": 0.1,
+						"valueMin": 0,
+						"valueMax": 10
+					}
+				},
+				"15": {
+					"title": "$RenderBrightness",
+					"type": 2.5,
+					"enable": 1,
+					"suffix": "x",
+					"mouse": "$RenderBrightnessMouse",
+					"callOpen": { "type": "file", "value": "ModernMinimap/MCMExtender/ScaleOpen.gek" },
+					"callLoop": { "type": "file", "value": "ModernMinimap/MCMExtender/ScaleLoop.gek" },
+					"vars": [ { "uiTrait": "HUDMainMenu/_Minimap+RenderBrightness", "configINI": "Map:fRenderBrightness", "default": 2 }],
+					"scale": {
+						"valueDecimal": 1,
+						"valueIncrement": 0.1,
+						"valueMin": 1,
+						"valueMax": 3,
+						"suffix": "x"
+					}
+				},
+				"17": {
+					"title": "$ZoomInterior",
+					"type": 2.5,
+					"enable": 1,
+					"suffix": "x",
+					"mouse": "$ZoomInteriorMouse",
+					"vars": [ { "form": "Goo1", "auxVar": "*Minimap_INI", "key": 0, "configINI": "Map:fInteriorZoom", "default": 1.25 }],
+					"scale": {
+						"valueDecimal": 2,
+						"valueIncrement": 0.25,
+						"valueMin": 0.5,
+						"valueMax": 1.5,
+						"suffix": "x"
+					}
+				},
+				"19": {
+					"title": "$ZoomExterior",
+					"type": 2.5,
+					"enable": 1,
+					"suffix": "x",
+					"mouse": "$ZoomExteriorMouse",
+					"vars": [ { "form": "Goo1", "auxVar": "*Minimap_INI", "key": 1, "configINI": "Map:fExteriorZoom", "default": 0.75 }],
+					"scale": {
+						"valueDecimal": 2,
+						"valueIncrement": 0.25,
+						"valueMin": 0.5,
+						"valueMax": 1.5,
+						"suffix": "x"
+					}
+				},
+				"2": {
+					"title": "$Features",
+					"enable": 1,
+					"type": 0
+				},
+				"4": {
+					"title": "$MapMode",
+					"type": 1,
+					"enable": 1,
+					"mouse": "$MapModeMouse",
+					"vars": [ { "form": "Goo1", "auxVar": "*Minimap_INI", "key": 9, "configINI": "Map:iMapMode", "default": 2 }],
+					"strings": [ "$LocalMap", "$WorldMap", "$Dynamic" ]
+				},
+				"6": {
+					"title": "$Visibility",
+					"type": 1,
+					"enable": 1,
+					"mouse": "$VisibilityMouse",
+					"vars": [ { "form": "Goo1", "auxVar": "*Minimap_INI", "key": 7, "configINI": "Map:iCellVisibility", "default": 0 }],
+					"strings": [ "$ShowAlways", "$Interior", "$Exterior" ]
+				},
+				"8": {
+					"title": "$RotationMode",
+					"type": 6,
+					"enable": 1,
+					"mouse": "$RotationModeMouse",
+					"vars": [ { "uiTrait": "HUDMainMenu/_Minimap+RotationMode", "configINI": "Map:iRotationMode", "default": 1 }],
+					"textOff": "$FixedNorth",
+					"textOn": "$RotatePlayer"
+				},
+				"10": {
+					"title": "$CompassText",
+					"type": 1,
+					"enable": 1,
+					"mouse": "$CompassTextMouse",
+					"vars": [ { "uiTrait": "HUDMainMenu/_Minimap+CompassText", "configINI": "Map:iCompassText", "default": 2 }],
+					"strings": [ "$Disabled", "$NorthOnly", "$All" ]
+				},
+				"12": {
+					"title": "$CompassRose",
+					"type": 5,
+					"enable": 1,
+					"mouse": "$CompassRoseMouse",
+					"vars": [ { "uiTrait": "HUDMainMenu/_Minimap+CompassRose", "configINI": "Map:bCompassRose", "default": 1 }]
+				},
+				"14": {
+					"title": "$ScanEffect",
+					"type": 5,
+					"enable": 1,
+					"mouse": "$ScanEffectMouse",
+					"vars": [ { "uiTrait": "HUDMainMenu/_Minimap+Scan", "configINI": "Map:bScanEffect", "default": 1 }]
+				},
+				"16": {
+					"title": "$CombatIndicator",
+					"type": 5,
+					"enable": 1,
+					"mouse": "$CombatIndicatorMouse",
+					"vars": [ { "uiTrait": "HUDMainMenu/_Minimap+CombatIndicator", "configINI": "Map:bCombatIndicator", "default": 1 }]
+				},
+				"18": {
+					"title": "$LocationText",
+					"type": 5,
+					"enable": 1,
+					"mouse": "$LocationTextMouse",
+					"vars": [ { "uiTrait": "HUDMainMenu/_Minimap+LocationText", "configINI": "Map:iLocationText", "default": 1 }]
+				},
+				"20": {
+					"title": "$PlayerPath",
+					"type": 5,
+					"enable": 1,
+					"mouse": "$PlayerPathMouse",
+					"vars": [ { "uiTrait": "HUDMainMenu/_Minimap+PlayerPath", "configINI": "Map:bPlayerPath", "default": 1 }]
+				},
+				"22": {
+					"title": "$RadiationIndicator",
+					"type": 5,
+					"enable": 1,
+					"mouse": "$RadiationIndicatorMouse",
+					"vars": [ { "uiTrait": "HUDMainMenu/_Minimap+RadIndicator", "configINI": "Map:bRadiationIndicator", "default": 1 }]
+				}
+			}
+		},
+		"3": {
+			"listTitle": "$IconsMain",
+			"pageTitle": "$IconsMain",
+			"columns": 2,
+			"enable": 1,
+			"options": {
+				"1": {
+					"title": "$Interface",
+					"enable": 1,
+					"type": 0
+				},
+				"3": {
+					"title": "$IconScale",
+					"type": 2.5,
+					"enable": 1,
+					"suffix": "x",
+					"mouse": "$IconScaleMouse",
+					"callOpen": { "type": "file", "value": "ModernMinimap/MCMExtender/ScaleOpen.gek" },
+					"callLoop": { "type": "file", "value": "ModernMinimap/MCMExtender/ScaleLoop.gek" },
+					"vars": [ { "uiTrait": "HUDMainMenu/_Minimap+IconScale", "configINI": "Icons:fSize", "default": 1 }],
+					"scale": {
+						"valueDecimal": 2,
+						"valueIncrement": 0.01,
+						"valueMin": 0.75,
+						"valueMax": 1.25,
+						"suffix": "x"
+					}
+				},
+				"5": {
+					"title": "$IconDistance",
+					"type": 2,
+					"enable": 1,
+					"suffix": "m",
+					"mouse": "$IconDistanceMouse",
+					"callOpen": { "type": "file", "value": "ModernMinimap/MCMExtender/ScaleOpen.gek" },
+					"callLoop": { "type": "file", "value": "ModernMinimap/MCMExtender/ScaleLoop.gek" },
+					"vars": [ { "uiTrait": "HUDMainMenu/_Minimap+DistanceMax", "configINI": "Icons:fRadius", "default": 15 }],
+					"scale": {
+						"valueDecimal": 0,
+						"valueIncrement": 1,
+						"valueMin": 0,
+						"valueMax": 100,
+						"suffix": "m"
+					}
+				},
+				"7": {
+					"title": "$DistanceCalculation",
+					"type": 6,
+					"enable": 1,
+					"mouse": "$DistanceCalculationMouse",
+					"vars": [ { "uiTrait": "HUDMainMenu/_Minimap+DistanceMode", "configINI": "Icons:bPerceptionCalc", "default": 0 }],
+					"textOff": "$Default",
+					"textOn": "$Perception"
+				},
+				"9": {
+					"title": "$HeightIndicatorIcon",
+					"type": 5,
+					"enable": 1,
+					"mouse": "$HeightIndicatorIconMouse",
+					"vars": [ { "uiTrait": "HUDMainMenu/_Minimap+IconHeight", "configINI": "Icons:bHeightIndicator", "default": 1 }]
+				},
+				"11": {
+					"title": "$HeightIndicatorQuest",
+					"type": 5,
+					"enable": 1,
+					"mouse": "$HeightIndicatorQuestMouse",
+					"vars": [ { "uiTrait": "HUDMainMenu/_Minimap+QuestHeight", "configINI": "Icons:bQuestHeightIndicator", "default": 0 }]
+				},
+
+				"2": {
+					"title": "$Actor",
+					"enable": 1,
+					"type": 0
+				},
+				"4": {
+					"title": "$NPC",
+					"type": 5,
+					"enable": 1,
+					"mouse": "$NPCMouse",
+					"vars": [ { "form": "Goo1", "auxVar": "*Minimap_INI", "key": 2, "configINI": "Actors:bNPC", "default": 1 }]
+				},
+				"6": {
+					"title": "$Creature",
+					"type": 5,
+					"enable": 1,
+					"mouse": "$CreatureMouse",
+					"vars": [ { "form": "Goo1", "auxVar": "*Minimap_INI", "key": 3, "configINI": "Actors:bCreature", "default": 1 }]
+				},
+				"8": {
+					"title": "$Hostile",
+					"type": 5,
+					"enable": 1,
+					"mouse": "$HostileMouse",
+					"vars": [ { "uiTrait": "HUDMainMenu/_Minimap+HostileColor", "configINI": "Actors:bHostileColor", "default": 1 }]
+				},
+				"10": {
+					"title": "$Corpse",
+					"type": 1,
+					"enable": 1,
+					"mouse": "$CorpseMouse",
+					"vars": [ { "form": "Goo1", "auxVar": "*Minimap_INI", "key": 4, "configINI": "Actors:iCorpse", "default": 1 }],
+					"strings": [ "$Disabled", "$HideEmpty", "$ShowAlways" ]
+				},
+				"14": {
+					"title": "$Follower",
+					"enable": 1,
+					"type": 0
+				},
+				"16": {
+					"title": "$ColorTint",
+					"type": 1,
+					"enable": 1,
+					"mouse": "$ColorTintMouse",
+					"vars": [{ "uiTrait": "HUDMainMenu/ModernMinimap/_systemcolor_2", "configINI": "Companions:iSystemcolor", "default": 0 }],
+					"strings": [ "$Custom", "$HUD", "$HUDAlt", "$Terminal", "$PipBoy", "$PauseMenu"]
+				},
+				"18": {
+					"title": "$ColorCustom",
+					"type": 9,
+					"state": { "uiTrait": "HUDMainMenu/ModernMinimap/_systemcolor_2", "value": 0, "disable": 1 },
+					"mouse": "$ColorCustomMouse",
+					"vars": [
+						{ "uiTrait": "HUDMainMenu/ModernMinimap/_red_2", "configINI": "Companions:iRed", "default": 46 },
+						{ "uiTrait": "HUDMainMenu/ModernMinimap/_green_2", "configINI": "Companions:iGreen", "default": 206 },
+						{ "uiTrait": "HUDMainMenu/ModernMinimap/_blue_2", "configINI": "Companions:iBlue", "default": 255 }
+					]
+				},
+				"20": {
+					"title": "$JIPCCC",
+					"type": 5,
+					"enable": 1,
+					"mouse": "$JIPCCCMouse",
+					"state": { "form": "Goo1", "auxVar": "*JIPCCC_Avatars", "key": 0, "value": 1 },
+					"vars": [ { "form": "Goo1", "auxVar": "*Minimap_INI", "key": 5, "configINI": "Companions:bJIPCCC", "default": 1 }]
+				},
+				"22": {
+					"title": "$JIPCCCTint",
+					"type": 5,
+					"enable": 1,
+					"mouse": "$JIPCCCTintMouse",
+					"state": { "form": "Goo1", "auxVar": "*JIPCCC_Avatars", "key": 0, "value": 1 },
+					"vars": [ { "form": "Goo1", "auxVar": "*Minimap_INI", "key": 6, "configINI": "Companions:bJIPCCCColor", "default": 0 }]
+				}
+			}
+		},
+		"4": {
+			"listTitle": "$IconsySI",
+			"pageTitle": "$IconsySI",
+			"columns": 2,
+			"enable": 1,
+			"requirements": [
+				{ "type": "file", "file": "Menus/ySI/ModernMinimapTags.json" }
+			],
+			"options": {
+				"1": {
+					"title": "$Items",
+					"enable": 1,
+					"type": 0
+				},
+				"3": {
+					"title": "$Book",
+					"type": 5,
+					"enable": 1,
+					"mouse": "$BookMouse",
+					"vars": [ { "form": "Goo1", "auxVar": "*Minimap_ySI", "key": 1, "configINI": "Objects:bBook", "default": 1 }]
+				},
+				"5": {
+					"title": "$Magazine",
+					"type": 5,
+					"enable": 1,
+					"mouse": "$MagazineMouse",
+					"vars": [ { "form": "Goo1", "auxVar": "*Minimap_ySI", "key": 2, "configINI": "Objects:bMagazine", "default": 1 }]
+				},
+				"7": {
+					"title": "$Note",
+					"type": 5,
+					"enable": 1,
+					"mouse": "$NoteMouse",
+					"vars": [ { "form": "Goo1", "auxVar": "*Minimap_ySI", "key": 3, "configINI": "Objects:bNote", "default": 1 }]
+				},
+				"9": {
+					"title": "$Key",
+					"type": 5,
+					"enable": 1,
+					"mouse": "$KeyMouse",
+					"vars": [ { "form": "Goo1", "auxVar": "*Minimap_ySI", "key": 4, "configINI": "Objects:bKey", "default": 1 }]
+				},
+				"11": {
+					"title": "$Quest",
+					"type": 5,
+					"enable": 1,
+					"mouse": "$QuestMouse",
+					"vars": [ { "form": "Goo1", "auxVar": "*Minimap_ySI", "key": 7, "configINI": "Objects:bQuest", "default": 1 }]
+				},
+				"13": {
+					"title": "$Unique",
+					"type": 5,
+					"enable": 1,
+					"mouse": "$UniqueMouse",
+					"vars": [ { "form": "Goo1", "auxVar": "*Minimap_ySI", "key": 5, "configINI": "Objects:bUnique", "default": 1 }]
+				},
+				"15": {
+					"title": "$Collectable",
+					"type": 5,
+					"enable": 1,
+					"mouse": "$CollectableMouse",
+					"vars": [ { "form": "Goo1", "auxVar": "*Minimap_ySI", "key": 6, "configINI": "Objects:bCollectable", "default": 1 }]
+				},
+
+				"19": {
+					"title": "$Actors",
+					"enable": 1,
+					"type": 0
+				},
+				"21": {
+					"title": "$Vendor",
+					"type": 1,
+					"enable": 1,
+					"mouse": "$VendorMouse",
+					"vars": [ { "form": "Goo1", "auxVar": "*Minimap_ySI", "key": 0, "configINI": "Vendors:iMode", "default": 2 }],
+					"strings": [ "$Disabled", "$BottleCap", "$Dynamic" ]
+				},
+
+				"2": {
+					"title": "$Objects",
+					"enable": 1,
+					"type": 0
+				},
+
+				"4": {
+					"title": "$Door",
+					"type": 5,
+					"enable": 1,
+					"mouse": "$DoorMouse",
+					"vars": [ { "form": "Goo1", "auxVar": "*Minimap_ySI", "key": 8, "configINI": "Objects:bDoor", "default": 1 }]
+				},
+				"6": {
+					"title": "$Container",
+					"type": 5,
+					"enable": 1,
+					"mouse": "$ContainerMouse",
+					"vars": [ { "form": "Goo1", "auxVar": "*Minimap_ySI", "key": 9, "configINI": "Objects:bContainer", "default": 1 }]
+				},
+				"8": {
+					"title": "$Terminal",
+					"type": 5,
+					"enable": 1,
+					"mouse": "$TerminalMouse",
+					"vars": [ { "form": "Goo1", "auxVar": "*Minimap_ySI", "key": 10, "configINI": "Objects:bTerminal", "default": 1 }]
+				},
+				"10": {
+					"title": "$Crafting",
+					"type": 5,
+					"enable": 1,
+					"mouse": "$CraftingMouse",
+					"vars": [ { "form": "Goo1", "auxVar": "*Minimap_ySI", "key": 11, "configINI": "Objects:bCrafting", "default": 1 }]
+				},
+				"12": {
+					"title": "$Mine",
+					"type": 5,
+					"enable": 1,
+					"mouse": "$MineMouse",
+					"vars": [ { "form": "Goo1", "auxVar": "*Minimap_ySI", "key": 12, "configINI": "Objects:bMine", "default": 1 }]
+				},
+				"14": {
+					"title": "$Trap",
+					"type": 5,
+					"enable": 1,
+					"mouse": "$TrapMouse",
+					"vars": [ { "form": "Goo1", "auxVar": "*Minimap_ySI", "key": 13, "configINI": "Objects:bTrap", "default": 1 }]
+				}
+			}
+		}
+	}
+}

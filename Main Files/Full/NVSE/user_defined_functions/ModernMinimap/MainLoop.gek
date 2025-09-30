@@ -3,7 +3,6 @@ int	iTemp
 int iSize
 int iIndex
 int iType
-int iBitIcon
 float fPosX
 float fPosY
 ref rIcon
@@ -81,7 +80,6 @@ begin Function {}
 
 	; Get global settings
 	iDist = GetUIFloatAlt "HUDMainMenu\ModernMinimap\_Dist"
-	iBitIcon = Goo1.AuxVarGetFlt "*Minimap_ySI" 0
 
 	; These are split into different sections for performance
 
@@ -101,7 +99,7 @@ begin Function {}
 	if eval (iSize = Ar_Size aRefs) > 0
 		while (iSize -= 1) > -1
 			rIcon = aRefs[iSize]
-			if eval IsReference rIcon && rIcon.GetDisabled == 0 && rIcon.HasLoaded3D && ((GetBit iBitIcon 6 && rIcon.GetLocked > 0) || HasKeyword rIcon "MinimapIcon")
+			if eval IsReference rIcon && rIcon.GetDisabled == 0 && rIcon.HasLoaded3D && ((Goo1.AuxVarGetFlt "*Minimap_ySI" 9 && rIcon.GetLocked > 0) || HasKeyword rIcon "MinimapIcon" || AuxVarGetFlt "*MinimapIcon" 0 (rIcon.GBO))
 				Goo1.AuxVarSetRef "*Minimap_Doors" rIcon -1
 			endif
 		loop
@@ -114,7 +112,7 @@ begin Function {}
 			rIcon = aRefs[iSize]
 			if eval IsReference rIcon && rIcon.GetDisabled == 0 && rIcon.HasLoaded3D
 				iType = rIcon.GetType
-				if eval (iType == 49 && GetBit iBitIcon 1) || (iType == 46 && GetBit iBitIcon 2) || (iType == 115 && GetBit iBitIcon 7) || (GetBit iBitIcon 4 && rIcon.IsQuestItem) || (GetBit iBitIcon 3 && IsItemUnique (rIcon.gbo)) || HasKeyword rIcon "MinimapIcon"
+				if eval (iType == 49 && Goo1.AuxVarGetFlt "*Minimap_ySI" 3) || (iType == 46 && Goo1.AuxVarGetFlt "*Minimap_ySI" 4) || (iType == 115 && Goo1.AuxVarGetFlt "*Minimap_ySI" 6) || (Goo1.AuxVarGetFlt "*Minimap_ySI" 7 && rIcon.IsQuestItem) || (Goo1.AuxVarGetFlt "*Minimap_ySI" 5 && IsItemUnique (rIcon.gbo)) || HasKeyword rIcon "MinimapIcon" || AuxVarGetFlt "*MinimapIcon" 0 (rIcon.GBO)
 					Goo1.AuxVarSetRef "*Minimap_Basic" rIcon -1
 				endif
 			endif
@@ -126,14 +124,14 @@ begin Function {}
 	if eval (iSize = Ar_Size aRefs) > 0
 		while (iSize -= 1) > -1
 			rIcon = aRefs[iSize]
-			if eval IsReference rIcon && rIcon.GetDisabled == 0 && rIcon.HasLoaded3D && rIcon.GetDestroyed == 0 && HasKeyword rIcon "MinimapIcon"
+			if eval IsReference rIcon && rIcon.GetDisabled == 0 && rIcon.HasLoaded3D && rIcon.GetDestroyed == 0 && (HasKeyword rIcon "MinimapIcon" || AuxVarGetFlt "*MinimapIcon" 0 (rIcon.GBO))
 				Goo1.AuxVarSetRef "*Minimap_Basic" rIcon -1
 			endif
 		loop
 	endif
 
 	; Terminal
-	if eval GetBit iBitIcon 8
+	if eval Goo1.AuxVarGetFlt "*Minimap_ySI" 10
 		aRefs = Player.GetRefs 23 2 1 iDist
 		if eval (iSize = Ar_Size aRefs) > 0
 			while (iSize -= 1) > -1
@@ -146,7 +144,7 @@ begin Function {}
 	endif
 
 	; Projectile
-	if eval GetBit iBitIcon 5
+	if eval Goo1.AuxVarGetFlt "*Minimap_ySI" 12
 		aRefs = Player.GetRefs 51 2 1 iDist
 		if eval (iSize = Ar_Size aRefs) > 0
 			while (iSize -= 1) > -1
@@ -159,14 +157,16 @@ begin Function {}
 	endif
 
 	; Actor refs
-	if eval (iTemp = Goo1.AuxVarGetFlt "*Minimap_INI" 3) > 0
-		if iTemp == 2
-			aRefs = Player.GetRefs 43 2 1 iDist
-		else
+	if eval Goo1.AuxVarGetFlt "*Minimap_INI" 2 || Goo1.AuxVarGetFlt "*Minimap_INI" 3
+		if eval Goo1.AuxVarGetFlt "*Minimap_INI" 2
 			aRefs = Player.GetRefs 42 2 1 iDist
-			if iTemp == 3
+		endif
+		if eval Goo1.AuxVarGetFlt "*Minimap_INI" 3
+			if eval Goo1.AuxVarGetFlt "*Minimap_INI" 2
 				aTemp = Player.GetRefs 43 2 1 iDist
 				ar_Cat aRefs aTemp
+			else
+				aRefs = Player.GetRefs 43 2 1 iDist
 			endif
 		endif
 
@@ -256,20 +256,18 @@ begin Function {}
 	endif
 
 	; Update player path
-	if eval Goo1.AuxVarGetFlt "*Minimap_INI" 8
-		if eval (iSize = (GetUIFloatAlt "HUDMainMenu\ModernMinimap\PlayerPath\childcount" - 1)) > -1
-			if eval GetUIFloatAlt ("HUDMainMenu\ModernMinimap\PlayerPath\Icon:" + $iSize + "\alpha") == 0
-				UnloadUIComponent ("HUDMainMenu\ModernMinimap\PlayerPath\Icon:" + $iSize)
-			endif
+	if eval (iSize = (GetUIFloatAlt "HUDMainMenu\ModernMinimap\PlayerPath\childcount" - 1)) > -1
+		if eval GetUIFloatAlt ("HUDMainMenu\ModernMinimap\PlayerPath\Icon:" + $iSize + "\alpha") == 0
+			UnloadUIComponent ("HUDMainMenu\ModernMinimap\PlayerPath\Icon:" + $iSize)
 		endif
-		fPosX = GetUIFloatAlt "HUDMainMenu\ModernMinimap\_PlrX"
-		fPosY = GetUIFloatAlt "HUDMainMenu\ModernMinimap\_PlrY"
-		if eval (fPosX - (GetUIFloatAlt "HUDMainMenu\ModernMinimap\PlayerPath\Icon:0\_PosX"))^2 + (fPosY - (GetUIFloatAlt "HUDMainMenu\ModernMinimap\PlayerPath\Icon:0\_PosY"))^2 > 8100
-			AddTileFromTemplate "HUDMainMenu\ModernMinimap\PlayerPath|Minimap_Player_Path_Template|Icon"
-			SetUIFloatAlt "HUDMainMenu\ModernMinimap\PlayerPath\Icon:0\_PosX" fPosX
-			SetUIFloatAlt "HUDMainMenu\ModernMinimap\PlayerPath\Icon:0\_PosY" fPosY
-			SetUIFloatGradual "HUDMainMenu\ModernMinimap\PlayerPath\Icon:0\_Fade" 510 0 3
-		endif
+	endif
+	fPosX = GetUIFloatAlt "HUDMainMenu\ModernMinimap\_PlrX"
+	fPosY = GetUIFloatAlt "HUDMainMenu\ModernMinimap\_PlrY"
+	if eval (fPosX - (GetUIFloatAlt "HUDMainMenu\ModernMinimap\PlayerPath\Icon:0\_PosX"))^2 + (fPosY - (GetUIFloatAlt "HUDMainMenu\ModernMinimap\PlayerPath\Icon:0\_PosY"))^2 > 8100
+		AddTileFromTemplate "HUDMainMenu\ModernMinimap\PlayerPath|Minimap_Player_Path_Template|Icon"
+		SetUIFloatAlt "HUDMainMenu\ModernMinimap\PlayerPath\Icon:0\_PosX" fPosX
+		SetUIFloatAlt "HUDMainMenu\ModernMinimap\PlayerPath\Icon:0\_PosY" fPosY
+		SetUIFloatGradual "HUDMainMenu\ModernMinimap\PlayerPath\Icon:0\_Fade" 510 0 3
 	endif
 
 	aRefs = aTemp = aFollowers = aMarkerRefs = ar_Null

@@ -1,0 +1,65 @@
+<filename> Interface\Stentorious\ModernMinimap\PlayerPath.dds </filename>
+<_PosX> 0 </_PosX>
+<_PosY> 0 </_PosY>
+<_Fade> 255 </_Fade>
+
+<visible> 1 </visible>
+<alpha>
+	<copy src="me()" trait="_Fade" />
+	<min> 255 </min>
+</alpha>
+<depth> 1 </depth>
+<x>
+	<copy src="me()" trait="_x" />
+	<mul src="parent()" trait="width" />
+	<sub>
+		<copy src="me()" trait="width" />
+		<div> 2 </div>
+	</sub>
+</x>
+<y>
+	<copy src="me()" trait="_y" />
+	<mul src="parent()" trait="height" />
+	<sub>
+		<copy src="me()" trait="height" />
+		<div> 2 </div>
+	</sub>
+</y>
+<width> <copy src="grandparent()" trait="_PlayerPathSize" /> </width>
+<height> <copy src="me()" trait="width" /> </height>
+<zoom> &scale; </zoom>
+<clips> 1 </clips>
+<systemcolor> <copy src="grandparent()" trait="_systemcolor_0" /> </systemcolor>
+<brightness> 255 </brightness>
+<_PosXOffset>
+	<copy src="me()" trait="_PosX" />
+	<sub src="grandparent()" trait="_PlrX" />
+	<mul src="grandparent()" trait="_WorldScale" />
+</_PosXOffset>
+<_PosYOffset>
+	<copy src="me()" trait="_PosY" />
+	<sub src="grandparent()" trait="_PlrY" />
+	<mul src="grandparent()" trait="_WorldScale" />
+</_PosYOffset>
+<_x>
+	<copy> 0.5 </copy>
+	<add>
+		<copy src="me()" trait="_PosXOffset" />
+		<mul src="grandparent()" trait="_IconDegCos" />
+	</add>
+	<sub>
+		<copy src="me()" trait="_PosYOffset" />
+		<mul src="grandparent()" trait="_IconDegSin" />
+	</sub>
+</_x>
+<_y>
+	<copy> 0.5 </copy>
+	<sub>
+		<copy src="me()" trait="_PosXOffset" />
+		<mul src="grandparent()" trait="_IconDegSin" />
+	</sub>
+	<sub>
+		<copy src="me()" trait="_PosYOffset" />
+		<mul src="grandparent()" trait="_IconDegCos" />
+	</sub>
+</_y>

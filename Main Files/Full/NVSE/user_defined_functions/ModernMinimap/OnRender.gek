@@ -2,6 +2,7 @@ int iType
 int iSize
 int iCorpse
 int iVendor
+int iDoor
 int iState
 float fPosX
 float fPosY
@@ -55,6 +56,9 @@ begin Function {}
 
 	; Update door/container icons
 	if eval (iSize = Goo1.AuxVarSize "*Minimap_Doors") > 0
+
+		iDoor = Goo1.AuxVarGetFlt "*Minimap_ySI" 8
+
 		while (iSize -= 1) > -1
 			if eval IsReference (rIcon = Goo1.AuxVarGetRef "*Minimap_Doors" iSize) == 0
 				continue
@@ -63,7 +67,7 @@ begin Function {}
 			iType = rIcon.GetType
 
 			; Assign icon based on lock status
-			if eval rIcon.GetLocked > 0
+			if eval rIcon.GetLocked > 0 && (iType == 27 || (iType == 28 && iDoor))
 				if eval rIcon.PlayerHasKey
 					sFilename = "interface\icons\Misc_Keychain.dds"
 				elseif eval rIcon.GetLockLevel > 100 || rIcon.GetLocked == 2
@@ -120,7 +124,7 @@ begin Function {}
 
 		; Get actor settings
 		iCorpse = Goo1.AuxVarGetFlt "*Minimap_INI" 4
-		iVendor = Goo1.AuxVarGetFlt "*Minimap_ySI" 1
+		iVendor = Goo1.AuxVarGetFlt "*Minimap_ySI" 0
 
 		; Process refs and update any valid icons
 		while (iSize -= 1) > -1
@@ -196,8 +200,12 @@ begin Function {}
 			elseif eval rIcon.GetKnockedState
 				sFilename = "interface\icons\Aid_DoctorBag.dds"
 				iState = 1
-			elseif eval Goo1.AuxVarGetFlt "*Minimap_INI" 5 && rIcon.GetPlayerTeammate && (sFilename = AuxStringMapGetStr "*JIPCCC_Avatars" (GetName rIcon)) != ""
-				iState = Goo1.AuxVarGetFlt "*Minimap_INI" 6
+			elseif eval Goo1.AuxVarGetFlt "*JIPCCC_Avatars" && Goo1.AuxVarGetFlt "*Minimap_INI" 5 && rIcon.GetPlayerTeammate && (sFilename = AuxStringMapGetStr "*JIPCCC_Avatars" (GetName rIcon)) != ""
+				if eval Goo1.AuxVarGetFlt "*Minimap_INI" 6
+					iState = 2
+				else
+					iState = 3
+				endif
 			else
 				iState = 2
 				fAngle = rIcon.GetAngle Z

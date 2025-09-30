@@ -1,0 +1,19 @@
+int iSubmenu
+int iOption
+array_var aValues
+
+begin Function {iSubmenu, iOption, aValues}
+
+	; Reset UI traits
+	SetUIFloatAlt "StartMenu/ModernMinimap/_MCM_OffsetX" (GetUIFloatAlt "StartMenu\_Minimap+OffsetX")
+	SetUIFloatAlt "StartMenu/ModernMinimap/_MCM_OffsetX" (GetUIFloatAlt "StartMenu\_Minimap+OffsetY")
+	SetUIFloatAlt "StartMenu/ModernMinimap/_MCM_TileScale" (GetUIFloatAlt "StartMenu\_Minimap+TileScale")
+	SetUIFloatAlt "StartMenu/ModernMinimap/_MCM_BackgroundAlpha" (GetUIFloatAlt "StartMenu\_Minimap+BackgroundAlpha")
+	SetUIFloatAlt "StartMenu/ModernMinimap/_MCM_BackgroundPad" (GetUIFloatAlt "StartMenu\_Minimap+BackgroundPad")
+	SetUIFloatAlt "StartMenu/ModernMinimap/_MCM_RenderBrightness" (GetUIFloatAlt "StartMenu\_Minimap+RenderBrightness")
+	SetUIFloatAlt "StartMenu/ModernMinimap/_MCM_IconScale" (GetUIFloatAlt "StartMenu\_Minimap+IconScale")
+	SetUIFloatAlt "StartMenu/ModernMinimap/_MCM_DistanceMax" (GetUIFloatAlt "StartMenu\_Minimap+DistanceMax")
+
+	aValues = Ar_Null
+
+end

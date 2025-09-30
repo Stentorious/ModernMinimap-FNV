@@ -1,0 +1,244 @@
+<filename> Interface\Stentorious\ModernMinimap\Actor.dds </filename>
+<_PosX> 0 </_PosX>
+<_PosY> 0 </_PosY>
+<_PosZ> <copy src="grandparent()" trait="_PlrZ" /> </_PosZ>
+<_Deg> -1 </_Deg>
+<_Dist> 0 </_Dist>
+<_Hostile> -1 </_Hostile>
+<_DepthMod> 0 </_DepthMod>
+
+<visible>
+	<copy src="grandparent()" trait="_DistCalc" />
+	<gte src="me()" trait="_Dist" />
+	<and>
+		<copy src="me()" trait="_Hostile" />
+		<gt> -2 </gt>
+	</and>
+</visible>
+<alpha> 0 </alpha>
+<locus> 1 </locus>
+<depth>
+	<copy src="me()" trait="_DepthMod" />
+	<mul> 2 </mul>
+</depth>
+<x>
+	<copy src="me()" trait="_x" />
+	<mul src="parent()" trait="width" />
+	<sub>
+		<copy src="me()" trait="width" />
+		<div> 2 </div>
+	</sub>
+</x>
+<y>
+	<copy src="me()" trait="_y" />
+	<mul src="parent()" trait="height" />
+	<sub>
+		<copy src="me()" trait="height" />
+		<div> 2 </div>
+	</sub>
+</y>
+<width> <copy src="grandparent()" trait="_IconLocalSize" /> </width>
+<height> <copy src="me()" trait="width" /> </height>
+<clips> 1 </clips>
+<_PosXOffset>
+	<copy src="me()" trait="_PosX" />
+	<sub src="grandparent()" trait="_PlrX" />
+	<mul src="grandparent()" trait="_WorldScale" />
+</_PosXOffset>
+<_PosYOffset>
+	<copy src="me()" trait="_PosY" />
+	<sub src="grandparent()" trait="_PlrY" />
+	<mul src="grandparent()" trait="_WorldScale" />
+</_PosYOffset>
+<_PosZOffset>
+	<copy src="me()" trait="_PosZ" />
+	<sub src="grandparent()" trait="_PlrZ" />
+</_PosZOffset>
+<_DegOffset>
+	<copy> 0 </copy>
+	<add>
+		<copy src="grandparent()" trait="_PlrDeg" />
+		<onlyif src="io()" trait="_Minimap+RotationMode" />
+	</add>
+	<add>
+		<copy src="grandparent()" trait="_CellDeg" />
+		<onlyifnot src="io()" trait="_Minimap+RotationMode" />
+	</add>
+	<sub src="me()" trait="_Deg" />
+	<div> 360 </div>
+</_DegOffset>
+<_Level>
+	<copy> 0 </copy>
+	<add>
+		<copy> 1 </copy>
+		<onlyif>
+			<copy src="me()" trait="_PosZOffset" />
+			<gt> 175 </gt>
+		</onlyif>
+	</add>
+	<add>
+		<copy> 2 </copy>
+		<onlyif>
+			<copy src="me()" trait="_PosZOffset" />
+			<lt> -175 </lt>
+		</onlyif>
+	</add>
+</_Level>
+<_x>
+	<copy> 0.5 </copy>
+	<add>
+		<copy src="me()" trait="_PosXOffset" />
+		<mul src="grandparent()" trait="_IconDegCos" />
+	</add>
+	<sub>
+		<copy src="me()" trait="_PosYOffset" />
+		<mul src="grandparent()" trait="_IconDegSin" />
+	</sub>
+</_x>
+<_y>
+	<copy> 0.5 </copy>
+	<sub>
+		<copy src="me()" trait="_PosXOffset" />
+		<mul src="grandparent()" trait="_IconDegSin" />
+	</sub>
+	<sub>
+		<copy src="me()" trait="_PosYOffset" />
+		<mul src="grandparent()" trait="_IconDegCos" />
+	</sub>
+</_y>
+<image name="Icon">
+	<visible> 1 </visible>
+	<alpha>
+		<copy> 255 </copy>
+		<sub>
+			<copy src="parent()" trait="_Dist" />
+			<pow> 6 </pow>
+			<div>
+				<copy src="ModernMinimap" trait="_DistCalc" />
+				<pow> 6 </pow>
+			</div>
+			<mul> 255 </mul>
+		</sub>
+		<max> 0 </max>
+		<min> 255 </min>
+	</alpha>
+	<depth> 0 </depth>
+	<x>	0 </x>
+	<y> 0 </y>
+	<rotateaxisx>
+		<copy src="me()" trait="width" />
+		<div> 2 </div>
+	</rotateaxisx>
+	<rotateaxisy>
+		<copy src="me()" trait="height" />
+		<div> 2 </div>
+	</rotateaxisy>
+	<rotateangle>
+		<copy> 6.2831 </copy>
+		<mul src="parent()" trait="_DegOffset" />
+		<onlyifnot>
+			<copy src="parent()" trait="_Deg" />
+			<eq> -1 </eq>
+		</onlyifnot>
+	</rotateangle>
+	<height> <copy src="parent()" trait="height" /> </height>
+	<width> <copy src="parent()" trait="width" /> </width>
+	<zoom> &scale; </zoom>
+	<systemcolor>
+		<copy src="parent()" trait="_Hostile" />
+		<copy src="ModernMinimap" trait="_systemcolor_" />
+	</systemcolor>
+	<red>
+		<copy src="parent()" trait="_Hostile" />
+		<copy src="ModernMinimap" trait="_red_" />
+	</red>
+	<green>
+		<copy src="parent()" trait="_Hostile" />
+		<copy src="ModernMinimap" trait="_green_" />
+	</green>
+	<blue>
+		<copy src="parent()" trait="_Hostile" />
+		<copy src="ModernMinimap" trait="_blue_" />
+	</blue>
+	<brightness> 255 </brightness>
+	<filename> <copy src="parent()" trait="filename" /> </filename>
+</image>
+<image name="DropShadow">
+	<visible> 1 </visible>
+	<alpha>
+		<copy src="sibling(Icon)" trait="alpha" />
+		<div> 2 </div>
+	</alpha>
+	<depth> -1 </depth>
+	<x>	<copy src="ModernMinimap" trait="_DropShadowOffset" /> </x>
+	<y> <copy src="me()" trait="x" /> </y>
+	<rotateaxisx> <copy src="sibling(Icon)" trait="rotateaxisx" /> </rotateaxisx>
+	<rotateaxisy> <copy src="sibling(Icon)" trait="rotateaxisy" /> </rotateaxisy>
+	<rotateangle> <copy src="sibling(Icon)" trait="rotateangle" /> </rotateangle>
+	<height> <copy src="parent()" trait="height" /> </height>
+	<width> <copy src="parent()" trait="width" /> </width>
+	<zoom> &scale; </zoom>
+	<systemcolor> 0 </systemcolor>
+	<red> 0 </red>
+	<green> 0 </green>
+	<blue> 0 </blue>
+	<brightness> 255 </brightness>
+	<filename> <copy src="sibling(Icon)" trait="filename" /> </filename>
+</image>
+<image name="HeightIndicator">
+	<visible>
+		<copy src="parent()" trait="_Level" />
+		<gt> 0 </gt>
+		<and src="io()" trait="_Minimap+IconHeight" />
+	</visible>
+	<alpha> <copy src="sibling(Icon)" trait="alpha" /> </alpha>
+	<depth> 0 </depth>
+	<x>
+		<copy src="parent()" trait="width" />
+		<sub src="me()" trait="width" />
+		<div> 2 </div>
+	</x>
+	<y>
+		<copy src="parent()" trait="height" />
+		<div> 2 </div>
+		<add>
+			<copy src="parent()" trait="height" />
+			<add src="me()" trait="height" />
+			<div> 1.5 </div>
+			<onlyif>
+				<copy src="parent()" trait="_Level" />
+				<eq> 2 </eq>
+			</onlyif>
+		</add>
+		<sub>
+			<copy src="parent()" trait="height" />
+			<add src="me()" trait="height" />
+			<div> 1.5 </div>
+			<onlyif>
+				<copy src="parent()" trait="_Level" />
+				<eq> 1 </eq>
+			</onlyif>
+		</sub>
+	</y>
+	<rotateaxisx>
+		<copy src="me()" trait="width" />
+		<div> 2 </div>
+	</rotateaxisx>
+	<rotateaxisy> 0 </rotateaxisy>
+	<rotateangle>
+		<copy> 3.1416 </copy>
+		<onlyif>
+			<copy src="parent()" trait="_Level" />
+			<eq> 2 </eq>
+		</onlyif>
+	</rotateangle>
+	<height>
+		<copy src="sibling(Icon)" trait="height" />
+		<div> 4 </div>
+	</height>
+	<width> <copy src="me()" trait="height" /> </width>
+	<zoom> &scale; </zoom>
+	<systemcolor> <copy src="ModernMinimap" trait="_systemcolor_0" /> </systemcolor>
+	<brightness> <copy src="sibling(Icon)" trait="brightness" /> </brightness>
+	<filename> Interface\Stentorious\ModernMinimap\HeightIndicator.dds </filename>
+</image>

@@ -6,9 +6,7 @@ ref rDoor
 begin Function {}
 
 	; Toggle minimap visibility
-	if eval Goo1.AuxVarGetFlt "*Minimap_Key" 0 > 0
-		SetOnTimerStopHandler 1 (CompileScript "ModernMinimap\AuxTimer.gek") "*Minimap_Key"
-	endif
+	SetOnTimerStopHandler 1 (CompileScript "ModernMinimap\AuxTimer.gek") "*Minimap_Key"
 
 	; Update player Perception
 	SetUIFloatAlt "HUDMainMenu\ModernMinimap\_PlrAV6"(Player.GetThresholdAV Perception)
@@ -22,9 +20,9 @@ begin Function {}
 		SetUIFloatAlt "HUDMainMenu\ModernMinimap\_Interior" 1
 		iTemp = Goo1.AuxVarGetFlt "*Minimap_INI" 7
 		if eval iTemp == 1
-			SetUIFloatAlt "HUDMainMenu\ModernMinimap\_visible" 0
-		elseif eval iTemp == 2
 			SetUIFloatAlt "HUDMainMenu\ModernMinimap\_visible" 1
+		elseif eval iTemp == 2
+			SetUIFloatAlt "HUDMainMenu\ModernMinimap\_visible" 0
 		endif
 		if eval Goo1.AuxVarGetFlt "*Minimap_INI" 9 == 2
 			SetUIFloatAlt "HUDMainMenu\ModernMinimap\_MapMode" 1
@@ -41,9 +39,9 @@ begin Function {}
 		SetUIFloatAlt "HUDMainMenu\ModernMinimap\_Interior" 0
 		iTemp = Goo1.AuxVarGetFlt "*Minimap_INI" 7
 		if eval iTemp == 2
-			SetUIFloatAlt "HUDMainMenu\ModernMinimap\_visible" 0
-		elseif eval iTemp == 1
 			SetUIFloatAlt "HUDMainMenu\ModernMinimap\_visible" 1
+		elseif eval iTemp == 1
+			SetUIFloatAlt "HUDMainMenu\ModernMinimap\_visible" 0
 		endif
 		if eval Goo1.AuxVarGetFlt "*Minimap_INI" 9 == 2
 			SetUIFloatAlt "HUDMainMenu\ModernMinimap\_MapMode" 0
@@ -69,8 +67,7 @@ begin Function {}
 	Goo1.AuxVarSetRef "*Minimap_Travel" (Player.GPW) 1
 
 	; Update location name
-	iTemp = Goo1.AuxVarGetFlt "*Minimap_INI" 2
-	if iTemp > 0
+	if eval (iTemp = GetUIFloatAlt "HUDMainMenu\_Minimap+LocationText") > 0
 		SetUIStringAlt "HUDMainMenu\ModernMinimap\LocationText\string" (Player.GetLocationName)
 		if iTemp == 1
 			SetUIFloatGradual "HUDMainMenu\ModernMinimap\LocationText\alpha" 0 255 6 1
@@ -78,7 +75,7 @@ begin Function {}
 	endif
 
 	; Update JIP CCC avatar map
-	if eval Goo1.AuxVarGetFlt "*Minimap_INI" 5
+	if eval Goo1.AuxVarGetFlt "*JIPCCC_Avatars"
 		Call (CompileScript "ModernMinimap\JIPCCCAvatar.gek") 0
 	endif
 
