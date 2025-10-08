@@ -37,4 +37,6 @@ Begin Function {fValue, iMenu, iSubmenu, iOption, aJSON}
 		endif
 	endif
 
+	aJSON = ar_Null
+
 End
