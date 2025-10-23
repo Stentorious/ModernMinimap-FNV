@@ -1,0 +1,29 @@
+int	iKeyID
+
+float fPosX
+float fPosY
+
+begin Function {iKeyID}
+
+	if eval MenuMode || AuxTimerTimeLeft "*Minimap_Key" == -1
+		return
+	endif
+
+	if eval GetUIFloatAlt "HUDMainMenu\ModernMinimap\_MapMode"
+		SetUIFloatAlt "HUDMainMenu\ModernMinimap\_MapMode" 0
+		SetUIStringAlt "HUDMainMenu\ModernMinimap\InfoText\string" "Map: World"
+		Call (CompileScript "ModernMinimap\WorldMap\MainLoop.gek")
+	else
+		SetUIFloatAlt "HUDMainMenu\ModernMinimap\_MapMode" 1
+		SetUIStringAlt "HUDMainMenu\ModernMinimap\InfoText\string" "Map: Local"
+		Call (CompileScript (Goo1.AuxVarGetStr "*Minimap_Script" 0))
+	endif
+
+	UnloadUIComponent "HUDMainMenu\ModernMinimap\PlayerPath"
+	AddTileFromTemplate "HUDMainMenu\ModernMinimap|Minimap_Path_Rect|PlayerPath"
+
+	SetUIFloatGradual "HUDMainMenu\ModernMinimap\InfoText\alpha" 400 0 0.5
+
+	AuxTimerStop "*Minimap_Key"
+
+end

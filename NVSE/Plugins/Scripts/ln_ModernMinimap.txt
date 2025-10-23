@@ -1,0 +1,281 @@
+; Modern Minimap - Stentorious + xConfused
+
+; On game load
+
+; Reset icon arrays
+Goo1.AuxVarErase "*Minimap_Doors"
+Goo1.AuxVarErase "*Minimap_Basic"
+Goo1.AuxVarErase "*Minimap_Actors"
+Goo1.AuxVarErase "*Minimap_Followers"
+Goo1.AuxVarErase "*Minimap_Markers"
+
+; Reset Minimap rect
+UnloadUIComponent "HUDMainMenu\ModernMinimap\Doors"
+UnloadUIComponent "HUDMainMenu\ModernMinimap\Basic"
+UnloadUIComponent "HUDMainMenu\ModernMinimap\Actors"
+UnloadUIComponent "HUDMainMenu\ModernMinimap\Followers"
+UnloadUIComponent "HUDMainMenu\ModernMinimap\QuestLocal"
+UnloadUIComponent "HUDMainMenu\ModernMinimap\PlayerPath"
+UnloadUIComponent "HUDMainMenu\ModernMinimap\WorldMarkers"
+UnloadUIComponent "HUDMainMenu\ModernMinimap\QuestWorld"
+AddTileFromTemplate "HUDMainMenu\ModernMinimap|Minimap_Icon_Rect|Doors"
+AddTileFromTemplate "HUDMainMenu\ModernMinimap|Minimap_Icon_Rect|Basic"
+AddTileFromTemplate "HUDMainMenu\ModernMinimap|Minimap_Icon_Rect|Actors"
+AddTileFromTemplate "HUDMainMenu\ModernMinimap|Minimap_Icon_Rect|Followers"
+AddTileFromTemplate "HUDMainMenu\ModernMinimap|Minimap_Quest_Rect|QuestLocal"
+AddTileFromTemplate "HUDMainMenu\ModernMinimap|Minimap_Path_Rect|PlayerPath"
+AddTileFromTemplate "HUDMainMenu\ModernMinimap|WorldMap_Icon_Rect|WorldMarkers"
+AddTileFromTemplate "HUDMainMenu\ModernMinimap|WorldMap_Quest_Rect|QuestWorld"
+
+CallAfterFrames 0 (CompileScript "ModernMinimap\OnLoad.gek")
+
+; On game restart
+if eval Goo1.AuxVarGetFlt "*Minimap_Init"
+	return
+endif
+Goo1.AuxVarSetFlt "*Minimap_Init" 1
+
+; Aux Vars
+; "*Minimap_INI"
+; 0: ySI installation flag
+; 1: Default interior zoom
+; 2: Default exterior zoom
+; 3: Location text mode
+; 4: Actor icon mode
+; 5: Actor corpses mode
+; 6: Item icons bitmask
+; 7: Vendor icon mode
+; "*Minimap_Travel"
+; 0: Currently fast traveling flag
+; 1: Last world space
+; "*Minimap_Icons"		Icon refs
+; "*Minimap_Markers"	Quest marker refs
+
+; Check for requirements
+if eval GetNVSEVersion < 6 || (GetNVSEVersion == 6 && GetNVSERevision < 4)
+	MessageBoxEx "Modern Minimap missing requirement!%rInstall xNVSE 6.4.0+."
+	return
+endif
+if eval GetPluginVersion "JohnnyGuitarNVSE" < 517
+	MessageBoxEx "Modern Minimap missing requirement!%rInstall latest JohnnyGuitar NVSE plugin."
+	return
+endif
+if eval GetPluginVersion "ShowOffNVSE Plugin" < 145
+	MessageBoxEx "Modern Minimap missing requirement!%rInstall latest ShowOff NVSE plugin."
+	return
+endif
+if eval GetPluginVersion "UI Organizer Plugin" < 230
+	MessageBoxEx "Modern Minimap missing requirement!%rInstall latest User Interface Organizer plugin."
+	return
+endif
+if eval GetPluginVersion "HighResLocalMaps" < 12
+	MessageBoxEx "Modern Minimap missing requirement!%rInstall High Res Local Maps."
+	return
+endif
+if eval GetPluginVersion "Engine Optimizations" < 100
+	MessageBoxEx "Modern Minimap missing requirement!%rInstall lStewieAl's Engine Optimizations."
+	return
+endif
+if eval IsModLoaded "JIP MiniMap.esp"
+	MessageBoxEx "Modern Minimap conflict detected!%rUninstall JIP Minimap."
+	return
+endif
+if eval GetINIFloat "Main:iResScale" "..\NVSE\Plugins\HighResLocalMaps.ini" < 2
+	MessageBoxEx "Modern Minimap overwrite detected!%rLoad after High Res Local Maps."
+endif
+
+; Load key binds
+Goo1.AuxVarSetFlt "*Minimap_Key" (GetINIFloat_Cached "KeyBinds:iMapVisibility" "Stentorious\ModernMinimap.ini" 50) 0
+if eval (int iTemp = Goo1.AuxVarGetFlt "*Minimap_Key" 0) > 0
+	SetOnKeyDownEventHandler (CompileScript "ModernMinimap\InputHandler.gek") 1 iTemp
+	SetOnKeyUpEventHandler (CompileScript "ModernMinimap\KeyToggle.gek") 1 iTemp
+endif
+Goo1.AuxVarSetFlt "*Minimap_Key" (GetINIFloat_Cached "KeyBinds:iMapZoomIn" "Stentorious\ModernMinimap.ini" 201) 1
+if eval (iTemp = Goo1.AuxVarGetFlt "*Minimap_Key" 1) > 0
+	SetOnKeyDownEventHandler (CompileScript "ModernMinimap\InputHandler.gek") 1 iTemp
+endif
+Goo1.AuxVarSetFlt "*Minimap_Key" (GetINIFloat_Cached "KeyBinds:iMapZoomOut" "Stentorious\ModernMinimap.ini" 209) 2
+if eval (iTemp = Goo1.AuxVarGetFlt "*Minimap_Key" 2) > 0
+	SetOnKeyDownEventHandler (CompileScript "ModernMinimap\InputHandler.gek") 1 iTemp
+endif
+Goo1.AuxVarSetFlt "*Minimap_Key" (GetINIFloat_Cached "KeyBinds:iMarkerVisibility" "Stentorious\ModernMinimap.ini" 199) 3
+if eval (iTemp = Goo1.AuxVarGetFlt "*Minimap_Key" 3) > 0
+	SetOnKeyDownEventHandler (CompileScript "ModernMinimap\InputHandler.gek") 1 iTemp
+endif
+
+Goo1.AuxVarSetFlt "*Minimap_INI" (Clamp (GetINIFloat_Cached "Map:fInteriorZoom" "Stentorious\ModernMinimap.ini" 1.25) 0.5 1.5) 0
+Goo1.AuxVarSetFlt "*Minimap_INI" (Clamp (GetINIFloat_Cached "Map:fExteriorZoom" "Stentorious\ModernMinimap.ini" 0.75) 0.5 1.5) 1
+
+; Load map settings
+SetUIFloatAlt "HUDMainMenu\_Minimap+AnchorX" (GetINIFloat_Cached "Map:iAnchorX" "Stentorious\ModernMinimap.ini" 2)
+SetUIFloatAlt "HUDMainMenu\_Minimap+AnchorY" (GetINIFloat_Cached "Map:iAnchorY" "Stentorious\ModernMinimap.ini" 0)
+SetUIFloatAlt "HUDMainMenu\_Minimap+OffsetX" (GetINIFloat_Cached "Map:fOffsetX" "Stentorious\ModernMinimap.ini" 24)
+SetUIFloatAlt "HUDMainMenu\_Minimap+OffsetY" (GetINIFloat_Cached "Map:fOffsetY" "Stentorious\ModernMinimap.ini" 24)
+SetUIFloatAlt "HUDMainMenu\_Minimap+TileScale" (GetINIFloat_Cached "Map:fSize" "Stentorious\ModernMinimap.ini" 1)
+SetUIFloatAlt "HUDMainMenu\_Minimap+BackgroundAlpha" (GetINIFloat_Cached "Map:fBackgroundAlpha" "Stentorious\ModernMinimap.ini" 80)
+SetUIFloatAlt "HUDMainMenu\_Minimap+BackgroundPad" (GetINIFloat_Cached "Map:fBackgroundPadding" "Stentorious\ModernMinimap.ini" 6)
+SetUIFloatAlt "HUDMainMenu\_Minimap+RenderBrightness" (GetINIFloat_Cached "Map:fRenderBrightness" "Stentorious\ModernMinimap.ini" 2)
+SetUIFloatAlt "HUDMainMenu\_Minimap+CompassRose" (eval GetINIFloat_Cached "Map:bCompassRose" "Stentorious\ModernMinimap.ini" 1)
+SetUIFloatAlt "HUDMainMenu\_Minimap+CompassText" (GetINIFloat_Cached "Map:iCompassText" "Stentorious\ModernMinimap.ini" 2)
+SetUIFloatAlt "HUDMainMenu\_Minimap+CombatIndicator" (eval GetINIFloat_Cached "Map:bCombatIndicator" "Stentorious\ModernMinimap.ini" 1)
+SetUIFloatAlt "HUDMainMenu\_Minimap+LocationText" (GetINIFloat_Cached "Map:iLocationText" "Stentorious\ModernMinimap.ini" 1)
+SetUIFloatAlt "HUDMainMenu\_Minimap+HostileColor" (eval GetINIFloat_Cached "Actors:bHostileColor" "Stentorious\ModernMinimap.ini" 1)
+SetUIFloatAlt "HUDMainMenu\_Minimap+Scan" (eval GetINIFloat_Cached "Map:bScanEffect" "Stentorious\ModernMinimap.ini" 1)
+SetUIFloatAlt "HUDMainMenu\_Minimap+RotationMode" (eval GetINIFloat_Cached "Map:iRotationMode" "Stentorious\ModernMinimap.ini" 1)
+SetUIFloatAlt "HUDMainMenu\_Minimap+PlayerPath" (eval GetINIFloat_Cached "Map:bPlayerPath" "Stentorious\ModernMinimap.ini" 1)
+
+; Radiation Meter
+if eval GetINIFloat_Cached "Map:bRadiationIndicator" "Stentorious\ModernMinimap.ini" 1
+	SetUIFloatAlt "HUDMainMenu\_Minimap+RadIndicator" 1
+	ModUIFloat "HUDMainMenu\RadiationMeter\y" -3000
+	SetUIFloatAlt "HUDMainMenu\RadWrap\visible" 0
+endif
+
+; Load icon settings
+SetUIFloatAlt "HUDMainMenu\_Minimap+IconScale" (GetINIFloat_Cached "Icons:fSize" "Stentorious\ModernMinimap.ini" 1)
+SetUIFloatAlt "HUDMainMenu\_Minimap+DistanceMax" (Clamp (GetINIFloat_Cached "Icons:fRadius" "Stentorious\ModernMinimap.ini" 15) 5 100)
+SetUIFloatAlt "HUDMainMenu\_Minimap+DistanceMode" (eval GetINIFloat_Cached "Icons:bPerceptionCalc" "Stentorious\ModernMinimap.ini" 0)
+SetUIFloatAlt "HUDMainMenu\_Minimap+IconHeight" (eval GetINIFloat_Cached "Icons:bHeightIndicator" "Stentorious\ModernMinimap.ini" 1)
+SetUIFloatAlt "HUDMainMenu\_Minimap+QuestHeight" (eval GetINIFloat_Cached "Icons:bQuestHeightIndicator" "Stentorious\ModernMinimap.ini" 0)
+
+; Update player perception
+SetUIFloatAlt "HUDMainMenu\ModernMinimap\_PlrAV6" (Player.GetThresholdAV Perception)
+SetOnActorValueChangeEventHandler 1 ({int iAVCode, float fOldValue, float fNewValue} => SetUIFloatAlt "HUDMainMenu\ModernMinimap\_PlrAV6" (Player.GetThresholdAV Perception)) 0 6
+
+; Actor settings
+Goo1.AuxVarSetFlt "*Minimap_INI" (eval GetINIFloat_Cached "Actors:bNPC" "Stentorious\ModernMinimap.ini" 1) 2
+Goo1.AuxVarSetFlt "*Minimap_INI" (eval GetINIFloat_Cached "Actors:bCreature" "Stentorious\ModernMinimap.ini" 1) 3
+Goo1.AuxVarSetFlt "*Minimap_INI" (Clamp (GetINIFloat_Cached "Actors:iCorpse" "Stentorious\ModernMinimap.ini" 1) 0 2) 4
+
+; Teammate color
+SetUIFloatAlt "HUDMainMenu\ModernMinimap\_systemcolor_2" (GetINIFloat_Cached "Companions:iSystemcolor" "Stentorious\ModernMinimap.ini" 0)
+SetUIFloatAlt "HUDMainMenu\ModernMinimap\_red_2" (GetINIFloat_Cached "Companions:iRed" "Stentorious\ModernMinimap.ini" 46)
+SetUIFloatAlt "HUDMainMenu\ModernMinimap\_green_2" (GetINIFloat_Cached "Companions:iGreen" "Stentorious\ModernMinimap.ini" 206)
+SetUIFloatAlt "HUDMainMenu\ModernMinimap\_blue_2" (GetINIFloat_Cached "Companions:iBlue" "Stentorious\ModernMinimap.ini" 255)
+
+; JIP CCC avatar support
+if eval FileExists "textures\jazzisparis\ccc\avatar_male.dds"
+	Goo1.AuxVarSetFlt "*JIPCCC_Avatars" 1
+	SetOnMenuCloseEventHandler (CompileScript "ModernMinimap\JIPCCCAvatar.gek") 1 1009
+	if eval IsModLoaded "JIP Companions Command & Control.esp"
+		SetOnMenuOpenEventHandler ({int iMenuID} => Goo1.AuxVarSetFlt "*JIPCCC_Force" (GetVariable "bConfirm" (EditorIDToFormID "JIPCCCMain"))) 1 1001
+		SetOnMenuCloseEventHandler ({int iMenuID} => CallAfter 0.1 (CompileScript "ModernMinimap\JIPCCCAvatar.gek") 0 1001) 1 1001
+	endif
+endif
+Goo1.AuxVarSetFlt "*Minimap_INI" (eval GetINIFloat_Cached "Companions:bJIPCCC" "Stentorious\ModernMinimap.ini" 1) 5
+Goo1.AuxVarSetFlt "*Minimap_INI" (eval GetINIFloat_Cached "Companions:bJIPCCCColor" "Stentorious\ModernMinimap.ini" 0) 6
+
+; Post release updates
+Goo1.AuxVarSetFlt "*Minimap_INI" (GetINIFloat_Cached "Map:iCellVisibility" "Stentorious\ModernMinimap.ini" 0) 7
+Goo1.AuxVarSetFlt "*Minimap_INI" 0 8
+Goo1.AuxVarSetFlt "*Minimap_INI" (GetINIFloat_Cached "Map:iMapMode" "Stentorious\ModernMinimap.ini" 2) 9
+if eval Goo1.AuxVarGetFlt "*Minimap_INI" 9 == 1
+	SetUIFloatAlt "HUDMainMenu\ModernMinimap\_MapMode" 0
+endif
+
+; Scan animation
+iTemp = GetUIFloatAlt "HUDMainMenu\ModernMinimap\_width"
+SetUIFloatGradual "HUDMainMenu\_Minimap+ScanY" (iTemp * -2) (iTemp * 3) 10 3
+SetUIFloatGradual "HUDMainMenu\_Minimap+ScanBrightness" 153 255 1 2
+
+; Marker alpha pulse
+SetUIFloatGradual "HUDMainMenu\ModernMinimap\_IconQuestPulse" -1.5 0.75 3 2
+
+; Radiation alpha pulse
+SetUIFloatGradual "HUDMainMenu\_Minimap+RadPulse" 0.33 1 1 2
+
+; Color mode (EXPERIMENTAL)
+;SetUIFloatAlt "HUDMainMenu\ModernMinimap\_ColorMode" (eval GetINIFloat_Cached "Developer:bColorRender" "Stentorious\ModernMinimap.ini")
+
+; Add custom quest marker template
+AddTileFromTemplate "HUDMainMenu\ModernMinimap\CustomMarkerLocal|Minimap_Quest_Local_Template|Icon"
+AddTileFromTemplate "HUDMainMenu\ModernMinimap\CustomMarkerWorld|Minimap_Quest_World_Template|Icon"
+SetUIFloatAlt "HUDMainMenu\ModernMinimap\CustomMarkerLocal\Icon\depth" 499
+SetUIFloatAlt "HUDMainMenu\ModernMinimap\CustomMarkerWorld\Icon\depth" 499
+SetUIFloatAlt "HUDMainMenu\ModernMinimap\CustomMarkerLocal\Icon\_Custom" 1
+SetUIStringAlt "HUDMainMenu\ModernMinimap\CustomMarkerWorld\Icon\filename" "Interface\Stentorious\ModernMinimap\MarkerPlayerAbove.dds"
+
+; Init event handlers
+SetGameMainLoopCallback (CompileScript "ModernMinimap\WorldMap\MainLoop.gek") 1 (GetMaxOf 1 (GetINIFloat_Cached "Performance:iUpdateRateWorld" "Stentorious\ModernMinimap.ini" 300)) 1
+SetEventHandler "OnCellExit" (CompileScript "ModernMinimap\CellChange.gek")
+SetOnLocationDiscoverEventHandler (CompileScript "ModernMinimap\WorldMap\OnLocationDiscover.gek") 1
+SetOnFastTravelEventHandler (begin Function {ref rTemp}
+	Goo1.AuxVarSetFlt "*Minimap_Travel" 1
+	CallAfterFrames 0 (CompileScript "ModernMinimap\FastTravel.gek") 0 (Player.GPC)
+end) 1
+
+; Build world map marker aux vars
+CallAfterFrames 0 (CompileScript "ModernMinimap\WorldMap\BuildMarkerArray.gek")
+
+; Clear INI cache
+CloseFileSO "Stentorious\ModernMinimap.ini" 0
+
+; Show update message
+if eval GetINIFloat "Mods:ModernMinimap" "Stentorious\UpdateMessages.ini" < 200
+	CallAfter 1 ({} => MessageBoxEx "Welcome to Modern Minimap 2.0+%r%rThe minimap will now display the local map in interiors and world map in exteriors.%r%rThis behavior can be disabled via the MCM.%r%rYou can toggle between the local/world map at any time with the %k key." (Goo1.AuxVarGetFlt "*Minimap_Key" 0))
+	SetINIFloat "Mods:ModernMinimap" 200 "Stentorious\UpdateMessages.ini"
+endif
+
+; MCM update events
+SetEventHandler "MCMExtUpdate" (CompileScript "ModernMinimap\MCMExtender\UpdateMenu.gek")
+SetEventHandler "MCMExtMenuState" (begin function {string_var sTemp, int iTemp}
+	if eval sTemp == "ModernMinimap"
+		SetUIFloatAlt "StartMenu\ModernMinimap\_visible" 1
+		SetUIFloatAlt "StartMenu\ModernMinimap\_submenu" iTemp
+		if eval GetUIFloatAlt "StartMenu\ModernMinimap\_PlrDeg" == -1
+			SetUIFloatGradual "StartMenu\ModernMinimap\_PlrDeg" 0 360 10 3
+		endif
+	else
+		SetUIFloatAlt "StartMenu\ModernMinimap\_visible" 0
+	endif
+	sv_Destruct sTemp
+end)
+
+; ySI support
+if eval FileExists "menus\ySI\ySI.xml" == 0 || GetPluginVersion "yUI" < 140
+	SetOnRenderUpdateEventHandler 1 (CompileScript "..\CompileScript\ModernMinimap\OnRender.gek") 0
+	SetGameMainLoopCallback (CompileScript "..\CompileScript\ModernMinimap\MainLoop.gek") 1 (GetMaxOf 1 (GetINIFloat_Cached "Performance:iUpdateRateLocal" "Stentorious\ModernMinimap.ini" 20)) 1
+	Goo1.AuxVarSetStr "*Minimap_Script" ("..\CompileScript\ModernMinimap\MainLoop.gek") 0
+	CloseFileSO "Stentorious\ModernMinimap.ini" 0
+	return
+endif
+
+Goo1.AuxVarSetFlt "*_ySI-SortingIcons" 1
+
+SetOnRenderUpdateEventHandler 1 (CompileScript "..\CompileScript\ModernMinimap\OnRenderySI.gek") 0
+SetGameMainLoopCallback (CompileScript "..\CompileScript\ModernMinimap\MainLoopySI.gek") 1 (GetMaxOf 1 (GetINIFloat_Cached "Performance:iUpdateRateLocal" "Stentorious\ModernMinimap.ini" 20)) 1
+Goo1.AuxVarSetStr "*Minimap_Script" ("..\CompileScript\ModernMinimap\MainLoopySI.gek") 0
+
+; Load ySI icon settings
+Goo1.AuxVarSetFlt "*Minimap_ySI" (Clamp (GetINIFloat_Cached "Vendors:iMode" "Stentorious\ModernMinimap.ini" 2) 0 2) 0
+Goo1.AuxVarSetFlt "*Minimap_ySI" (eval GetINIFloat_Cached "Objects:bBook" "Stentorious\ModernMinimap.ini" 1) 1
+Goo1.AuxVarSetFlt "*Minimap_ySI" (eval GetINIFloat_Cached "Objects:bMagazine" "Stentorious\ModernMinimap.ini" 1) 2
+Goo1.AuxVarSetFlt "*Minimap_ySI" (eval GetINIFloat_Cached "Objects:bNote" "Stentorious\ModernMinimap.ini" 1) 3
+Goo1.AuxVarSetFlt "*Minimap_ySI" (eval GetINIFloat_Cached "Objects:bKey" "Stentorious\ModernMinimap.ini" 1) 4
+Goo1.AuxVarSetFlt "*Minimap_ySI" (eval GetINIFloat_Cached "Objects:bUnique" "Stentorious\ModernMinimap.ini" 1) 5
+Goo1.AuxVarSetFlt "*Minimap_ySI" (eval GetINIFloat_Cached "Objects:bCollectable" "Stentorious\ModernMinimap.ini" 1) 6
+Goo1.AuxVarSetFlt "*Minimap_ySI" (eval GetINIFloat_Cached "Objects:bQuest" "Stentorious\ModernMinimap.ini" 1) 7
+Goo1.AuxVarSetFlt "*Minimap_ySI" (eval GetINIFloat_Cached "Objects:bDoor" "Stentorious\ModernMinimap.ini" 1) 8
+Goo1.AuxVarSetFlt "*Minimap_ySI" (eval GetINIFloat_Cached "Objects:bContainer" "Stentorious\ModernMinimap.ini" 1) 9
+Goo1.AuxVarSetFlt "*Minimap_ySI" (eval GetINIFloat_Cached "Objects:bTerminal" "Stentorious\ModernMinimap.ini" 1) 10
+Goo1.AuxVarSetFlt "*Minimap_ySI" (eval GetINIFloat_Cached "Objects:bCrafting" "Stentorious\ModernMinimap.ini" 1) 11
+Goo1.AuxVarSetFlt "*Minimap_ySI" (eval GetINIFloat_Cached "Objects:bMine" "Stentorious\ModernMinimap.ini" 1) 12
+Goo1.AuxVarSetFlt "*Minimap_ySI" (eval GetINIFloat_Cached "Objects:bTrap" "Stentorious\ModernMinimap.ini" 1) 13
+
+Call (CompileScript "ModernMinimap\UpdateForms.gek")
+
+CloseFileSO "Stentorious\ModernMinimap.ini" 0
+
+; Assign aux to keyword forms
+array_var aForms = GetKeywordForms "MinimapIcon"
+int iSize = 0
+if eval (iSize = Ar_Size aForms) > 0
+	while (iSize -= 1) > -1
+		ref rIcon = aForms[iSize]
+		if eval IsReference rIcon
+			rIcon = rIcon.GBO
+		endif
+		AuxVarSetFlt "*MinimapIcon" 1 0 rIcon
+	loop
+endif
+aForms = ar_Null
