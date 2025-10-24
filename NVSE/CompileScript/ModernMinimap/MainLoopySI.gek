@@ -113,7 +113,7 @@ begin Function {}
 			rIcon = aRefs[iSize]
 			if eval IsReference rIcon && rIcon.GetDisabled == 0 && rIcon.HasLoaded3D
 				iType = rIcon.GetType
-				if eval (iType == 49 && Goo1.AuxVarGetFlt "*Minimap_ySI" 3) || (iType == 46 && Goo1.AuxVarGetFlt "*Minimap_ySI" 4) || (iType == 115 && Goo1.AuxVarGetFlt "*Minimap_ySI" 6) || (Goo1.AuxVarGetFlt "*Minimap_ySI" 7 && rIcon.IsQuestItem) || (Goo1.AuxVarGetFlt "*Minimap_ySI" 5 && IsItemUnique (rIcon.gbo)) || AuxVarGetFlt "*MinimapIcon" 0 (rIcon.GBO)
+				if eval AuxVarGetFlt "*MinimapIcon" 0 (rIcon.GBO) || (iType == 49 && Goo1.AuxVarGetFlt "*Minimap_ySI" 3) || (iType == 46 && Goo1.AuxVarGetFlt "*Minimap_ySI" 4) || (iType == 115 && Goo1.AuxVarGetFlt "*Minimap_ySI" 6) || (Goo1.AuxVarGetFlt "*Minimap_ySI" 7 && rIcon.IsQuestItem) || (Goo1.AuxVarGetFlt "*Minimap_ySI" 5 && IsItemUnique (rIcon.GBO))
 					Goo1.AuxVarSetRef "*Minimap_Basic" rIcon -1
 				endif
 			endif
