@@ -149,6 +149,8 @@
 						{ "uiTrait": "HUDMainMenu/_Minimap+OffsetY", "configINI": "Map:fOffsetY", "default": 24 }
 					],
 					"scale": {
+						"setting1": "X:",
+						"setting2": "Y:",
 						"value1Decimal": 0,
 						"value2Decimal": 0,
 						"value1Increment": 1,
