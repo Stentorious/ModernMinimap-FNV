@@ -291,6 +291,14 @@
 					"textOn": "$RotatePlayer"
 				},
 				"10": {
+					"title": "$LocationText",
+					"type": 1,
+					"enable": 1,
+					"mouse": "$LocationTextMouse",
+					"vars": [ { "uiTrait": "HUDMainMenu/_Minimap+LocationText", "configINI": "Map:iLocationText", "default": 1 }],
+					"strings": [ "$Disabled", "$CellChange", "$ShowAlways" ]
+				},
+				"12": {
 					"title": "$CompassText",
 					"type": 1,
 					"enable": 1,
@@ -298,33 +306,26 @@
 					"vars": [ { "uiTrait": "HUDMainMenu/_Minimap+CompassText", "configINI": "Map:iCompassText", "default": 2 }],
 					"strings": [ "$Disabled", "$NorthOnly", "$All" ]
 				},
-				"12": {
+				"14": {
 					"title": "$CompassRose",
 					"type": 5,
 					"enable": 1,
 					"mouse": "$CompassRoseMouse",
 					"vars": [ { "uiTrait": "HUDMainMenu/_Minimap+CompassRose", "configINI": "Map:bCompassRose", "default": 1 }]
 				},
-				"14": {
+				"16": {
 					"title": "$ScanEffect",
 					"type": 5,
 					"enable": 1,
 					"mouse": "$ScanEffectMouse",
 					"vars": [ { "uiTrait": "HUDMainMenu/_Minimap+Scan", "configINI": "Map:bScanEffect", "default": 1 }]
 				},
-				"16": {
+				"18": {
 					"title": "$CombatIndicator",
 					"type": 5,
 					"enable": 1,
 					"mouse": "$CombatIndicatorMouse",
 					"vars": [ { "uiTrait": "HUDMainMenu/_Minimap+CombatIndicator", "configINI": "Map:bCombatIndicator", "default": 1 }]
-				},
-				"18": {
-					"title": "$LocationText",
-					"type": 5,
-					"enable": 1,
-					"mouse": "$LocationTextMouse",
-					"vars": [ { "uiTrait": "HUDMainMenu/_Minimap+LocationText", "configINI": "Map:iLocationText", "default": 1 }]
 				},
 				"20": {
 					"title": "$PlayerPath",

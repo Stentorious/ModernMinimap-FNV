@@ -859,7 +859,10 @@
 		<string> 1x </string>
 	</text>
 	<text name="LocationText">
-		<visible> 0 </visible>
+		<visible>
+			<copy src="io()" trait="_Minimap+LocationText" />
+			<gt> 0 </gt>
+		</visible>
 		<alpha> 255 </alpha>
 		<depth> 504 </depth>
 		<x>	<copy src="sibling(InfoText)" trait="x" /> </x>

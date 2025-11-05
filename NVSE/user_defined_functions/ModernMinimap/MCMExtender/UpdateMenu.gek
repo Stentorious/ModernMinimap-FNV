@@ -24,6 +24,13 @@ begin Function {aTemp}
 			SetUIFloatAlt "HUDMainMenu\RadWrap\visible" 1
 		endif
 
+		; Update location text
+		if eval GetUIFloatAlt "HUDMainMenu\_Minimap+LocationText" == 1
+			SetUIFloatGradual "HUDMainMenu\ModernMinimap\LocationText\alpha" 0
+		elseif eval GetUIFloatAlt "HUDMainMenu\_Minimap+LocationText" == 2
+			SetUIFloatGradual "HUDMainMenu\ModernMinimap\LocationText\alpha" 255
+		endif
+
 		; Update map
 		;Call (CompileScript (Goo1.AuxVarGetStr "*Minimap_Script" 0))
 
