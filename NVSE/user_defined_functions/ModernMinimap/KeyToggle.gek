@@ -19,6 +19,11 @@ begin Function {iKeyID}
 		Call (CompileScript (Goo1.AuxVarGetStr "*Minimap_Script" 0))
 	endif
 
+	if eval Goo1.AuxVarGetFlt "*PipMap_Init" 0
+		Player.PlaySound3D UIPipBoyTab
+		Player.PlaySound3D NPCIdlePipBoyStatic
+	endif
+
 	UnloadUIComponent "HUDMainMenu\ModernMinimap\PlayerPath"
 	AddTileFromTemplate "HUDMainMenu\ModernMinimap|Minimap_Path_Rect|PlayerPath"
 
