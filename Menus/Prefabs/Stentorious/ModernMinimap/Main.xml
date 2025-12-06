@@ -20,7 +20,7 @@
 <_Minimap+DistanceMode> 0 </_Minimap+DistanceMode>				<!-- Perception based icon distance -->
 
 <!-- ### Other Traits ### -->
-<_Minimap+ScanY> 0 </_Minimap+ScanY>							<!-- Scan Y position -->
+<_Minimap+ScanAnim> 0 </_Minimap+ScanAnim>						<!-- Scan animation -->
 <_Minimap+ScanBrightness> 255 </_Minimap+ScanBrightness>		<!-- Scan brightness pulse -->
 <_Minimap+RadPulse> 0 </_Minimap+RadPulse>						<!-- Radiation icon alpha pulse -->
 
@@ -754,21 +754,23 @@
 			<div> 2 </div>
 			<mul> -1 </mul>
 		</x>
-		<y> <copy src="io()" trait="_Minimap+ScanY" /> </y>
+		<y>
+			<copy src="parent()" trait="_width" />
+			<mul src="io()" trait="_Minimap+ScanAnim" />
+		</y>
 		<width>
 			<copy src="parent()" trait="_width" />
 			<mul> 2 </mul>
 		</width>
 		<height>
-			<copy> 24 </copy>
+			<copy> 32 </copy>
 			<mul src="parent()" trait="_TileScale" />
 		</height>
 		<clips> 1 </clips>
 		<zoom> &scale; </zoom>
 		<systemcolor> <copy src="parent()" trait="_systemcolor_0" /> </systemcolor>
 		<brightness> <copy src="io()" trait="_Minimap+ScanBrightness" /> </brightness>
-		<filename> fade_to_bottom.dds </filename>
-		<texatlas> Interface\InterfaceShared.tai </texatlas>
+		<filename> Interface\Stentorious\ModernMinimap\Distortion.dds </filename>
 	</image>
 
 	<hotrect name="Player">

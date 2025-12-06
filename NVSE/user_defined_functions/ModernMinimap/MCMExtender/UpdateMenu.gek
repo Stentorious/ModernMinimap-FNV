@@ -16,12 +16,14 @@ begin Function {aTemp}
 		AddTileFromTemplate "HUDMainMenu\ModernMinimap|Minimap_Icon_Rect|Followers"
 
 		; Update radiation meter position
-		if eval GetUIFloatAlt "HUDMainMenu\_Minimap+RadIndicator" == 1 && GetUIFloatAlt "HUDMainMenu\RadiationMeter\y" > 0
-			ModUIFloat "HUDMainMenu\RadiationMeter\y" -3000
-			SetUIFloatAlt "HUDMainMenu\RadWrap\visible" 0
-		elseif eval GetUIFloatAlt "HUDMainMenu\RadiationMeter\y" < 0
-			ModUIFloat "HUDMainMenu\RadiationMeter\y" 3000
-			SetUIFloatAlt "HUDMainMenu\RadWrap\visible" 1
+		if eval Goo1.AuxVarGetFlt "*PipMap_Init" 0 == 0
+			if eval GetUIFloatAlt "HUDMainMenu\_Minimap+RadIndicator" == 1 && GetUIFloatAlt "HUDMainMenu\RadiationMeter\y" > 0
+				ModUIFloat "HUDMainMenu\RadiationMeter\y" -3000
+				SetUIFloatAlt "HUDMainMenu\RadWrap\visible" 0
+			elseif eval GetUIFloatAlt "HUDMainMenu\RadiationMeter\y" < 0
+				ModUIFloat "HUDMainMenu\RadiationMeter\y" 3000
+				SetUIFloatAlt "HUDMainMenu\RadWrap\visible" 1
+			endif
 		endif
 
 		; Update location text

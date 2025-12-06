@@ -127,8 +127,10 @@ SetUIFloatAlt "HUDMainMenu\_Minimap+PlayerPath" (eval GetINIFloat_Cached "Map:bP
 ; Radiation Meter
 if eval GetINIFloat_Cached "Map:bRadiationIndicator" "Stentorious\ModernMinimap.ini" 1
 	SetUIFloatAlt "HUDMainMenu\_Minimap+RadIndicator" 1
-	ModUIFloat "HUDMainMenu\RadiationMeter\y" -3000
-	SetUIFloatAlt "HUDMainMenu\RadWrap\visible" 0
+	if eval GetUIFloatAlt "HUDMainMenu\ModernMinimap\Scanlines\visible" != 1
+		ModUIFloat "HUDMainMenu\RadiationMeter\y" -3000
+		SetUIFloatAlt "HUDMainMenu\RadWrap\visible" 0
+	endif
 endif
 
 ; Load icon settings
@@ -174,9 +176,8 @@ if eval Goo1.AuxVarGetFlt "*Minimap_INI" 9 == 1
 endif
 
 ; Scan animation
-iTemp = GetUIFloatAlt "HUDMainMenu\ModernMinimap\_width"
-SetUIFloatGradual "HUDMainMenu\_Minimap+ScanY" (iTemp * -2) (iTemp * 3) 10 3
-SetUIFloatGradual "HUDMainMenu\_Minimap+ScanBrightness" 153 255 1 2
+SetUIFloatGradual "HUDMainMenu\_Minimap+ScanAnim" -2 3 10 3
+SetUIFloatGradual "HUDMainMenu\_Minimap+ScanBrightness" 204 306 1 2
 
 ; Marker alpha pulse
 SetUIFloatGradual "HUDMainMenu\ModernMinimap\_IconQuestPulse" -1.5 0.75 3 2

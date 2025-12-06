@@ -20,7 +20,7 @@
 <_Minimap+DistanceMode> <copy src="sibling(HUDMainMenu)" trait="_Minimap+DistanceMode" /> </_Minimap+DistanceMode>
 
 <!-- ### Other Traits ### -->
-<_Minimap+ScanY> <copy src="sibling(HUDMainMenu)" trait="_Minimap+ScanY" />  </_Minimap+ScanY>
+<_Minimap+ScanAnim> <copy src="sibling(HUDMainMenu)" trait="_Minimap+ScanAnim" />  </_Minimap+ScanAnim>
 <_Minimap+ScanBrightness> <copy src="sibling(HUDMainMenu)" trait="_Minimap+ScanBrightness" />  </_Minimap+ScanBrightness>
 <_Minimap+RadPulse> <copy src="sibling(HUDMainMenu)" trait="_Minimap+RadPulse" /> </_Minimap+RadPulse>
 
@@ -692,21 +692,23 @@
 			<div> 2 </div>
 			<mul> -1 </mul>
 		</x>
-		<y> <copy src="io()" trait="_Minimap+ScanY" /> </y>
+		<y>
+			<copy src="parent()" trait="_width" />
+			<mul src="io()" trait="_Minimap+ScanAnim" />
+		</y>
 		<width>
 			<copy src="parent()" trait="_width" />
 			<mul> 2 </mul>
 		</width>
 		<height>
-			<copy> 24 </copy>
+			<copy> 32 </copy>
 			<mul src="parent()" trait="_TileScale" />
 		</height>
 		<clips> 1 </clips>
 		<zoom> &scale; </zoom>
 		<systemcolor> <copy src="parent()" trait="_systemcolor_0" /> </systemcolor>
 		<brightness> <copy src="io()" trait="_Minimap+ScanBrightness" /> </brightness>
-		<filename> fade_to_bottom.dds </filename>
-		<texatlas> Interface\InterfaceShared.tai </texatlas>
+		<filename> Interface\Stentorious\ModernMinimap\Distortion.dds </filename>
 	</image>
 
 	<hotrect name="Player">
