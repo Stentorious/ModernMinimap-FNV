@@ -5,6 +5,7 @@
 <_Minimap+AnchorY> 0 </_Minimap+AnchorY>						<!-- Screen Y offset -->
 <_Minimap+BackgroundAlpha> 80 </_Minimap+BackgroundAlpha>		<!-- Background opacity -->
 <_Minimap+BackgroundPad> 8 </_Minimap+BackgroundPad>			<!-- Padding between map window and main background edge -->
+<_Minimap+BorderThickness> <copy src="globals()" trait="_line_thickness" /> </_Minimap+BorderThickness>	<!-- Border thickness -->
 <_Minimap+RenderBrightness> 8 </_Minimap+RenderBrightness>		<!-- Local map render brightness -->
 <_Minimap+RadIndicator> 0 </_Minimap+RadIndicator>				<!-- Radiation indicator -->
 <_Minimap+TileScale> 1 </_Minimap+TileScale>					<!-- Minimap UI tile scale -->
@@ -38,6 +39,7 @@
 		<copy src="io()" trait="_Minimap+BackgroundPad" />
 		<add> 2 </add>
 	</_BackgroundPad>
+	<_BorderThickness> <copy src="io()" trait="_Minimap+BorderThickness" /> </_BorderThickness>
 	<_TileScale> <copy src="io()" trait="_Minimap+TileScale" /> </_TileScale>
 	<_Dist>
 		<copy src="io()" trait="_Minimap+DistanceMax" />
@@ -645,9 +647,9 @@
 	<image name="Headline_VL">
 		<x>
 			<copy> 0 </copy>
-			<sub src="globals()" trait="_line_thickness" />
+			<sub src="parent()" trait="_BorderThickness" />
 		</x>
-		<width> <copy src="globals()" trait="_line_thickness" /> </width>
+		<width> <copy src="parent()" trait="_BorderThickness" /> </width>
 		<height> <copy src="parent()" trait="_width" /> </height>
 		<systemcolor> <copy src="parent()" trait="_systemcolor" /> </systemcolor>
 		<brightness> 255 </brightness>
@@ -655,7 +657,7 @@
 	</image>
 	<image name="Headline_VR">
 		<x> <copy src="parent()" trait="_width" /> </x>
-		<width> <copy src="globals()" trait="_line_thickness" /> </width>
+		<width> <copy src="parent()" trait="_BorderThickness" /> </width>
 		<height> <copy src="parent()" trait="_width" /> </height>
 		<systemcolor> <copy src="parent()" trait="_systemcolor" /> </systemcolor>
 		<brightness> 255 </brightness>
@@ -666,10 +668,10 @@
 		<y> <copy src="me()" trait="x" /> </y>
 		<width>
 			<copy src="parent()" trait="_width" />
-			<add src="globals()" trait="_line_thickness" />
-			<add src="globals()" trait="_line_thickness" />
+			<add src="parent()" trait="_BorderThickness" />
+			<add src="parent()" trait="_BorderThickness" />
 		</width>
-		<height> <copy src="globals()" trait="_line_thickness" /> </height>
+		<height> <copy src="parent()" trait="_BorderThickness" /> </height>
 		<systemcolor> <copy src="parent()" trait="_systemcolor" /> </systemcolor>
 		<brightness> 255 </brightness>
 		<filename> Interface\Shared\solid.dds </filename>
@@ -679,10 +681,10 @@
 		<y> <copy src="parent()" trait="_width" /> </y>
 		<width>
 			<copy src="parent()" trait="_width" />
-			<add src="globals()" trait="_line_thickness" />
-			<add src="globals()" trait="_line_thickness" />
+			<add src="parent()" trait="_BorderThickness" />
+			<add src="parent()" trait="_BorderThickness" />
 		</width>
-		<height> <copy src="globals()" trait="_line_thickness" /> </height>
+		<height> <copy src="parent()" trait="_BorderThickness" /> </height>
 		<systemcolor> <copy src="parent()" trait="_systemcolor" /> </systemcolor>
 		<brightness> 255 </brightness>
 		<filename> Interface\Shared\solid.dds </filename>
@@ -704,7 +706,7 @@
 			<div> 2 </div>
 		</y>
 		<width>
-			<copy src="globals()" trait="_line_thickness" />
+			<copy src="parent()" trait="_BorderThickness" />
 			<mul src="parent()" trait="_TileScale" />
 		</width>
 		<height> <copy src="parent()" trait="_width" /> <mul> 2 </mul> </height>

@@ -214,6 +214,22 @@
 					}
 				},
 				"15": {
+					"title": "$BorderThickness",
+					"type": 2.5,
+					"enable": 1,
+					"mouse": "$BorderThicknessMouse",
+					"state": { "form": "Goo1", "auxVar": "*PipMap_Init", "key": 0, "value": 0, "disable": 1 },
+					"callOpen": { "type": "file", "value": "ModernMinimap/MCMExtender/ScaleOpen.gek" },
+					"callLoop": { "type": "file", "value": "ModernMinimap/MCMExtender/ScaleLoop.gek" },
+					"vars": [ { "uiTrait": "HUDMainMenu/_Minimap+BorderThickness", "configINI": "Map:fBorderThickness", "default": 4 }],
+					"scale": {
+						"valueDecimal": 1,
+						"valueIncrement": 0.1,
+						"valueMin": 0,
+						"valueMax": 10
+					}
+				},
+				"17": {
 					"title": "$RenderBrightness",
 					"type": 2.5,
 					"enable": 1,
@@ -230,7 +246,7 @@
 						"suffix": "x"
 					}
 				},
-				"17": {
+				"19": {
 					"title": "$ZoomInterior",
 					"type": 2.5,
 					"enable": 1,
@@ -245,7 +261,7 @@
 						"suffix": "x"
 					}
 				},
-				"19": {
+				"21": {
 					"title": "$ZoomExterior",
 					"type": 2.5,
 					"enable": 1,

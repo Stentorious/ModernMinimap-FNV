@@ -15,6 +15,8 @@ begin Function {iSubmenu, iOption, aValues}
 		elseif eval iOption == 13
 			SetUIFloatAlt "StartMenu/ModernMinimap/_MCM_BackgroundPad" (aValues[0])
 		elseif eval iOption == 15
+			SetUIFloatAlt "StartMenu/ModernMinimap/_MCM_BorderThickness" (aValues[0])
+		elseif eval iOption == 17
 			SetUIFloatAlt "StartMenu/ModernMinimap/_MCM_RenderBrightness" (aValues[0])
 		endif
 	elseif eval iSubmenu == 3
