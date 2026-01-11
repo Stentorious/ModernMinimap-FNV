@@ -47,11 +47,8 @@
 </filename>
 <_Custom> 0 </_Custom>
 <_x1>
-	<copy> 0 </copy>
-	<add>
-		<copy src="me()" trait="_PosXOffset" />
-		<mul src="grandparent()" trait="_IconDegCos" />
-	</add>
+	<copy src="me()" trait="_PosXOffset" />
+	<mul src="grandparent()" trait="_IconDegCos" />
 	<sub>
 		<copy src="me()" trait="_PosYOffset" />
 		<mul src="grandparent()" trait="_IconDegSin" />
@@ -85,14 +82,11 @@
 	</min>
 </_scaler>
 <_x>
-	<copy> 0.5 </copy>
-	<add>
-		<copy src="me()" trait="_x1" />
-		<onlyif>
-			<copy src="me()" trait="_scaler" />
-			<gte> 1 </gte>
-		</onlyif>
-	</add>
+	<copy src="me()" trait="_x1" />
+	<onlyif>
+		<copy src="me()" trait="_scaler" />
+		<gte> 1 </gte>
+	</onlyif>
 	<add>
 		<copy src="me()" trait="_x1" />
 		<mul src="me()" trait="_scaler" />
@@ -101,16 +95,14 @@
 			<lt> 1 </lt>
 		</onlyif>
 	</add>
+	<add> 0.5 </add>
 </_x>
 <_y>
-	<copy> 0.5 </copy>
-	<add>
-		<copy src="me()" trait="_y1" />
-		<onlyif>
-			<copy src="me()" trait="_scaler" />
-			<gte> 1 </gte>
-		</onlyif>
-	</add>
+	<copy src="me()" trait="_y1" />
+	<onlyif>
+		<copy src="me()" trait="_scaler" />
+		<gte> 1 </gte>
+	</onlyif>
 	<add>
 		<copy src="me()" trait="_y1" />
 		<mul src="me()" trait="_scaler" />
@@ -119,6 +111,7 @@
 			<lt> 1 </lt>
 		</onlyif>
 	</add>
+	<add> 0.5 </add>
 </_y>
 <_PosXOffset>
 	<copy src="me()" trait="_PosX" />
@@ -135,15 +128,9 @@
 	<sub src="grandparent()" trait="_PlrZ" />
 </_PosZOffset>
 <_Level>
-	<copy> 0 </copy>
-	<add>
-		<copy> 1 </copy>
-		<onlyif>
-			<copy src="me()" trait="_PosZOffset" />
-			<gt> 175 </gt>
-			<and src="io()" trait="_Minimap+QuestHeight" />
-		</onlyif>
-	</add>
+	<copy src="me()" trait="_PosZOffset" />
+	<gt> 175 </gt>
+	<and src="io()" trait="_Minimap+QuestHeight" />
 	<add>
 		<copy> 2 </copy>
 		<onlyif>

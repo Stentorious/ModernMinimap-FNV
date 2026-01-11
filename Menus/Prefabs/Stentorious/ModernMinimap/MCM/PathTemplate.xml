@@ -42,11 +42,9 @@
 	<mul src="grandparent()" trait="_WorldScale" />
 </_PosYOffset>
 <_x>
-	<copy> 0.5 </copy>
-	<add>
-		<copy src="me()" trait="_PosXOffset" />
-		<mul src="grandparent()" trait="_IconDegCos" />
-	</add>
+	<copy src="me()" trait="_PosXOffset" />
+	<mul src="grandparent()" trait="_IconDegCos" />
+	<add> 0.5 </add>
 	<sub>
 		<copy src="me()" trait="_PosYOffset" />
 		<mul src="grandparent()" trait="_IconDegSin" />

@@ -280,7 +280,7 @@
 		<copy src="me()" trait="_systemcolor_0" />
 		<onlyifnot src="io()" trait="_ySIColorfulIconsFix" />
 	</_systemcolor_-1>
-	<_systemcolor_0> &hudmain; </_systemcolor_0>
+	<_systemcolor_0> <copy src="io()" trait="_MCMExt+Systemcolor" /> </_systemcolor_0>
 	<_systemcolor_1>
 		<copy src="me()" trait="_systemcolor_0" />
 		<onlyifnot src="io()" trait="_Minimap+HostileColor" />
@@ -1016,7 +1016,7 @@
 			<_PosZ> 500 </_PosZ>
 			<_Deg> 135 </_Deg>
 			<_Dist> 707.1 </_Dist>
-			<_Hostile> -1 </_Hostile>
+			<_Hostile> 1 </_Hostile>
 			<_DepthMod> 100 </_DepthMod>
 		</hotrect>
 

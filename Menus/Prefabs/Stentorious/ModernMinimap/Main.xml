@@ -189,14 +189,12 @@
 
 	<!-- Orthographic render camera offset from player z coordinate -->
 	<_CameraOffset>
-		<copy> 10000 </copy>
-		<sub>
-			<copy> 9800 </copy>
-			<onlyif>
-				<copy src="me()" trait="_ColorMode" />
-				<and src="me()" trait="_Interior" />
-			</onlyif>
-		</sub>
+		<copy> -9800 </copy>
+		<onlyif>
+			<copy src="me()" trait="_ColorMode" />
+			<and src="me()" trait="_Interior" />
+		</onlyif>
+		<add> 10000 </add>
 	</_CameraOffset>
 
 	<!-- Map window size -->
@@ -217,22 +215,16 @@
 	<_PlrDegCos> <cos src="me()" trait="_PlrDeg" /> </_PlrDegCos>
 	<_PlrDegSin> <sin src="me()" trait="_PlrDeg" /> </_PlrDegSin>
 	<_IconDegCos>
-		<copy> 0 </copy>
-		<add>
-			<copy src="me()" trait="_PlrDegCos" />
-			<onlyif src="io()" trait="_Minimap+RotationMode" />
-		</add>
+		<copy src="me()" trait="_PlrDegCos" />
+		<onlyif src="io()" trait="_Minimap+RotationMode" />
 		<add>
 			<copy src="me()" trait="_CellDegCos" />
 			<onlyifnot src="io()" trait="_Minimap+RotationMode" />
 		</add>
 	</_IconDegCos>
 	<_IconDegSin>
-		<copy> 0 </copy>
-		<add>
-			<copy src="me()" trait="_PlrDegSin" />
-			<onlyif src="io()" trait="_Minimap+RotationMode" />
-		</add>
+		<copy src="me()" trait="_PlrDegSin" />
+		<onlyif src="io()" trait="_Minimap+RotationMode" />
 		<add>
 			<copy src="me()" trait="_CellDegSin" />
 			<onlyifnot src="io()" trait="_Minimap+RotationMode" />
@@ -241,8 +233,7 @@
 
 	<!-- Calculates distance from player where icons become visible -->
 	<_DistCalc>
-		<copy> 0 </copy>
-		<add src="me()" trait="_Dist" />
+		<copy src="me()" trait="_Dist" />
 		<onlyifnot src="io()" trait="_Minimap+DistanceMode" />
 		<add>
 			<copy src="me()" trait="_Dist" />
@@ -369,12 +360,10 @@
 		<add> 3 </add>
 	</_MarkerMaxX>
 	<_MarkerMinX>
-		<copy src="me()" trait="width" />
+		<copy> -18 </copy>
+		<mul src="me()" trait="_IconScaleMul" />
+		<add src="me()" trait="width" />
 		<sub src="me()" trait="_MarkerMaxX" />
-		<sub>
-			<copy> 18 </copy>
-			<mul src="me()" trait="_IconScaleMul" />
-		</sub>
 	</_MarkerMinX>
 
 	<!-- Interface Control (DO NOT TOUCH) -->
@@ -387,14 +376,8 @@
 		<and src="me()" trait="_visible_pa" />
 	</visible>
 	<x>
-		<copy src="me()" trait="_BackgroundPad" />
-		<add>
-			<copy src="me()" trait="_x" />
-			<onlyif>
-				<copy src="io()" trait="_Minimap+AnchorX" />
-				<eq> 0 </eq>
-			</onlyif>
-		</add>
+		<copy src="me()" trait="_x" />
+		<onlyifnot src="io()" trait="_Minimap+AnchorX" />
 		<add>
 			<copy src="screen()" trait="width" />
 			<sub src="child(Background)" trait="width" />
@@ -414,16 +397,11 @@
 				<eq> 2 </eq>
 			</onlyif>
 		</add>
+		<add src="me()" trait="_BackgroundPad" />
 	</x>
 	<y>
-		<copy src="me()" trait="_BackgroundPad" />
-		<add>
-			<copy src="me()" trait="_y" />
-			<onlyif>
-				<copy src="io()" trait="_Minimap+AnchorY" />
-				<eq> 0 </eq>
-			</onlyif>
-		</add>
+		<copy src="me()" trait="_y" />
+		<onlyifnot src="io()" trait="_Minimap+AnchorY" />
 		<add>
 			<copy src="screen()" trait="height" />
 			<sub src="child(Background)" trait="height" />
@@ -443,6 +421,7 @@
 				<eq> 2 </eq>
 			</onlyif>
 		</add>
+		<add src="me()" trait="_BackgroundPad" />
 	</y>
 	<depth> 10 </depth>
 	<locus> 1 </locus>
@@ -516,11 +495,9 @@
 		</brightness>
 		<filename> Interface\Shared\solid.dds </filename>
 		<_x>
-			<copy> 0.5 </copy>
-			<add>
-				<copy src="me()" trait="_PosXOffset" />
-				<mul src="Parent()" trait="_CellDegCos" />
-			</add>
+			<copy src="me()" trait="_PosXOffset" />
+			<mul src="Parent()" trait="_CellDegCos" />
+			<add> 0.5 </add>
 			<sub>
 				<copy src="me()" trait="_PosYOffset" />
 				<mul src="Parent()" trait="_CellDegSin" />
@@ -626,11 +603,9 @@
 			<sub src="parent()" trait="_BackgroundPad" />
 		</y>
 		<width>
-			<copy src="parent()" trait="_width" />
-			<add>
-				<copy src="parent()" trait="_BackgroundPad" />
-				<mul> 2 </mul>
-			</add>
+			<copy src="parent()" trait="_BackgroundPad" />
+			<mul> 2 </mul>
+			<add src="parent()" trait="_width" />
 		</width>
 		<height> <copy src="me()" trait="width" /> </height>
 		<zoom> &scale; </zoom>
@@ -917,18 +892,14 @@
 		</visible>
 		<string> S </string>
 		<_x>
-			<copy> 0.5 </copy>
-			<add>
-				<copy src="parent()" trait="_CardinalOffset" />
-				<mul src="parent()" trait="_CellPlrDegSin" />
-			</add>
+			<copy src="parent()" trait="_CardinalOffset" />
+			<mul src="parent()" trait="_CellPlrDegSin" />
+			<add> 0.5 </add>
 		</_x>
 		<_y>
-			<copy> 0.5 </copy>
-			<add>
-				<copy src="parent()" trait="_CardinalOffset" />
-				<mul src="parent()" trait="_CellPlrDegCos" />
-			</add>
+			<copy src="parent()" trait="_CardinalOffset" />
+			<mul src="parent()" trait="_CellPlrDegCos" />
+			<add> 0.5 </add>
 		</_y>
 	</text>
 	<text name="EastText">
@@ -944,11 +915,9 @@
 		</x>
 		<string> E </string>
 		<_x>
-			<copy> 0.5 </copy>
-			<add>
-				<copy src="parent()" trait="_CardinalOffset" />
-				<mul src="parent()" trait="_CellPlrDegCos" />
-			</add>
+			<copy src="parent()" trait="_CardinalOffset" />
+			<mul src="parent()" trait="_CellPlrDegCos" />
+			<add> 0.5 </add>
 		</_x>
 		<_y>
 			<copy> 0.5 </copy>
@@ -970,11 +939,9 @@
 			</sub>
 		</_x>
 		<_y>
-			<copy> 0.5 </copy>
-			<add>
-				<copy src="parent()" trait="_CardinalOffset" />
-				<mul src="parent()" trait="_CellPlrDegSin" />
-			</add>
+			<copy src="parent()" trait="_CardinalOffset" />
+			<mul src="parent()" trait="_CellPlrDegSin" />
+			<add> 0.5 </add>
 		</_y>
 	</text>
 
@@ -992,11 +959,9 @@
 			<sub src="me()" trait="width" />
 		</x>
 		<y>
-			<copy src="sibling(InfoText)" trait="y" />
-			<sub>
-				<copy src="me()" trait="width" />
-				<div> 4 </div>
-			</sub>
+			<copy src="me()" trait="width" />
+			<div> -4 </div>
+			<add src="sibling(InfoText)" trait="y" />
 		</y>
 		<width>
 			<copy> 24 </copy>
@@ -1030,11 +995,9 @@
 		<alpha> <copy src="radiation_text" trait="alpha" /> </alpha>
 		<depth> 504 </depth>
 		<x>
-			<copy src="sibling(RadiationIcon)" trait="x" />
-			<sub>
-				<copy> 7 </copy>
-				<mul src="parent()" trait="_TileScale" />
-			</sub>
+			<copy> -7 </copy>
+			<mul src="parent()" trait="_TileScale" />
+			<add src="sibling(RadiationIcon)" trait="x" />
 		</x>
 		<y> <copy src="sibling(InfoText)" trait="y" /> </y>
 		<zoom> <copy src="parent()" trait="_info_text_zoom" /> </zoom>
@@ -1048,11 +1011,9 @@
 		<alpha> <copy src="radiation_text_value" trait="alpha" /> </alpha>
 		<depth> 504 </depth>
 		<x>
-			<copy src="sibling(RadiationLabel)" trait="x" />
-			<sub>
-				<copy src="sibling(RadiationLabel)" trait="width" />
-				<mul> 1.1 </mul>
-			</sub>
+			<copy src="sibling(RadiationLabel)" trait="width" />
+			<mul> -1.1 </mul>
+			<add src="sibling(RadiationLabel)" trait="x" />
 		</x>
 		<y> <copy src="sibling(InfoText)" trait="y" /> </y>
 		<zoom> <copy src="parent()" trait="_info_text_zoom" /> </zoom>
@@ -1141,22 +1102,18 @@
 			<depth> 450 </depth>
 			<clips> 1 </clips>
 			<x>
-				<copy src="grandparent()" trait="_WorldMapX" />
-				<add>
-					<copy src="me()" trait="_x" />
-					<mul src="grandparent()" trait="_WorldMapWidth" />
-				</add>
+				<copy src="me()" trait="_x" />
+				<mul src="grandparent()" trait="_WorldMapWidth" />
+				<add src="grandparent()" trait="_WorldMapX" />
 				<sub>
 					<copy src="me()" trait="width" />
 					<div> 2 </div>
 				</sub>
 			</x>
 			<y>
-				<copy src="grandparent()" trait="_WorldMapY" />
-				<add>
-					<copy src="me()" trait="_y" />
-					<mul src="grandparent()" trait="_WorldMapWidth" />
-				</add>
+				<copy src="me()" trait="_y" />
+				<mul src="grandparent()" trait="_WorldMapWidth" />
+				<add src="grandparent()" trait="_WorldMapY" />
 				<sub>
 					<copy src="me()" trait="height" />
 					<div> 2 </div>
@@ -1164,10 +1121,8 @@
 			</y>
 			<width>
 				<copy> 36 </copy>
-				<add>
-					<copy> 36 </copy>
-					<mul src="me()" trait="_timeline" />
-				</add>
+				<mul src="me()" trait="_timeline" />
+				<add> 36 </add>
 				<min> 72 </min>
 				<mul src="grandparent()" trait="_IconScaleMul" />
 			</width>
@@ -1187,11 +1142,9 @@
 				<sub src="me()" trait="_PosY" />
 			</_PosYOffset>
 			<_x>
-				<copy src="grandparent()" trait="_PlrWldX" />
-				<add>
-					<copy src="me()" trait="_PosXOffset" />
-					<mul src="grandparent()" trait="_CellPlrDegCos" />
-				</add>
+				<copy src="me()" trait="_PosXOffset" />
+				<mul src="grandparent()" trait="_CellPlrDegCos" />
+				<add src="grandparent()" trait="_PlrWldX" />
 				<sub>
 					<copy src="me()" trait="_PosYOffset" />
 					<mul src="grandparent()" trait="_CellPlrDegSin" />
@@ -1294,22 +1247,18 @@
 			<mul> 2 </mul>
 		</depth>
 		<x>
-			<copy src="grandparent()" trait="_WorldMapX" />
-			<add>
-				<copy src="me()" trait="_x" />
-				<mul src="grandparent()" trait="_WorldMapWidth" />
-			</add>
+			<copy src="me()" trait="_x" />
+			<mul src="grandparent()" trait="_WorldMapWidth" />
+			<add src="grandparent()" trait="_WorldMapX" />
 			<sub>
 				<copy src="me()" trait="width" />
 				<div> 2 </div>
 			</sub>
 		</x>
 		<y>
-			<copy src="grandparent()" trait="_WorldMapY" />
-			<add>
-				<copy src="me()" trait="_y" />
-				<mul src="grandparent()" trait="_WorldMapWidth" />
-			</add>
+			<copy src="me()" trait="_y" />
+			<mul src="grandparent()" trait="_WorldMapWidth" />
+			<add src="grandparent()" trait="_WorldMapY" />
 			<sub>
 				<copy src="me()" trait="height" />
 				<div> 2 </div>
@@ -1333,11 +1282,9 @@
 			<sub src="me()" trait="_PosY" />
 		</_PosYOffset>
 		<_x>
-			<copy src="grandparent()" trait="_PlrWldX" />
-			<add>
-				<copy src="me()" trait="_PosXOffset" />
-				<mul src="grandparent()" trait="_CellPlrDegCos" />
-			</add>
+			<copy src="me()" trait="_PosXOffset" />
+			<mul src="grandparent()" trait="_CellPlrDegCos" />
+			<add src="grandparent()" trait="_PlrWldX" />
 			<sub>
 				<copy src="me()" trait="_PosYOffset" />
 				<mul src="grandparent()" trait="_CellPlrDegSin" />
@@ -1455,11 +1402,8 @@
 			<sub src="grandparent()" trait="_PlrZ" />
 		</_PosZOffset>
 		<_DegOffset>
-			<copy> 0 </copy>
-			<add>
-				<copy src="grandparent()" trait="_PlrDeg" />
-				<onlyif src="io()" trait="_Minimap+RotationMode" />
-			</add>
+			<copy src="grandparent()" trait="_PlrDeg" />
+			<onlyif src="io()" trait="_Minimap+RotationMode" />
 			<add>
 				<copy src="grandparent()" trait="_CellDeg" />
 				<onlyifnot src="io()" trait="_Minimap+RotationMode" />
@@ -1468,14 +1412,8 @@
 			<div> 360 </div>
 		</_DegOffset>
 		<_Level>
-			<copy> 0 </copy>
-			<add>
-				<copy> 1 </copy>
-				<onlyif>
-					<copy src="me()" trait="_PosZOffset" />
-					<gt> 175 </gt>
-				</onlyif>
-			</add>
+			<copy src="me()" trait="_PosZOffset" />
+			<gt> 175 </gt>
 			<add>
 				<copy> 2 </copy>
 				<onlyif>
@@ -1485,11 +1423,9 @@
 			</add>
 		</_Level>
 		<_x>
-			<copy> 0.5 </copy>
-			<add>
-				<copy src="me()" trait="_PosXOffset" />
-				<mul src="grandparent()" trait="_IconDegCos" />
-			</add>
+			<copy src="me()" trait="_PosXOffset" />
+			<mul src="grandparent()" trait="_IconDegCos" />
+			<add> 0.5 </add>
 			<sub>
 				<copy src="me()" trait="_PosYOffset" />
 				<mul src="grandparent()" trait="_IconDegSin" />
@@ -1694,11 +1630,9 @@
 			<mul src="grandparent()" trait="_WorldScale" />
 		</_PosYOffset>
 		<_x>
-			<copy> 0.5 </copy>
-			<add>
-				<copy src="me()" trait="_PosXOffset" />
-				<mul src="grandparent()" trait="_IconDegCos" />
-			</add>
+			<copy src="me()" trait="_PosXOffset" />
+			<mul src="grandparent()" trait="_IconDegCos" />
+			<add> 0.5 </add>
 			<sub>
 				<copy src="me()" trait="_PosYOffset" />
 				<mul src="grandparent()" trait="_IconDegSin" />
@@ -1768,11 +1702,8 @@
 
 		<!-- Calculate marker position to remain in the bounds of the map -->
 		<_x1>
-			<copy> 0 </copy>
-			<add>
-				<copy src="me()" trait="_PosXOffset" />
-				<mul src="grandparent()" trait="_IconDegCos" />
-			</add>
+			<copy src="me()" trait="_PosXOffset" />
+			<mul src="grandparent()" trait="_IconDegCos" />
 			<sub>
 				<copy src="me()" trait="_PosYOffset" />
 				<mul src="grandparent()" trait="_IconDegSin" />
@@ -1806,14 +1737,11 @@
 			</min>
 		</_scaler>
 		<_x>
-			<copy> 0.5 </copy>
-			<add>
-				<copy src="me()" trait="_x1" />
-				<onlyif>
-					<copy src="me()" trait="_scaler" />
-					<gte> 1 </gte>
-				</onlyif>
-			</add>
+			<copy src="me()" trait="_x1" />
+			<onlyif>
+				<copy src="me()" trait="_scaler" />
+				<gte> 1 </gte>
+			</onlyif>
 			<add>
 				<copy src="me()" trait="_x1" />
 				<mul src="me()" trait="_scaler" />
@@ -1822,16 +1750,14 @@
 					<lt> 1 </lt>
 				</onlyif>
 			</add>
+			<add> 0.5 </add>
 		</_x>
 		<_y>
-			<copy> 0.5 </copy>
-			<add>
-				<copy src="me()" trait="_y1" />
-				<onlyif>
-					<copy src="me()" trait="_scaler" />
-					<gte> 1 </gte>
-				</onlyif>
-			</add>
+			<copy src="me()" trait="_y1" />
+			<onlyif>
+				<copy src="me()" trait="_scaler" />
+				<gte> 1 </gte>
+			</onlyif>
 			<add>
 				<copy src="me()" trait="_y1" />
 				<mul src="me()" trait="_scaler" />
@@ -1840,6 +1766,7 @@
 					<lt> 1 </lt>
 				</onlyif>
 			</add>
+			<add> 0.5 </add>
 		</_y>
 		<_PosX> 0 </_PosX>
 		<_PosY> 0 </_PosY>
@@ -1860,15 +1787,9 @@
 			<sub src="grandparent()" trait="_PlrZ" />
 		</_PosZOffset>
 		<_Level>
-			<copy> 0 </copy>
-			<add>
-				<copy> 1 </copy>
-				<onlyif>
-					<copy src="me()" trait="_PosZOffset" />
-					<gt> 175 </gt>
-					<and src="io()" trait="_Minimap+QuestHeight" />
-				</onlyif>
-			</add>
+			<copy src="me()" trait="_PosZOffset" />
+			<gt> 175 </gt>
+			<and src="io()" trait="_Minimap+QuestHeight" />
 			<add>
 				<copy> 2 </copy>
 				<onlyif>
@@ -1889,11 +1810,9 @@
 		<locus> 1 </locus>
 		<depth> <copy src="me()" trait="_DepthMod" /> </depth>
 		<x>
-			<copy src="grandparent()" trait="_WorldMapX" />
-			<add>
-				<copy src="me()" trait="_x" />
-				<mul src="grandparent()" trait="_WorldMapWidth" />
-			</add>
+			<copy src="me()" trait="_x" />
+			<mul src="grandparent()" trait="_WorldMapWidth" />
+			<add src="grandparent()" trait="_WorldMapX" />
 			<sub>
 				<copy src="me()" trait="width" />
 				<div> 2 </div>
@@ -1902,11 +1821,9 @@
 			<min src="grandparent()" trait="_MarkerMinX" />
 		</x>
 		<y>
-			<copy src="grandparent()" trait="_WorldMapY" />
-			<add>
-				<copy src="me()" trait="_y" />
-				<mul src="grandparent()" trait="_WorldMapWidth" />
-			</add>
+			<copy src="me()" trait="_y" />
+			<mul src="grandparent()" trait="_WorldMapWidth" />
+			<add src="grandparent()" trait="_WorldMapY" />
 			<sub>
 				<copy src="me()" trait="height" />
 				<div> 2 </div>
@@ -1939,11 +1856,8 @@
 			<sub src="me()" trait="_PosY" />
 		</_PosYOffset>
 		<_x1>
-			<copy> 0 </copy>
-			<add>
-				<copy src="me()" trait="_PosXOffset" />
-				<mul src="grandparent()" trait="_CellPlrDegCos" />
-			</add>
+			<copy src="me()" trait="_PosXOffset" />
+			<mul src="grandparent()" trait="_CellPlrDegCos" />
 			<sub>
 				<copy src="me()" trait="_PosYOffset" />
 				<mul src="grandparent()" trait="_CellPlrDegSin" />
@@ -1977,14 +1891,11 @@
 			</min>
 		</_scaler>
 		<_x>
-			<copy src="grandparent()" trait="_PlrWldX" />
-			<add>
-				<copy src="me()" trait="_x1" />
-				<onlyif>
-					<copy src="me()" trait="_scaler" />
-					<gte> 1 </gte>
-				</onlyif>
-			</add>
+			<copy src="me()" trait="_x1" />
+			<onlyif>
+				<copy src="me()" trait="_scaler" />
+				<gte> 1 </gte>
+			</onlyif>
 			<add>
 				<copy src="me()" trait="_x1" />
 				<mul src="me()" trait="_scaler" />
@@ -1993,16 +1904,14 @@
 					<lt> 1 </lt>
 				</onlyif>
 			</add>
+			<add src="grandparent()" trait="_PlrWldX" />
 		</_x>
 		<_y>
-			<copy src="grandparent()" trait="_PlrWldY" />
-			<add>
-				<copy src="me()" trait="_y1" />
-				<onlyif>
-					<copy src="me()" trait="_scaler" />
-					<gte> 1 </gte>
-				</onlyif>
-			</add>
+			<copy src="me()" trait="_y1" />
+			<onlyif>
+				<copy src="me()" trait="_scaler" />
+				<gte> 1 </gte>
+			</onlyif>
 			<add>
 				<copy src="me()" trait="_y1" />
 				<mul src="me()" trait="_scaler" />
@@ -2011,6 +1920,7 @@
 					<lt> 1 </lt>
 				</onlyif>
 			</add>
+			<add src="grandparent()" trait="_PlrWldY" />
 		</_y>
 	</image>
 </template>
