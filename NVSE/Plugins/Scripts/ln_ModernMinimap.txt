@@ -52,7 +52,7 @@ Goo1.AuxVarSetFlt "*Minimap_Init" 1
 ; "*Minimap_Markers"	Quest marker refs
 
 ; Check for requirements
-if eval GetNVSEVersion < 6 || (GetNVSEVersion == 6 && GetNVSERevision < 4)
+if eval GetNVSEVersionFull < 6.40
 	MessageBoxEx "Modern Minimap missing requirement!%rInstall xNVSE 6.4.0+."
 	return
 endif
@@ -87,20 +87,20 @@ endif
 ; Load key binds
 Goo1.AuxVarSetFlt "*Minimap_Key" (GetINIFloat_Cached "KeyBinds:iMapVisibility" "Stentorious\ModernMinimap.ini" 50) 0
 if eval (int iTemp = Goo1.AuxVarGetFlt "*Minimap_Key" 0) > 0
-	SetOnKeyDownEventHandler (CompileScript "ModernMinimap\InputHandler.gek") 1 iTemp
-	SetOnKeyUpEventHandler (CompileScript "ModernMinimap\KeyToggle.gek") 1 iTemp
+	SetOnKeyDownEventHandler (CompileScript "ModernMinimap\OnKeyDown.gek") 1 iTemp
+	SetOnKeyUpEventHandler (CompileScript "ModernMinimap\OnKeyUp.gek") 1 iTemp
 endif
 Goo1.AuxVarSetFlt "*Minimap_Key" (GetINIFloat_Cached "KeyBinds:iMapZoomIn" "Stentorious\ModernMinimap.ini" 201) 1
 if eval (iTemp = Goo1.AuxVarGetFlt "*Minimap_Key" 1) > 0
-	SetOnKeyDownEventHandler (CompileScript "ModernMinimap\InputHandler.gek") 1 iTemp
+	SetOnKeyDownEventHandler (CompileScript "ModernMinimap\OnKeyDown.gek") 1 iTemp
 endif
 Goo1.AuxVarSetFlt "*Minimap_Key" (GetINIFloat_Cached "KeyBinds:iMapZoomOut" "Stentorious\ModernMinimap.ini" 209) 2
 if eval (iTemp = Goo1.AuxVarGetFlt "*Minimap_Key" 2) > 0
-	SetOnKeyDownEventHandler (CompileScript "ModernMinimap\InputHandler.gek") 1 iTemp
+	SetOnKeyDownEventHandler (CompileScript "ModernMinimap\OnKeyDown.gek") 1 iTemp
 endif
 Goo1.AuxVarSetFlt "*Minimap_Key" (GetINIFloat_Cached "KeyBinds:iMarkerVisibility" "Stentorious\ModernMinimap.ini" 199) 3
 if eval (iTemp = Goo1.AuxVarGetFlt "*Minimap_Key" 3) > 0
-	SetOnKeyDownEventHandler (CompileScript "ModernMinimap\InputHandler.gek") 1 iTemp
+	SetOnKeyDownEventHandler (CompileScript "ModernMinimap\OnKeyDown.gek") 1 iTemp
 endif
 
 Goo1.AuxVarSetFlt "*Minimap_INI" (Clamp (GetINIFloat_Cached "Map:fInteriorZoom" "Stentorious\ModernMinimap.ini" 1.25) 0.5 1.5) 0

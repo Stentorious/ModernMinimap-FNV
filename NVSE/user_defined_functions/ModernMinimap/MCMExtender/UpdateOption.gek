@@ -14,12 +14,12 @@ Begin Function {fValue, iMenu, iSubmenu, iOption, aJSON}
 		if eval iOption == 2
 			if eval (iKeybind = Goo1.AuxVarGetFlt "*Minimap_Key" 0) != fValue
 				if eval iKeybind > 0
-					SetOnKeyDownEventHandler (CompileScript "ModernMinimap\InputHandler.gek") 0 iKeybind
-					SetOnKeyUpEventHandler (CompileScript "ModernMinimap\KeyToggle.gek") 0 iKeybind
+					SetOnKeyDownEventHandler (CompileScript "ModernMinimap\OnKeyDown.gek") 0 iKeybind
+					SetOnKeyUpEventHandler (CompileScript "ModernMinimap\OnKeyUp.gek") 0 iKeybind
 				endif
 				if eval fValue > 0
-					SetOnKeyDownEventHandler (CompileScript "ModernMinimap\InputHandler.gek") 1 fValue
-					SetOnKeyUpEventHandler (CompileScript "ModernMinimap\KeyToggle.gek") 1 fValue
+					SetOnKeyDownEventHandler (CompileScript "ModernMinimap\OnKeyDown.gek") 1 fValue
+					SetOnKeyUpEventHandler (CompileScript "ModernMinimap\OnKeyUp.gek") 1 fValue
 				endif
 				Goo1.AuxVarSetFlt "*Minimap_Key" fValue 0
 			endif
@@ -27,10 +27,10 @@ Begin Function {fValue, iMenu, iSubmenu, iOption, aJSON}
 			iIndex = iOption - 2
 			if eval (iKeybind = Goo1.AuxVarGetFlt "*Minimap_Key" iIndex) != fValue
 				if eval iKeybind > 0
-					SetOnKeyDownEventHandler (CompileScript "ModernMinimap\InputHandler.gek") 0 iKeybind
+					SetOnKeyDownEventHandler (CompileScript "ModernMinimap\OnKeyDown.gek") 0 iKeybind
 				endif
 				if eval fValue > 0
-					SetOnKeyDownEventHandler (CompileScript "ModernMinimap\InputHandler.gek") 1 fValue
+					SetOnKeyDownEventHandler (CompileScript "ModernMinimap\OnKeyDown.gek") 1 fValue
 				endif
 				Goo1.AuxVarSetFlt "*Minimap_Key" fValue iIndex
 			endif
