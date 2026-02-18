@@ -207,7 +207,7 @@
 				"6": {
 					"title": "$Visibility",
 					"type": 1,
-					"enable": 1,
+					"state": { "form": "Goo1", "auxVar": "*PipMap_Init", "key": 0, "value": 0, "disable": 1 },
 					"mouse": "$VisibilityMouse",
 					"vars": [ { "form": "Goo1", "auxVar": "*Minimap_INI", "key": 7, "configINI": "Map:iCellVisibility", "default": 0 }],
 					"strings": [ "$ShowAlways", "$Interior", "$Exterior" ]
