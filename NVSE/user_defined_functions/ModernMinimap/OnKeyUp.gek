@@ -5,7 +5,7 @@ float fPosY
 
 begin Function {iKeyID}
 
-	if eval MenuMode || Goo1.AuxTimerTimeLeft "*Minimap_Key" == -1
+	if eval MenuMode || (Goo1.AuxVarGetFlt "*PipMap_Init" 0 == 0 && Goo1.AuxTimerTimeLeft "*Minimap_Key" == -1) || (Goo1.AuxVarGetFlt "*PipMap_Init" 0 && iKeyID == Goo1.AuxVarGetFlt "*Minimap_Key" 0)
 		return
 	endif
 

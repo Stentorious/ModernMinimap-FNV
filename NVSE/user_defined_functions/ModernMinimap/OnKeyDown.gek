@@ -10,6 +10,10 @@ begin Function {iKeyID}
 	if eval MenuMode || (Goo1.AuxVarGetFlt "*PipMap_Init" 0 && Goo1.AuxVarGetFlt "*PipMap_Anim" == 0)
 		return
 	elseif eval iKeyID == Goo1.AuxVarGetFlt "*Minimap_Key" 0
+		if eval Goo1.AuxVarGetFlt "*PipMap_Init" 0
+			Call (CompileScript "ModernMinimap\OnKeyUp.gek") 1000
+			return
+		endif
 		if eval GetUIFloatAlt "HUDMainMenu\ModernMinimap\_visible" == 0
 			SetUIFloatAlt "HUDMainMenu\ModernMinimap\_visible" 1
 			if eval GetUIFloatAlt "HUDMainMenu\ModernMinimap\_MapMode"
