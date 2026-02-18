@@ -6,7 +6,7 @@ ref rDoor
 begin Function {}
 
 	; Toggle minimap visibility
-	SetOnTimerStopHandler 1 (CompileScript "ModernMinimap\AuxTimer.gek") "*Minimap_Key"
+	Goo1.SetOnTimerStopHandler 1 (CompileScript "ModernMinimap\AuxTimer.gek") "*Minimap_Key"
 
 	; Update player Perception
 	SetUIFloatAlt "HUDMainMenu\ModernMinimap\_PlrAV6"(Player.GetThresholdAV Perception)

@@ -18,7 +18,7 @@ begin Function {iKeyID}
 				Call (CompileScript "ModernMinimap\WorldMap\MainLoop.gek")
 			endif
 		else
-			AuxTimerStart "*Minimap_Key" 0.5
+			Goo1.AuxTimerStart "*Minimap_Key" 0.5
 		endif
 		return
 	elseif eval GetUIFloatAlt "HUDMainMenu\ModernMinimap\visible" == 0

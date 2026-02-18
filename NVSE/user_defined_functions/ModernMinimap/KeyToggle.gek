@@ -5,7 +5,7 @@ float fPosY
 
 begin Function {iKeyID}
 
-	if eval MenuMode || AuxTimerTimeLeft "*Minimap_Key" == -1
+	if eval MenuMode || Goo1.AuxTimerTimeLeft "*Minimap_Key" == -1
 		return
 	endif
 
@@ -35,6 +35,6 @@ begin Function {iKeyID}
 
 	SetUIFloatGradual "HUDMainMenu\ModernMinimap\InfoText\alpha" 400 0 0.5
 
-	AuxTimerStop "*Minimap_Key"
+	Goo1.AuxTimerStop "*Minimap_Key"
 
 end
