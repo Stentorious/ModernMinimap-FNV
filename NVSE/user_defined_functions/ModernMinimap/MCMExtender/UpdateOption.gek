@@ -10,7 +10,7 @@ int iIndex
 Begin Function {fValue, iMenu, iSubmenu, iOption, aJSON}
 
 	; Update keybind
-	if eval iSubmenu == 1
+	if eval iSubmenu == 2
 		if eval iOption == 2
 			if eval (iKeybind = Goo1.AuxVarGetFlt "*Minimap_Key" 0) != fValue
 				if eval iKeybind > 0

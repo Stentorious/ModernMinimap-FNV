@@ -580,7 +580,7 @@
 		<zoom> &scale; </zoom>
 		<systemcolor>
 			<copy src="parent()" trait="_systemcolor_0" />
-			<onlyifnot src="parent()" trait="_ColorMode" />
+			<onlyif src="io()" trait="_Minimap+ColorTintWorld" />
 		</systemcolor>
 		<brightness> 255 </brightness>
 		<filename> <copy src="parent()" trait="_WorldMap" /> </filename>

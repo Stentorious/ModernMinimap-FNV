@@ -123,6 +123,7 @@ SetUIFloatAlt "HUDMainMenu\_Minimap+HostileColor" (eval GetINIFloat_Cached "Acto
 SetUIFloatAlt "HUDMainMenu\_Minimap+Scan" (eval GetINIFloat_Cached "Map:bScanEffect" "Stentorious\ModernMinimap.ini" 1)
 SetUIFloatAlt "HUDMainMenu\_Minimap+RotationMode" (eval GetINIFloat_Cached "Map:iRotationMode" "Stentorious\ModernMinimap.ini" 1)
 SetUIFloatAlt "HUDMainMenu\_Minimap+PlayerPath" (eval GetINIFloat_Cached "Map:bPlayerPath" "Stentorious\ModernMinimap.ini" 1)
+SetUIFloatAlt "HUDMainMenu\_Minimap+ColorTintWorld" (eval GetINIFloat_Cached "Map:bColorTintWorld" "Stentorious\ModernMinimap.ini" 1)
 
 ; Radiation Meter
 if eval GetINIFloat_Cached "Map:bRadiationIndicator" "Stentorious\ModernMinimap.ini" 1

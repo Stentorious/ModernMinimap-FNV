@@ -4,7 +4,7 @@ array_var aValues
 
 begin Function {iSubmenu, iOption, aValues}
 
-	if eval iSubmenu == 2
+	if eval iSubmenu == 1
 		if eval iOption == 7
 			SetUIFloatAlt "StartMenu/ModernMinimap/_MCM_OffsetX" (aValues[0])
 			SetUIFloatAlt "StartMenu/ModernMinimap/_MCM_OffsetY" (aValues[1])

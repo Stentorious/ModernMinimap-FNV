@@ -34,82 +34,6 @@
 		"1": {
 			"listTitle": "$General",
 			"pageTitle": "$General",
-			"columns": 1,
-			"enable": 1,
-			"options": {
-				"1": {
-					"title": "$Keybinds",
-					"enable": 1,
-					"type": 0
-				},
-				"2": {
-					"title": "$MapControl",
-					"enable": 1,
-					"type": 3,
-					"mouse": "$MapControlMouse",
-					"vars": [ { "configINI": "KeyBinds:iMapVisibility", "default": 50 } ],
-					"call": { "type": "file", "value": "ModernMinimap/MCMExtender/UpdateOption.gek" }
-				},
-				"3": {
-					"title": "$ZoomIn",
-					"enable": 1,
-					"type": 3,
-					"mouse": "$ZoomInMouse",
-					"vars": [ { "configINI": "KeyBinds:iMapZoomIn", "default": 201 } ],
-					"call": { "type": "file", "value": "ModernMinimap/MCMExtender/UpdateOption.gek" }
-				},
-				"4": {
-					"title": "$ZoomOut",
-					"enable": 1,
-					"type": 3,
-					"mouse": "$ZoomOutMouse",
-					"vars": [ { "configINI": "KeyBinds:iMapZoomOut", "default": 209 } ],
-					"call": { "type": "file", "value": "ModernMinimap/MCMExtender/UpdateOption.gek" }
-				},
-				"5": {
-					"title": "$MarkerVisibility",
-					"enable": 1,
-					"type": 3,
-					"mouse": "$MarkerVisibilityMouse",
-					"vars": [ { "configINI": "KeyBinds:iMarkerVisibility", "default": 199 } ],
-					"call": { "type": "file", "value": "ModernMinimap/MCMExtender/UpdateOption.gek" }
-				},
-				"7": {
-					"title": "$Performance",
-					"enable": 2,
-					"type": 0
-				},
-				"8": {
-					"title": "$UpdateRateLocal",
-					"type": 2,
-					"enable": 2,
-					"mouse": "$UpdateRateLocalMouse",
-					"vars": [ { "configINI": "Performance:iUpdateRateLocal", "default": 20 }],
-					"scale": {
-						"valueDecimal": 2,
-						"valueIncrement": 1,
-						"valueMin": 1,
-						"valueMax": 50
-					}
-				},
-				"9": {
-					"title": "$UpdateRateWorld",
-					"type": 2,
-					"enable": 2,
-					"mouse": "$UpdateRateWorldMouse",
-					"vars": [ { "configINI": "Performance:iUpdateRateWorld", "default": 200 }],
-					"scale": {
-						"valueDecimal": 0,
-						"valueIncrement": 1,
-						"valueMin": 1,
-						"valueMax": 500
-					}
-				}
-			}
-		},
-		"2": {
-			"listTitle": "$Minimap",
-			"pageTitle": "$Minimap",
 			"columns": 2,
 			"enable": 1,
 			"options": {
@@ -260,6 +184,13 @@
 						"suffix": "x"
 					}
 				},
+				"21": {
+					"title": "$ColorTintWorld",
+					"type": 5,
+					"enable": 1,
+					"mouse": "$ColorTintWorldMouse",
+					"vars": [ { "uiTrait": "HUDMainMenu/_Minimap+ColorTintWorld", "configINI": "Map:bColorTintWorld", "default": 1 }]
+				},
 				"2": {
 					"title": "$Features",
 					"enable": 1,
@@ -340,6 +271,51 @@
 					"enable": 1,
 					"mouse": "$RadiationIndicatorMouse",
 					"vars": [ { "uiTrait": "HUDMainMenu/_Minimap+RadIndicator", "configINI": "Map:bRadiationIndicator", "default": 1 }]
+				}
+			}
+		},
+		"2": {
+			"listTitle": "$Controls",
+			"pageTitle": "$Controls",
+			"columns": 1,
+			"enable": 1,
+			"options": {
+				"1": {
+					"title": "$Keybinds",
+					"enable": 1,
+					"type": 0
+				},
+				"2": {
+					"title": "$MapControl",
+					"enable": 1,
+					"type": 3,
+					"mouse": "$MapControlMouse",
+					"vars": [ { "configINI": "KeyBinds:iMapVisibility", "default": 50 } ],
+					"call": { "type": "file", "value": "ModernMinimap/MCMExtender/UpdateOption.gek" }
+				},
+				"3": {
+					"title": "$ZoomIn",
+					"enable": 1,
+					"type": 3,
+					"mouse": "$ZoomInMouse",
+					"vars": [ { "configINI": "KeyBinds:iMapZoomIn", "default": 201 } ],
+					"call": { "type": "file", "value": "ModernMinimap/MCMExtender/UpdateOption.gek" }
+				},
+				"4": {
+					"title": "$ZoomOut",
+					"enable": 1,
+					"type": 3,
+					"mouse": "$ZoomOutMouse",
+					"vars": [ { "configINI": "KeyBinds:iMapZoomOut", "default": 209 } ],
+					"call": { "type": "file", "value": "ModernMinimap/MCMExtender/UpdateOption.gek" }
+				},
+				"5": {
+					"title": "$MarkerVisibility",
+					"enable": 1,
+					"type": 3,
+					"mouse": "$MarkerVisibilityMouse",
+					"vars": [ { "configINI": "KeyBinds:iMarkerVisibility", "default": 199 } ],
+					"call": { "type": "file", "value": "ModernMinimap/MCMExtender/UpdateOption.gek" }
 				}
 			}
 		},
