@@ -125,7 +125,11 @@ begin Function {}
 	if eval (iSize = Ar_Size aRefs) > 0
 		while (iSize -= 1) > -1
 			rIcon = aRefs[iSize]
-			if eval IsReference rIcon && rIcon.GetDisabled == 0 && rIcon.HasLoaded3D && rIcon.GetDestroyed == 0 && AuxVarGetFlt "*MinimapIcon" 0 (rIcon.GBO)
+			if eval IsReference rIcon && rIcon.GetDisabled == 0 && rIcon.HasLoaded3D && rIcon.GetDestroyed == 0 && AuxVarGetFlt "*MinimapIcon" 0 (rTemp = rIcon.GBO)
+				; Check for disarmed traps
+				if eval AuxVarType "*MinimapTrap" 0 rTemp == 4 && rIcon.HasVariable (AuxVarGetStr "*MinimapTrap" 0 rTemp) && rIcon.GetVariable (AuxVarGetStr "*MinimapTrap" 0 rTemp) == AuxVarGetFlt "*MinimapTrap" 1 rTemp
+					continue
+				endif
 				Goo1.AuxVarSetRef "*Minimap_Basic" rIcon -1
 			endif
 		loop

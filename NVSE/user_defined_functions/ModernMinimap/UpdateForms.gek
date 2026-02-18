@@ -167,6 +167,22 @@ begin Function {}
 	AuxVarSetFlt "*MinimapIcon" iToggle 0 SprungTrapBearTrap
 	AuxVarSetFlt "*MinimapIcon" iToggle 0 VHDLegionOliverRangerTrapBearTrap
 	AuxVarSetFlt "*MinimapIcon" iToggle 0 VHDLegionOliverTrapTripwire
+	AuxVarSetStr "*MinimapTrap" "disarmed" 0 TrapBearTrap
+	AuxVarSetFlt "*MinimapTrap" 1 1 TrapBearTrap
+	;AuxVarSetStr "*MinimapTrap" "defuse" 0 TrapComputerBack
+	;AuxVarSetFlt "*MinimapTrap" 2 1 TrapComputerBack
+	AuxVarSetStr "*MinimapTrap" "trapDisarmed" 0 TrapBabyCarriage
+	AuxVarSetFlt "*MinimapTrap" 1 1 TrapBabyCarriage
+	AuxVarSetStr "*MinimapTrap" "armed" 0 TrapPressurePlate
+	AuxVarSetFlt "*MinimapTrap" 0 1 TrapPressurePlate
+	AuxVarSetStr "*MinimapTrap" "isArmed" 0 TrapPitchingMachine01
+	AuxVarSetFlt "*MinimapTrap" 0 1 TrapPitchingMachine01
+	AuxVarSetStr "*MinimapTrap" "trapDisarmed" 0 TrapMailboxBomb01
+	AuxVarSetFlt "*MinimapTrap" 1 1 TrapMailboxBomb01
+	AuxVarSetStr "*MinimapTrap" "disarmed" 0 SprungTrapBearTrap
+	AuxVarSetFlt "*MinimapTrap" 1 1 SprungTrapBearTrap
+	AuxVarSetStr "*MinimapTrap" "disarmed" 0 VHDLegionOliverRangerTrapBearTrap
+	AuxVarSetFlt "*MinimapTrap" 1 1 VHDLegionOliverRangerTrapBearTrap
 	if eval iDeadMoney
 		AuxVarSetFlt "*MinimapIcon" iToggle 0 (EditorIDToFormID "NVDLC01TrapTripwire")
 		AuxVarSetFlt "*MinimapIcon" iToggle 0 (EditorIDToFormID "NVDLC01TrapBearTrap")
@@ -177,12 +193,24 @@ begin Function {}
 		AuxVarSetFlt "*MinimapIcon" iToggle 0 (EditorIDToFormID "NVDLC01SpeakerINV")
 		AuxVarSetFlt "*MinimapIcon" iToggle 0 (EditorIDToFormID "NVDLC01SpeakerDest")
 		AuxVarSetFlt "*MinimapIcon" iToggle 0 (EditorIDToFormID "NVDLC01SpeakerINVOff")
+		AuxVarSetStr "*MinimapTrap" "disarmed" 0 (EditorIDToFormID "NVDLC01TrapBearTrap")
+		AuxVarSetFlt "*MinimapTrap" 1 1 (EditorIDToFormID "NVDLC01TrapBearTrap")
+		AuxVarSetStr "*MinimapTrap" "armed" 0 (EditorIDToFormID "NVDLC01TrapPressurePlate")
+		AuxVarSetFlt "*MinimapTrap" 0 1 (EditorIDToFormID "NVDLC01TrapPressurePlate")
+		AuxVarSetStr "*MinimapTrap" "disarmed" 0 (EditorIDToFormID "NVDLC01SprungTrapBearTrap")
+		AuxVarSetFlt "*MinimapTrap" 1 1 (EditorIDToFormID "NVDLC01SprungTrapBearTrap")
 	endif
 	if eval iHonestHearts
 		AuxVarSetFlt "*MinimapIcon" iToggle 0 (EditorIDToFormID "NVDLC02MQ03BearTrap")
 		AuxVarSetFlt "*MinimapIcon" iToggle 0 (EditorIDToFormID "NVDLC02BearTrap")
 		AuxVarSetFlt "*MinimapIcon" iToggle 0 (EditorIDToFormID "NVDLC02TrapTripwire01")
 		AuxVarSetFlt "*MinimapIcon" iToggle 0 (EditorIDToFormID "NVDLC02TrapPressurePlate")
+		AuxVarSetStr "*MinimapTrap" "disarmed" 0 (EditorIDToFormID "NVDLC02MQ03BearTrap")
+		AuxVarSetFlt "*MinimapTrap" 1 1 (EditorIDToFormID "NVDLC02MQ03BearTrap")
+		AuxVarSetStr "*MinimapTrap" "disarmed" 0 (EditorIDToFormID "NVDLC02BearTrap")
+		AuxVarSetFlt "*MinimapTrap" 1 1 (EditorIDToFormID "NVDLC02BearTrap")
+		AuxVarSetStr "*MinimapTrap" "armed" 0 (EditorIDToFormID "NVDLC02TrapPressurePlate")
+		AuxVarSetFlt "*MinimapTrap" 0 1 (EditorIDToFormID "NVDLC02TrapPressurePlate")
 	endif
 	if eval iTaleOfTwoWastelands
 		AuxVarSetFlt "*MinimapIcon" iToggle 0 (EditorIDToFormID "trapShotgunCombat")
@@ -190,6 +218,12 @@ begin Function {}
 		AuxVarSetFlt "*MinimapIcon" iToggle 0 (EditorIDToFormID "TakomaTrapBabyCarriage")
 		AuxVarSetFlt "*MinimapIcon" iToggle 0 (EditorIDToFormID "DLC04LabTrapComputer")
 		AuxVarSetFlt "*MinimapIcon" iToggle 0 (EditorIDToFormID "DLC04TrapPitchingMachine")
+		AuxVarSetStr "*MinimapTrap" "armed" 0 (EditorIDToFormID "TrapElectrifiedToiletTop01")
+		AuxVarSetFlt "*MinimapTrap" 0 1 (EditorIDToFormID "TrapElectrifiedToiletTop01")
+		AuxVarSetStr "*MinimapTrap" "trapDisarmed" 0 (EditorIDToFormID "TakomaTrapBabyCarriage")
+		AuxVarSetFlt "*MinimapTrap" 1 1 (EditorIDToFormID "TakomaTrapBabyCarriage")
+		AuxVarSetStr "*MinimapTrap" "isArmed" 0 (EditorIDToFormID "DLC04TrapPitchingMachine")
+		AuxVarSetFlt "*MinimapTrap" 0 1 (EditorIDToFormID "DLC04TrapPitchingMachine")
 	endif
 
 	; Assign aux (Quest)
