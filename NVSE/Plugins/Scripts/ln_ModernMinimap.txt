@@ -212,12 +212,6 @@ CallAfterFrames 0 (CompileScript "ModernMinimap\WorldMap\BuildMarkerArray.gek")
 ; Clear INI cache
 CloseFileSO "Stentorious\ModernMinimap.ini" 0
 
-; Show update message
-if eval GetINIFloat "Mods:ModernMinimap" "Stentorious\UpdateMessages.ini" < 200
-	CallAfter 1 ({} => MessageBoxEx "Welcome to Modern Minimap 2.0+%r%rThe minimap will now display the local map in interiors and world map in exteriors.%r%rThis behavior can be disabled via the MCM.%r%rYou can toggle between the local/world map at any time with the %k key." (Goo1.AuxVarGetFlt "*Minimap_Key" 0))
-	SetINIFloat "Mods:ModernMinimap" 200 "Stentorious\UpdateMessages.ini"
-endif
-
 ; MCM update events
 SetEventHandler "MCMExtUpdate" (CompileScript "ModernMinimap\MCMExtender\UpdateMenu.gek")
 SetEventHandler "MCMExtMenuState" (begin function {string_var sTemp, int iTemp}
