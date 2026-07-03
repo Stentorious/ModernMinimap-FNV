@@ -6,7 +6,14 @@
 	"minMCMVersion": 1.30,
 	"minModVersion": 1.00,
 	"requirements": [
-		{ "type": "file", "file": "NVSE/plugins/scripts/ln_ModernMinimap.txt" }
+		{ "type": "file", "file": "NVSE/plugins/scripts/ln_ModernMinimap.txt" },
+		{ "type": "nvse", "version": 6.48, "notify": 1 },
+		{ "type": "dll", "file": "JohnnyGuitarNVSE", "version": 528, "notify": 1 },
+		{ "type": "dll", "file": "ShowOffNVSE Plugin", "version": 184, "notify": 1 },
+		{ "type": "dll", "file": "lStewieAl's Tweaks", "version": 906, "notify": 1 },
+		{ "type": "dll", "file": "UI Organizer Plugin", "version": 230, "notify": 1 },
+		{ "type": "dll", "file": "HighResLocalMaps", "version": 12, "notify": 1 },
+		{ "type": "dll", "file": "Engine Optimizations", "version": 100, "notify": 1 }
 	],
 	"submenus": {
 		"0": {

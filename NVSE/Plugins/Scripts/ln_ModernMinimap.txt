@@ -52,30 +52,6 @@ Goo1.AuxVarSetFlt "*Minimap_Init" 1
 ; "*Minimap_Markers"	Quest marker refs
 
 ; Check for requirements
-if eval GetNVSEVersionFull < 6.40
-	MessageBoxEx "Modern Minimap missing requirement!%rInstall xNVSE 6.4.0+."
-	return
-endif
-if eval GetPluginVersion "JohnnyGuitarNVSE" < 517
-	MessageBoxEx "Modern Minimap missing requirement!%rInstall latest JohnnyGuitar NVSE plugin."
-	return
-endif
-if eval GetPluginVersion "ShowOffNVSE Plugin" < 145
-	MessageBoxEx "Modern Minimap missing requirement!%rInstall latest ShowOff NVSE plugin."
-	return
-endif
-if eval GetPluginVersion "UI Organizer Plugin" < 230
-	MessageBoxEx "Modern Minimap missing requirement!%rInstall latest User Interface Organizer plugin."
-	return
-endif
-if eval GetPluginVersion "HighResLocalMaps" < 12
-	MessageBoxEx "Modern Minimap missing requirement!%rInstall High Res Local Maps."
-	return
-endif
-if eval GetPluginVersion "Engine Optimizations" < 100
-	MessageBoxEx "Modern Minimap missing requirement!%rInstall lStewieAl's Engine Optimizations."
-	return
-endif
 if eval IsModLoaded "JIP MiniMap.esp"
 	MessageBoxEx "Modern Minimap conflict detected!%rUninstall JIP Minimap."
 	return
@@ -229,8 +205,10 @@ end)
 
 ; ySI support
 if eval FileExists "menus\ySI\ySI.xml" == 0 || GetPluginVersion "yUI" < 140
-	SetOnRenderUpdateEventHandler 1 (CompileScript "..\CompileScript\ModernMinimap\OnRender.gek") 0
-	SetGameMainLoopCallback (CompileScript "..\CompileScript\ModernMinimap\MainLoop.gek") 1 (GetMaxOf 1 (GetINIFloat_Cached "Performance:iUpdateRateLocal" "Stentorious\ModernMinimap.ini" 20)) 1
+	CallAfterFrames 0 (begin function {int iTemp}
+		SetOnRenderUpdateEventHandler 1 (CompileScript "..\CompileScript\ModernMinimap\OnRender.gek") 0
+		SetGameMainLoopCallback (CompileScript "..\CompileScript\ModernMinimap\MainLoop.gek") 1 iTemp 1
+	end) 0 (GetMaxOf 1 (GetINIFloat_Cached "Performance:iUpdateRateLocal" "Stentorious\ModernMinimap.ini" 20))
 	Goo1.AuxVarSetStr "*Minimap_Script" ("..\CompileScript\ModernMinimap\MainLoop.gek") 0
 	CloseFileSO "Stentorious\ModernMinimap.ini" 0
 	return
@@ -238,8 +216,10 @@ endif
 
 Goo1.AuxVarSetFlt "*_ySI-SortingIcons" 1
 
-SetOnRenderUpdateEventHandler 1 (CompileScript "..\CompileScript\ModernMinimap\OnRenderySI.gek") 0
-SetGameMainLoopCallback (CompileScript "..\CompileScript\ModernMinimap\MainLoopySI.gek") 1 (GetMaxOf 1 (GetINIFloat_Cached "Performance:iUpdateRateLocal" "Stentorious\ModernMinimap.ini" 20)) 1
+CallAfterFrames 0 (begin function {int iTemp}
+	SetOnRenderUpdateEventHandler 1 (CompileScript "..\CompileScript\ModernMinimap\OnRenderySI.gek") 0
+	SetGameMainLoopCallback (CompileScript "..\CompileScript\ModernMinimap\MainLoopySI.gek") 1 iTemp 1
+end) 0 (GetMaxOf 1 (GetINIFloat_Cached "Performance:iUpdateRateLocal" "Stentorious\ModernMinimap.ini" 20))
 Goo1.AuxVarSetStr "*Minimap_Script" ("..\CompileScript\ModernMinimap\MainLoopySI.gek") 0
 
 ; Load ySI icon settings
