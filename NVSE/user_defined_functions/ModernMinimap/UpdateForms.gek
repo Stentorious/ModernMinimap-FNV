@@ -169,6 +169,8 @@ begin Function {}
 	AuxVarSetFlt "*MinimapIcon" iToggle 0 VHDLegionOliverTrapTripwire
 	AuxVarSetStr "*MinimapTrap" "disarmed" 0 TrapBearTrap
 	AuxVarSetFlt "*MinimapTrap" 1 1 TrapBearTrap
+	AuxVarSetStr "*MinimapTrap" "armed" 0 TrapTripwire01
+	AuxVarSetFlt "*MinimapTrap" 0 1 TrapTripwire01
 	;AuxVarSetStr "*MinimapTrap" "defuse" 0 TrapComputerBack
 	;AuxVarSetFlt "*MinimapTrap" 2 1 TrapComputerBack
 	AuxVarSetStr "*MinimapTrap" "trapDisarmed" 0 TrapBabyCarriage
@@ -193,6 +195,8 @@ begin Function {}
 		AuxVarSetFlt "*MinimapIcon" iToggle 0 (EditorIDToFormID "NVDLC01SpeakerINV")
 		AuxVarSetFlt "*MinimapIcon" iToggle 0 (EditorIDToFormID "NVDLC01SpeakerDest")
 		AuxVarSetFlt "*MinimapIcon" iToggle 0 (EditorIDToFormID "NVDLC01SpeakerINVOff")
+		AuxVarSetStr "*MinimapTrap" "armed" 0 (EditorIDToFormID "NVDLC01TrapTripwire")
+		AuxVarSetFlt "*MinimapTrap" 0 1 (EditorIDToFormID "NVDLC01TrapTripwire")
 		AuxVarSetStr "*MinimapTrap" "disarmed" 0 (EditorIDToFormID "NVDLC01TrapBearTrap")
 		AuxVarSetFlt "*MinimapTrap" 1 1 (EditorIDToFormID "NVDLC01TrapBearTrap")
 		AuxVarSetStr "*MinimapTrap" "armed" 0 (EditorIDToFormID "NVDLC01TrapPressurePlate")
@@ -209,6 +213,8 @@ begin Function {}
 		AuxVarSetFlt "*MinimapTrap" 1 1 (EditorIDToFormID "NVDLC02MQ03BearTrap")
 		AuxVarSetStr "*MinimapTrap" "disarmed" 0 (EditorIDToFormID "NVDLC02BearTrap")
 		AuxVarSetFlt "*MinimapTrap" 1 1 (EditorIDToFormID "NVDLC02BearTrap")
+		AuxVarSetStr "*MinimapTrap" "armed" 0 (EditorIDToFormID "NVDLC02TrapTripwire01")
+		AuxVarSetFlt "*MinimapTrap" 0 1 (EditorIDToFormID "NVDLC02TrapTripwire01")
 		AuxVarSetStr "*MinimapTrap" "armed" 0 (EditorIDToFormID "NVDLC02TrapPressurePlate")
 		AuxVarSetFlt "*MinimapTrap" 0 1 (EditorIDToFormID "NVDLC02TrapPressurePlate")
 	endif
