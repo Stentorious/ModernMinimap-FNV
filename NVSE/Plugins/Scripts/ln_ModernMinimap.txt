@@ -90,6 +90,7 @@ SetUIFloatAlt "HUDMainMenu\_Minimap+OffsetY" (GetINIFloat_Cached "Map:fOffsetY" 
 SetUIFloatAlt "HUDMainMenu\_Minimap+TileScale" (GetINIFloat_Cached "Map:fSize" "Stentorious\ModernMinimap.ini" 1)
 SetUIFloatAlt "HUDMainMenu\_Minimap+BackgroundAlpha" (GetINIFloat_Cached "Map:fBackgroundAlpha" "Stentorious\ModernMinimap.ini" 80)
 SetUIFloatAlt "HUDMainMenu\_Minimap+BackgroundPad" (GetINIFloat_Cached "Map:fBackgroundPadding" "Stentorious\ModernMinimap.ini" 6)
+SetUIFloatAlt "HUDMainMenu\_Minimap+BorderThickness" (Clamp (GetINIFloat_Cached "Map:fBorderThickness" "Stentorious\ModernMinimap.ini" (GetUIFloatAlt "HUDMainMenu\_Minimap+BorderThickness")) 0 10)
 SetUIFloatAlt "HUDMainMenu\_Minimap+RenderBrightness" (GetINIFloat_Cached "Map:fRenderBrightness" "Stentorious\ModernMinimap.ini" 2)
 SetUIFloatAlt "HUDMainMenu\_Minimap+CompassRose" (eval GetINIFloat_Cached "Map:bCompassRose" "Stentorious\ModernMinimap.ini" 1)
 SetUIFloatAlt "HUDMainMenu\_Minimap+CompassText" (GetINIFloat_Cached "Map:iCompassText" "Stentorious\ModernMinimap.ini" 2)

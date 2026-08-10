@@ -10,6 +10,7 @@ begin Function {iSubmenu, iOption, aValues}
 	SetUIFloatAlt "StartMenu/ModernMinimap/_MCM_TileScale" (GetUIFloatAlt "StartMenu\_Minimap+TileScale")
 	SetUIFloatAlt "StartMenu/ModernMinimap/_MCM_BackgroundAlpha" (GetUIFloatAlt "StartMenu\_Minimap+BackgroundAlpha")
 	SetUIFloatAlt "StartMenu/ModernMinimap/_MCM_BackgroundPad" (GetUIFloatAlt "StartMenu\_Minimap+BackgroundPad")
+	SetUIFloatAlt "StartMenu/ModernMinimap/_MCM_BorderThickness" (GetUIFloatAlt "StartMenu\_Minimap+BorderThickness")
 	SetUIFloatAlt "StartMenu/ModernMinimap/_MCM_RenderBrightness" (GetUIFloatAlt "StartMenu\_Minimap+RenderBrightness")
 	SetUIFloatAlt "StartMenu/ModernMinimap/_MCM_IconScale" (GetUIFloatAlt "StartMenu\_Minimap+IconScale")
 	SetUIFloatAlt "StartMenu/ModernMinimap/_MCM_DistanceMax" (GetUIFloatAlt "StartMenu\_Minimap+DistanceMax")
