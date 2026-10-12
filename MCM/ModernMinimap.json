@@ -395,6 +395,28 @@
 					"vars": [ { "uiTrait": "HUDMainMenu/_Minimap+QuestHeight", "configINI": "Icons:bQuestHeightIndicator", "default": 0 }]
 				},
 
+				"15": {
+					"title": "$ModSupport",
+					"enable": 1,
+					"type": 0
+				},
+				"17": {
+					"title": "$JIPCCC",
+					"type": 5,
+					"enable": 1,
+					"mouse": "$JIPCCCMouse",
+					"state": { "form": "Goo1", "auxVar": "*JIPCCC_Avatars", "key": 0, "value": 1 },
+					"vars": [ { "form": "Goo1", "auxVar": "*Minimap_INI", "key": 5, "configINI": "Companions:bJIPCCC", "default": 1 }]
+				},
+				"19": {
+					"title": "$JIPCCCTint",
+					"type": 5,
+					"enable": 1,
+					"mouse": "$JIPCCCTintMouse",
+					"state": { "form": "Goo1", "auxVar": "*JIPCCC_Avatars", "key": 0, "value": 1 },
+					"vars": [ { "form": "Goo1", "auxVar": "*Minimap_INI", "key": 6, "configINI": "Companions:bJIPCCCColor", "default": 0 }]
+				},
+
 				"2": {
 					"title": "$Actor",
 					"enable": 1,
@@ -415,13 +437,6 @@
 					"vars": [ { "form": "Goo1", "auxVar": "*Minimap_INI", "key": 3, "configINI": "Actors:bCreature", "default": 1 }]
 				},
 				"8": {
-					"title": "$Hostile",
-					"type": 5,
-					"enable": 1,
-					"mouse": "$HostileMouse",
-					"vars": [ { "uiTrait": "HUDMainMenu/_Minimap+HostileColor", "configINI": "Actors:bHostileColor", "default": 1 }]
-				},
-				"10": {
 					"title": "$Corpse",
 					"type": 1,
 					"enable": 1,
@@ -429,45 +444,64 @@
 					"vars": [ { "form": "Goo1", "auxVar": "*Minimap_INI", "key": 4, "configINI": "Actors:iCorpse", "default": 1 }],
 					"strings": [ "$Disabled", "$HideEmpty", "$ShowAlways" ]
 				},
-				"14": {
-					"title": "$Follower",
-					"enable": 1,
-					"type": 0
-				},
-				"16": {
-					"title": "$ColorTint",
+				"10": {
+					"title": "$ColorFriendly",
 					"type": 1,
 					"enable": 1,
-					"mouse": "$ColorTintMouse",
-					"vars": [{ "uiTrait": "HUDMainMenu/ModernMinimap/_systemcolor_2", "configINI": "Companions:iSystemcolor", "default": 0 }],
+					"mouse": "$ColorFriendlyMouse",
+					"vars": [{ "uiTrait": "HUDMainMenu/_Minimap+Systemcolor_1", "configINI": "Color:iFriendlySystemcolor", "default": 1 }],
 					"strings": [ "$Custom", "$HUD", "$HUDAlt", "$Terminal", "$PipBoy", "$PauseMenu"]
 				},
-				"18": {
-					"title": "$ColorCustom",
+				"12": {
+					"title": "$ColorHostile",
+					"type": 1,
+					"enable": 1,
+					"mouse": "$ColorHostileMouse",
+					"vars": [{ "uiTrait": "HUDMainMenu/_Minimap+Systemcolor_2", "configINI": "Color:iHostileSystemcolor", "default": 2 }],
+					"strings": [ "$Custom", "$HUD", "$HUDAlt", "$Terminal", "$PipBoy", "$PauseMenu"],
+					"call": { "type": "file", "value": "ModernMinimap/MCMExtender/UpdateOption.gek" }
+				},
+				"14": {
+					"title": "$ColorFollower",
+					"type": 1,
+					"enable": 1,
+					"mouse": "$ColorFollowerMouse",
+					"vars": [{ "uiTrait": "HUDMainMenu/_Minimap+Systemcolor_3", "configINI": "Color:iFollowerSystemcolor", "default": 0 }],
+					"strings": [ "$Custom", "$HUD", "$HUDAlt", "$Terminal", "$PipBoy", "$PauseMenu"]
+				},
+				"16": {
+					"title": "$CustomColorFriendly",
 					"type": 9,
-					"state": { "uiTrait": "HUDMainMenu/ModernMinimap/_systemcolor_2", "value": 0, "disable": 1 },
-					"mouse": "$ColorCustomMouse",
+					"state": { "uiTrait": "HUDMainMenu/_Minimap+Systemcolor_1", "value": 0, "disable": 1 },
+					"mouse": "$CustomColorFriendlyMouse",
 					"vars": [
-						{ "uiTrait": "HUDMainMenu/ModernMinimap/_red_2", "configINI": "Companions:iRed", "default": 46 },
-						{ "uiTrait": "HUDMainMenu/ModernMinimap/_green_2", "configINI": "Companions:iGreen", "default": 206 },
-						{ "uiTrait": "HUDMainMenu/ModernMinimap/_blue_2", "configINI": "Companions:iBlue", "default": 255 }
+						{ "uiTrait": "HUDMainMenu/_Minimap+Red_1", "configINI": "Color:iFriendlyRed", "default": 0 },
+						{ "uiTrait": "HUDMainMenu/_Minimap+Green_1", "configINI": "Color:iFriendlyGreen", "default": 0 },
+						{ "uiTrait": "HUDMainMenu/_Minimap+Blue_1", "configINI": "Color:iFriendlyBlue", "default": 0 }
 					]
 				},
-				"20": {
-					"title": "$JIPCCC",
-					"type": 5,
-					"enable": 1,
-					"mouse": "$JIPCCCMouse",
-					"state": { "form": "Goo1", "auxVar": "*JIPCCC_Avatars", "key": 0, "value": 1 },
-					"vars": [ { "form": "Goo1", "auxVar": "*Minimap_INI", "key": 5, "configINI": "Companions:bJIPCCC", "default": 1 }]
+				"18": {
+					"title": "$CustomColorHostile",
+					"type": 9,
+					"state": { "uiTrait": "HUDMainMenu/_Minimap+Systemcolor_2", "value": 0, "disable": 1 },
+					"mouse": "$CustomColorHostileMouse",
+					"vars": [
+						{ "uiTrait": "HUDMainMenu/_Minimap+Red_2", "configINI": "Color:iHostileRed", "default": 0 },
+						{ "uiTrait": "HUDMainMenu/_Minimap+Green_2", "configINI": "Color:iHostileGreen", "default": 0 },
+						{ "uiTrait": "HUDMainMenu/_Minimap+Blue_2", "configINI": "Color:iHostileBlue", "default": 0 }
+					],
+					"call": { "type": "file", "value": "ModernMinimap/MCMExtender/UpdateOption.gek" }
 				},
-				"22": {
-					"title": "$JIPCCCTint",
-					"type": 5,
-					"enable": 1,
-					"mouse": "$JIPCCCTintMouse",
-					"state": { "form": "Goo1", "auxVar": "*JIPCCC_Avatars", "key": 0, "value": 1 },
-					"vars": [ { "form": "Goo1", "auxVar": "*Minimap_INI", "key": 6, "configINI": "Companions:bJIPCCCColor", "default": 0 }]
+				"20": {
+					"title": "$CustomColorFollower",
+					"type": 9,
+					"state": { "uiTrait": "HUDMainMenu/_Minimap+Systemcolor_3", "value": 0, "disable": 1 },
+					"mouse": "$CustomColorFollowerMouse",
+					"vars": [
+						{ "uiTrait": "HUDMainMenu/_Minimap+Red_3", "configINI": "Color:iFollowerRed", "default": 46 },
+						{ "uiTrait": "HUDMainMenu/_Minimap+Green_3", "configINI": "Color:iFollowerGreen", "default": 206 },
+						{ "uiTrait": "HUDMainMenu/_Minimap+Blue_3", "configINI": "Color:iFollowerBlue", "default": 255 }
+					]
 				}
 			}
 		},
@@ -551,7 +585,6 @@
 					"enable": 1,
 					"type": 0
 				},
-
 				"4": {
 					"title": "$Door",
 					"type": 5,

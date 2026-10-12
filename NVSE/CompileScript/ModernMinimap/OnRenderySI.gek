@@ -132,13 +132,13 @@ begin Function {}
 				continue
 			endif
 
-			iState = -1
+			iState = 0
 			fAngle = -1
 
 			; Dead icons
 			if eval rIcon.GetDead
 				if eval iCorpse == 0 || (iCorpse == 1 && (Ar_Size (rIcon.GetAllItems 0 1 0 0)) == -1 && (Ar_Size (rIcon.GetDroppedRefs)) == -1)
-					iState = -2
+					iState = -1
 				else
 					sFilename = "interface\icons\Misc_Skull.dds"
 				endif
@@ -158,7 +158,7 @@ begin Function {}
 			; Basic icon
 			else
 				fAngle = rIcon.GetAngle Z
-				iState = rIcon.IsCompassHostile
+				iState = rIcon.IsCompassHostile + 1
 				sFilename = "Interface\Stentorious\ModernMinimap\Actor.dds"
 			endif
 
@@ -169,7 +169,7 @@ begin Function {}
 			SetUIFloatAlt (sUIPath + "_PosZ") (rIcon.GetPos Z)
 			SetUIFloatAlt (sUIPath + "_Dist") (Player.GetDistance3D rIcon)
 			SetUIFloatAlt (sUIPath + "_Deg") fAngle
-			SetUIFloatAlt (sUIPath + "_Hostile") iState
+			SetUIFloatAlt (sUIPath + "_IconState") iState
 			SetUIStringAlt (sUIPath + "filename") (sFilename)
 
 		loop
@@ -187,7 +187,7 @@ begin Function {}
 				continue
 			endif
 
-			iState = -1
+			iState = 0
 			fAngle = -1
 
 			; Give corpse icon or hide if dead
@@ -199,15 +199,15 @@ begin Function {}
 				endif
 			elseif eval rIcon.GetKnockedState
 				sFilename = "interface\icons\Aid_DoctorBag.dds"
-				iState = 1
+				iState = 2
 			elseif eval Goo1.AuxVarGetFlt "*JIPCCC_Avatars" && Goo1.AuxVarGetFlt "*Minimap_INI" 5 && rIcon.GetPlayerTeammate && (sFilename = AuxStringMapGetStr "*JIPCCC_Avatars" (GetName rIcon)) != ""
 				if eval Goo1.AuxVarGetFlt "*Minimap_INI" 6
-					iState = 2
-				else
 					iState = 3
+				else
+					iState = 4
 				endif
 			else
-				iState = 2
+				iState = 3
 				fAngle = rIcon.GetAngle Z
 				sFilename = "Interface\Stentorious\ModernMinimap\Actor.dds"
 			endif
@@ -219,7 +219,7 @@ begin Function {}
 			SetUIFloatAlt (sUIPath + "_PosZ") (rIcon.GetPos Z)
 			SetUIFloatAlt (sUIPath + "_Dist") (Player.GetDistance3D rIcon)
 			SetUIFloatAlt (sUIPath + "_Deg") fAngle
-			SetUIFloatAlt (sUIPath + "_Hostile") iState
+			SetUIFloatAlt (sUIPath + "_IconState") iState
 			SetUIStringAlt (sUIPath + "filename") (sFilename)
 
 		loop

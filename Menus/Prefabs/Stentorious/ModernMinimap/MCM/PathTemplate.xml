@@ -29,7 +29,7 @@
 <height> <copy src="me()" trait="width" /> </height>
 <zoom> &scale; </zoom>
 <clips> 1 </clips>
-<systemcolor> <copy src="grandparent()" trait="_systemcolor_0" /> </systemcolor>
+<systemcolor><copy src="io()" trait="_Minimap+Systemcolor_Default" /> </systemcolor>
 <brightness> 255 </brightness>
 <_PosXOffset>
 	<copy src="me()" trait="_PosX" />

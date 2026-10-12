@@ -13,7 +13,6 @@
 <_Minimap+Scan> 1 </_Minimap+Scan>								<!-- Scan effect -->
 <_Minimap+CombatIndicator> 1 </_Minimap+CombatIndicator>		<!-- Combat indicator -->
 <_Minimap+LocationText> 1 </_Minimap+LocationText>				<!-- Cell location text -->
-<_Minimap+HostileColor> 1 </_Minimap+HostileColor>				<!-- Tint hostile actor icons -->
 <_Minimap+RotationMode> 1 </_Minimap+RotationMode>				<!-- Fixed North (0) or Player Heading (1) -->
 <_Minimap+PlayerPath> 1 </_Minimap+PlayerPath>					<!-- Path trailing behind the player's movement -->
 <_Minimap+DistanceMax> 1 </_Minimap+DistanceMax>				<!-- Max icon distance -->
@@ -28,6 +27,33 @@
 <_Minimap+IconScale> 1 </_Minimap+IconScale>					<!-- Minimap icon scale -->
 <_Minimap+IconHeight> 1 </_Minimap+IconHeight>					<!-- Icon height indicator -->
 <_Minimap+QuestHeight> 0 </_Minimap+QuestHeight>				<!-- Marker height indicator -->
+
+<!-- Colors
+0 = Default Icon
+1 = Actor (Friendly)
+2 = Actor (Hostile)
+3 = Actor (Companion)
+-->
+<_Minimap+Systemcolor_Default> &hudmain; </_Minimap+Systemcolor_Default>
+<_Minimap+Systemcolor_0>
+	<copy src="io()" trait="_Minimap+Systemcolor_Default" />
+	<onlyifnot src="io()" trait="_ySIColorFulIconsFix" />
+</_Minimap+Systemcolor_0>
+<_Minimap+Systemcolor_1> &hudmain; </_Minimap+Systemcolor_1>
+<_Minimap+Systemcolor_2> &hudalt; </_Minimap+Systemcolor_2>
+<_Minimap+Systemcolor_3> 0 </_Minimap+Systemcolor_3>
+<_Minimap+Red_0> 255 </_Minimap+Red_0>
+<_Minimap+Red_1> 255 </_Minimap+Red_1>
+<_Minimap+Red_2> 255 </_Minimap+Red_2>
+<_Minimap+Red_3> 46 </_Minimap+Red_3>
+<_Minimap+Green_0> 255 </_Minimap+Green_0>
+<_Minimap+Green_1> 255 </_Minimap+Green_1>
+<_Minimap+Green_2> 255 </_Minimap+Green_2>
+<_Minimap+Green_3> 206 </_Minimap+Green_3>
+<_Minimap+Blue_0> 255 </_Minimap+Blue_0>
+<_Minimap+Blue_1> 255 </_Minimap+Blue_1>
+<_Minimap+Blue_2> 255 </_Minimap+Blue_2>
+<_Minimap+Blue_3> 255 </_Minimap+Blue_3>
 
 <rect name="ModernMinimap">
 
@@ -261,7 +287,7 @@
 
 	<!-- Map color control -->
 	<_systemcolor>
-		<copy src="me()" trait="_systemcolor_0" />
+		<copy src="io()" trait="_Minimap+Systemcolor_Default" />
 		<onlyif>
 			<not src="me()" trait="_InCombat" />
 			<or> <not src="io()" trait="_Minimap+CombatIndicator" /> </or>
@@ -277,39 +303,9 @@
 
 	<!-- Icon color control -->
 	<_systemcolor_map>
-		<copy src="me()" trait="_systemcolor_0" />
+		<copy src="io()" trait="_Minimap+Systemcolor_Default" />
 		<onlyifnot src="io()" trait="_ColorfulMapMarkerFix" />
 	</_systemcolor_map>
-	<_systemcolor_-1>
-		<copy src="me()" trait="_systemcolor_0" />
-		<onlyifnot src="io()" trait="_ySIColorfulIconsFix" />
-	</_systemcolor_-1>
-	<_systemcolor_0> &hudmain; </_systemcolor_0>
-	<_systemcolor_1>
-		<copy src="me()" trait="_systemcolor_0" />
-		<onlyifnot src="io()" trait="_Minimap+HostileColor" />
-		<add>
-			<copy> &hudalt; </copy>
-			<onlyif src="io()" trait="_Minimap+HostileColor" />
-		</add>
-	</_systemcolor_1>
-	<_systemcolor_2> 0 </_systemcolor_2>
-	<_systemcolor_3> 0 </_systemcolor_3>
-	<_red_-1> 255 </_red_-1>
-	<_red_0> 255 </_red_0>
-	<_red_1> 255 </_red_1>
-	<_red_2> 255 </_red_2>
-	<_red_3> 255 </_red_3>
-	<_green_-1> 255 </_green_-1>
-	<_green_0> 255 </_green_0>
-	<_green_1> 255 </_green_1>
-	<_green_2> 255 </_green_2>
-	<_green_3> 255 </_green_3>
-	<_blue_-1> 255 </_blue_-1>
-	<_blue_0> 255 </_blue_0>
-	<_blue_1> 255 </_blue_1>
-	<_blue_2> 255 </_blue_2>
-	<_blue_3> 255 </_blue_3>
 
 	<!-- Text Scale -->
 	<_info_text_zoom>
@@ -481,7 +477,7 @@
 		<height> <copy src="me()" trait="width" /> </height>
 		<zoom> &scale; </zoom>
 		<systemcolor>
-			<copy src="parent()" trait="_systemcolor_0" />
+			<copy src="io()" trait="_Minimap+Systemcolor_Default" />
 			<onlyifnot src="parent()" trait="_ColorMode" />
 		</systemcolor>
 		<brightness>
@@ -579,7 +575,7 @@
 		<height> <copy src="me()" trait="width" /> </height>
 		<zoom> &scale; </zoom>
 		<systemcolor>
-			<copy src="parent()" trait="_systemcolor_0" />
+			<copy src="io()" trait="_Minimap+Systemcolor_Default" />
 			<onlyif src="io()" trait="_Minimap+ColorTintWorld" />
 		</systemcolor>
 		<brightness> 255 </brightness>
@@ -693,7 +689,7 @@
 			<div> 2 </div>
 		</rotateaxisy>
 		<rotateangle> <copy src="sibling(MapRender)" trait="rotateangle" /> </rotateangle>
-		<systemcolor> <copy src="parent()" trait="_systemcolor_0" /> </systemcolor>
+		<systemcolor> <copy src="io()" trait="_Minimap+Systemcolor_Default" /> </systemcolor>
 		<brightness> 153 </brightness>
 		<filename> Interface\Shared\solid.dds </filename>
 		<_visible> <copy src="io()" trait="_Minimap+CompassRose" /> </_visible>
@@ -715,7 +711,7 @@
 			<div> 2 </div>
 		</rotateaxisy>
 		<rotateangle> <copy src="sibling(MapRender)" trait="rotateangle" /> </rotateangle>
-		<systemcolor> <copy src="parent()" trait="_systemcolor_0" /> </systemcolor>
+		<systemcolor> <copy src="io()" trait="_Minimap+Systemcolor_Default" /> </systemcolor>
 		<brightness> 153 </brightness>
 		<filename> Interface\Shared\solid.dds </filename>
 	</image>
@@ -743,7 +739,7 @@
 		</height>
 		<clips> 1 </clips>
 		<zoom> &scale; </zoom>
-		<systemcolor> <copy src="parent()" trait="_systemcolor_0" /> </systemcolor>
+		<systemcolor> <copy src="io()" trait="_Minimap+Systemcolor_Default" /> </systemcolor>
 		<brightness> <copy src="io()" trait="_Minimap+ScanBrightness" /> </brightness>
 		<filename> Interface\Stentorious\ModernMinimap\Distortion.dds </filename>
 	</image>
@@ -1178,7 +1174,7 @@
 				<width> <copy src="parent()" trait="width" /> </width>
 				<height> <copy src="parent()" trait="height" /> </height>
 				<zoom> &scale; </zoom>
-				<systemcolor> <copy src="ModernMinimap" trait="_systemcolor_-1" /> </systemcolor>
+				<systemcolor> <copy src="io()" trait="_Minimap+Systemcolor_0" /> </systemcolor>
 				<brightness> 255 </brightness>
 				<filename> <copy src="parent()" trait="_filename" /> </filename>
 			</image>
@@ -1208,7 +1204,7 @@
 					<copy> 57.5 </copy>
 					<mul src="ModernMinimap" trait="_IconScaleMul" />
 				</zoom>
-				<systemcolor> <copy src="ModernMinimap" trait="_systemcolor_0" /> </systemcolor>
+				<systemcolor> <copy src="io()" trait="_Minimap+Systemcolor_Default" /> </systemcolor>
 				<brightness> 204 </brightness>
 				<font> 7 </font>
 				<justify> &center; </justify>
@@ -1349,8 +1345,8 @@
 			<copy src="grandparent()" trait="_DistCalc" />
 			<gte src="me()" trait="_Dist" />
 			<and>
-				<copy src="me()" trait="_Hostile" />
-				<gt> -2 </gt>
+				<copy src="me()" trait="_IconState" />
+				<gte> 0 </gte>
 			</and>
 		</visible>
 		<alpha> 0 </alpha>
@@ -1385,7 +1381,16 @@
 		<_PosZ> <copy src="grandparent()" trait="_PlrZ" /> </_PosZ>
 		<_Deg> -1 </_Deg>
 		<_Dist> 0 </_Dist>
-		<_Hostile> -1 </_Hostile>
+		<!--
+		_IconState
+		-1 = Hidden Icon
+		0 = Item Icon
+		1 = Actor Icon (Friendly)
+		2 = Actor Icon (Hostile)
+		3 = Actor Icon (Follower)
+		4 = Actor Icon (JIP No Tint)
+		-->
+		<_IconState> 0 </_IconState>
 		<_DepthMod> 0 </_DepthMod>
 		<_PosXOffset>
 			<copy src="me()" trait="_PosX" />
@@ -1482,20 +1487,20 @@
 			<width> <copy src="parent()" trait="width" /> </width>
 			<zoom> &scale; </zoom>
 			<systemcolor>
-				<copy src="parent()" trait="_Hostile" />
-				<copy src="ModernMinimap" trait="_systemcolor_" />
+				<copy src="parent()" trait="_IconState" />
+				<copy src="io()" trait="_Minimap+Systemcolor_" />
 			</systemcolor>
 			<red>
-				<copy src="parent()" trait="_Hostile" />
-				<copy src="ModernMinimap" trait="_red_" />
+				<copy src="parent()" trait="_IconState" />
+				<copy src="io()" trait="_Minimap+Red_" />
 			</red>
 			<green>
-				<copy src="parent()" trait="_Hostile" />
-				<copy src="ModernMinimap" trait="_green_" />
+				<copy src="parent()" trait="_IconState" />
+				<copy src="io()" trait="_Minimap+Green_" />
 			</green>
 			<blue>
-				<copy src="parent()" trait="_Hostile" />
-				<copy src="ModernMinimap" trait="_blue_" />
+				<copy src="parent()" trait="_IconState" />
+				<copy src="io()" trait="_Minimap+Blue_" />
 			</blue>
 			<brightness> 255 </brightness>
 			<filename> <copy src="parent()" trait="filename" /> </filename>
@@ -1577,7 +1582,7 @@
 			</height>
 			<width> <copy src="me()" trait="height" /> </width>
 			<zoom> &scale; </zoom>
-			<systemcolor> <copy src="ModernMinimap" trait="_systemcolor_0" /> </systemcolor>
+			<systemcolor> <copy src="io()" trait="_Minimap+Systemcolor_Default" /> </systemcolor>
 			<brightness> <copy src="sibling(Icon)" trait="brightness" /> </brightness>
 			<filename> Interface\Stentorious\ModernMinimap\HeightIndicator.dds </filename>
 		</image>
@@ -1613,7 +1618,7 @@
 		<height> <copy src="me()" trait="width" /> </height>
 		<zoom> &scale; </zoom>
 		<clips> 1 </clips>
-		<systemcolor> <copy src="grandparent()" trait="_systemcolor_0" /> </systemcolor>
+		<systemcolor> <copy src="io()" trait="_Minimap+Systemcolor_Default" /> </systemcolor>
 		<brightness> 255 </brightness>
 		<filename> Interface\Stentorious\ModernMinimap\PlayerPath.dds </filename>
 		<_PosX> 0 </_PosX>
@@ -1690,7 +1695,7 @@
 		</height>
 		<zoom> &scale; </zoom>
 		<clips> 1 </clips>
-		<systemcolor> <copy src="grandparent()" trait="_systemcolor_0" /> </systemcolor>
+		<systemcolor> <copy src="io()" trait="_Minimap+Systemcolor_Default" /> </systemcolor>
 		<filename>
 			<copy> 3 </copy>
 			<onlyif src="me()" trait="_Custom" />
@@ -1842,7 +1847,7 @@
 		</height>
 		<zoom> &scale; </zoom>
 		<clips> 1 </clips>
-		<systemcolor> <copy src="grandparent()" trait="_systemcolor_0" /> </systemcolor>
+		<systemcolor> <copy src="io()" trait="_Minimap+Systemcolor_Default" /> </systemcolor>
 		<filename> Interface\Stentorious\ModernMinimap\MarkerQuestAbove.dds </filename>
 		<_PosX> 0 </_PosX>
 		<_PosY> 0 </_PosY>

@@ -35,6 +35,13 @@ Begin Function {fValue, iMenu, iSubmenu, iOption, aJSON}
 				Goo1.AuxVarSetFlt "*Minimap_Key" fValue iIndex
 			endif
 		endif
+
+	; Update icon color
+	elseif eval iSubmenu == 3
+		if eval iOption == 12 || iOption == 18
+			SetUIFloatAlt "StartMenu/ModernMinimap/Actors/Icon:0/_IconState" 1
+			SetUIFloatAlt "StartMenu/ModernMinimap/Actors/Icon:0/_IconState" 2
+		endif
 	endif
 
 	aJSON = ar_Null

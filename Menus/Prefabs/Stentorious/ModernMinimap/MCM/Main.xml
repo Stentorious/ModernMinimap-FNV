@@ -13,7 +13,6 @@
 <_Minimap+Scan> <copy src="sibling(HUDMainMenu)" trait="_Minimap+Scan" /> </_Minimap+Scan>
 <_Minimap+CombatIndicator> <copy src="sibling(HUDMainMenu)" trait="_Minimap+CombatIndicator" /> </_Minimap+CombatIndicator>
 <_Minimap+LocationText> <copy src="sibling(HUDMainMenu)" trait="_Minimap+LocationText" /> </_Minimap+LocationText>
-<_Minimap+HostileColor> <copy src="sibling(HUDMainMenu)" trait="_Minimap+HostileColor" /> </_Minimap+HostileColor>
 <_Minimap+RotationMode> <copy src="sibling(HUDMainMenu)" trait="_Minimap+RotationMode" /> </_Minimap+RotationMode>
 <_Minimap+PlayerPath> <copy src="sibling(HUDMainMenu)" trait="_Minimap+PlayerPath" /> </_Minimap+PlayerPath>
 <_Minimap+DistanceMax> <copy src="sibling(HUDMainMenu)" trait="_Minimap+DistanceMax" /> </_Minimap+DistanceMax>
@@ -28,6 +27,25 @@
 <_Minimap+IconScale> <copy src="sibling(HUDMainMenu)" trait="_Minimap+IconScale" /> </_Minimap+IconScale>
 <_Minimap+IconHeight> <copy src="sibling(HUDMainMenu)" trait="_Minimap+IconHeight" /> </_Minimap+IconHeight>
 <_Minimap+QuestHeight> <copy src="sibling(HUDMainMenu)" trait="_Minimap+QuestHeight" /> </_Minimap+QuestHeight>
+
+<!-- ### Color Traits ### -->
+<_Minimap+Systemcolor_Default> <copy src="io()" trait="_MCMExt+Systemcolor" /> </_Minimap+Systemcolor_Default>
+<_Minimap+Systemcolor_0> <copy src="sibling(HUDMainMenu)" trait="_Minimap+Systemcolor_0" /> </_Minimap+Systemcolor_0>
+<_Minimap+Systemcolor_1> <copy src="sibling(HUDMainMenu)" trait="_Minimap+Systemcolor_1" /> </_Minimap+Systemcolor_1>
+<_Minimap+Systemcolor_2> <copy src="sibling(HUDMainMenu)" trait="_Minimap+Systemcolor_2" /> </_Minimap+Systemcolor_2>
+<_Minimap+Systemcolor_3> <copy src="sibling(HUDMainMenu)" trait="_Minimap+Systemcolor_3" /> </_Minimap+Systemcolor_3>
+<_Minimap+Red_0> <copy src="sibling(HUDMainMenu)" trait="_Minimap+Red_0" /> </_Minimap+Red_0>
+<_Minimap+Red_1> <copy src="sibling(HUDMainMenu)" trait="_Minimap+Red_1" /> </_Minimap+Red_1>
+<_Minimap+Red_2> <copy src="sibling(HUDMainMenu)" trait="_Minimap+Red_2" /> </_Minimap+Red_2>
+<_Minimap+Red_3> <copy src="sibling(HUDMainMenu)" trait="_Minimap+Red_3" /> </_Minimap+Red_3>
+<_Minimap+Green_0> <copy src="sibling(HUDMainMenu)" trait="_Minimap+Green_0" /> </_Minimap+Green_0>
+<_Minimap+Green_1> <copy src="sibling(HUDMainMenu)" trait="_Minimap+Green_1" /> </_Minimap+Green_1>
+<_Minimap+Green_2> <copy src="sibling(HUDMainMenu)" trait="_Minimap+Green_2" /> </_Minimap+Green_2>
+<_Minimap+Green_3> <copy src="sibling(HUDMainMenu)" trait="_Minimap+Green_3" /> </_Minimap+Green_3>
+<_Minimap+Blue_0> <copy src="sibling(HUDMainMenu)" trait="_Minimap+Blue_0" /> </_Minimap+Blue_0>
+<_Minimap+Blue_1> <copy src="sibling(HUDMainMenu)" trait="_Minimap+Blue_1" /> </_Minimap+Blue_1>
+<_Minimap+Blue_2> <copy src="sibling(HUDMainMenu)" trait="_Minimap+Blue_2" /> </_Minimap+Blue_2>
+<_Minimap+Blue_3> <copy src="sibling(HUDMainMenu)" trait="_Minimap+Blue_3" /> </_Minimap+Blue_3>
 
 <rect name="ModernMinimap">
 
@@ -257,7 +275,7 @@
 
 	<!-- Map color control -->
 	<_systemcolor>
-		<copy src="me()" trait="_systemcolor_0" />
+		<copy src="io()" trait="_Minimap+Systemcolor_Default" />
 		<onlyif>
 			<not src="io()" trait="_Minimap+CombatIndicator" />
 			<or> <not src="me()" trait="_submenu" /> </or>
@@ -273,39 +291,9 @@
 
 	<!-- Icon color control -->
 	<_systemcolor_map>
-		<copy src="me()" trait="_systemcolor_0" />
+		<copy src="io()" trait="_Minimap+Systemcolor_Default" />
 		<onlyifnot src="io()" trait="_ColorfulMapMarkerFix" />
 	</_systemcolor_map>
-	<_systemcolor_-1>
-		<copy src="me()" trait="_systemcolor_0" />
-		<onlyifnot src="io()" trait="_ySIColorfulIconsFix" />
-	</_systemcolor_-1>
-	<_systemcolor_0> <copy src="io()" trait="_MCMExt+Systemcolor" /> </_systemcolor_0>
-	<_systemcolor_1>
-		<copy src="me()" trait="_systemcolor_0" />
-		<onlyifnot src="io()" trait="_Minimap+HostileColor" />
-		<add>
-			<copy> &hudalt; </copy>
-			<onlyif src="io()" trait="_Minimap+HostileColor" />
-		</add>
-	</_systemcolor_1>
-	<_systemcolor_2> 0 </_systemcolor_2>
-	<_systemcolor_3> 0 </_systemcolor_3>
-	<_red_-1> 255 </_red_-1>
-	<_red_0> 255 </_red_0>
-	<_red_1> 255 </_red_1>
-	<_red_2> 255 </_red_2>
-	<_red_3> 255 </_red_3>
-	<_green_-1> 255 </_green_-1>
-	<_green_0> 255 </_green_0>
-	<_green_1> 255 </_green_1>
-	<_green_2> 255 </_green_2>
-	<_green_3> 255 </_green_3>
-	<_blue_-1> 255 </_blue_-1>
-	<_blue_0> 255 </_blue_0>
-	<_blue_1> 255 </_blue_1>
-	<_blue_2> 255 </_blue_2>
-	<_blue_3> 255 </_blue_3>
 
 	<!-- Text Scale -->
 	<_info_text_zoom>
@@ -488,7 +476,7 @@
 		<height> <copy src="me()" trait="width" /> </height>
 		<zoom> &scale; </zoom>
 		<systemcolor>
-			<copy src="parent()" trait="_systemcolor_0" />
+			<copy src="io()" trait="_Minimap+Systemcolor_Default" />
 			<onlyifnot src="parent()" trait="_ColorMode" />
 		</systemcolor>
 		<brightness>
@@ -656,7 +644,7 @@
 			<div> 2 </div>
 		</rotateaxisy>
 		<rotateangle> <copy src="sibling(MapRender)" trait="rotateangle" /> </rotateangle>
-		<systemcolor> <copy src="parent()" trait="_systemcolor_0" /> </systemcolor>
+		<systemcolor> <copy src="io()" trait="_Minimap+Systemcolor_Default" /> </systemcolor>
 		<brightness> 153 </brightness>
 		<filename> Interface\Shared\solid.dds </filename>
 		<_visible> <copy src="io()" trait="_Minimap+CompassRose" /> </_visible>
@@ -678,7 +666,7 @@
 			<div> 2 </div>
 		</rotateaxisy>
 		<rotateangle> <copy src="sibling(MapRender)" trait="rotateangle" /> </rotateangle>
-		<systemcolor> <copy src="parent()" trait="_systemcolor_0" /> </systemcolor>
+		<systemcolor> <copy src="io()" trait="_Minimap+Systemcolor_Default" /> </systemcolor>
 		<brightness> 153 </brightness>
 		<filename> Interface\Shared\solid.dds </filename>
 	</image>
@@ -706,7 +694,7 @@
 		</height>
 		<clips> 1 </clips>
 		<zoom> &scale; </zoom>
-		<systemcolor> <copy src="parent()" trait="_systemcolor_0" /> </systemcolor>
+		<systemcolor> <copy src="io()" trait="_Minimap+Systemcolor_Default" /> </systemcolor>
 		<brightness> <copy src="io()" trait="_Minimap+ScanBrightness" /> </brightness>
 		<filename> Interface\Stentorious\ModernMinimap\Distortion.dds </filename>
 	</image>
@@ -1016,7 +1004,7 @@
 			<_PosZ> 500 </_PosZ>
 			<_Deg> 135 </_Deg>
 			<_Dist> 707.1 </_Dist>
-			<_Hostile> 1 </_Hostile>
+			<_IconState> 2 </_IconState>
 			<_DepthMod> 100 </_DepthMod>
 		</hotrect>
 

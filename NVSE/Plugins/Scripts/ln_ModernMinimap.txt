@@ -95,11 +95,24 @@ SetUIFloatAlt "HUDMainMenu\_Minimap+CompassRose" (eval GetINIFloat_Cached "Map:b
 SetUIFloatAlt "HUDMainMenu\_Minimap+CompassText" (GetINIFloat_Cached "Map:iCompassText" "Stentorious\ModernMinimap.ini" 2)
 SetUIFloatAlt "HUDMainMenu\_Minimap+CombatIndicator" (eval GetINIFloat_Cached "Map:bCombatIndicator" "Stentorious\ModernMinimap.ini" 1)
 SetUIFloatAlt "HUDMainMenu\_Minimap+LocationText" (GetINIFloat_Cached "Map:iLocationText" "Stentorious\ModernMinimap.ini" 1)
-SetUIFloatAlt "HUDMainMenu\_Minimap+HostileColor" (eval GetINIFloat_Cached "Actors:bHostileColor" "Stentorious\ModernMinimap.ini" 1)
 SetUIFloatAlt "HUDMainMenu\_Minimap+Scan" (eval GetINIFloat_Cached "Map:bScanEffect" "Stentorious\ModernMinimap.ini" 1)
 SetUIFloatAlt "HUDMainMenu\_Minimap+RotationMode" (eval GetINIFloat_Cached "Map:iRotationMode" "Stentorious\ModernMinimap.ini" 1)
 SetUIFloatAlt "HUDMainMenu\_Minimap+PlayerPath" (eval GetINIFloat_Cached "Map:bPlayerPath" "Stentorious\ModernMinimap.ini" 1)
 SetUIFloatAlt "HUDMainMenu\_Minimap+ColorTintWorld" (eval GetINIFloat_Cached "Map:bColorTintWorld" "Stentorious\ModernMinimap.ini" 1)
+
+; Color
+SetUIFloatAlt "HUDMainMenu\_Minimap+Systemcolor_1" (GetINIFloat_Cached "Color:iFriendlySystemcolor" "Stentorious\ModernMinimap.ini" 1)
+SetUIFloatAlt "HUDMainMenu\_Minimap+Red_1" (GetINIFloat_Cached "Color:iFriendlyRed" "Stentorious\ModernMinimap.ini" 0)
+SetUIFloatAlt "HUDMainMenu\_Minimap+Green_1" (GetINIFloat_Cached "Color:iFriendlyGreen" "Stentorious\ModernMinimap.ini" 0)
+SetUIFloatAlt "HUDMainMenu\_Minimap+Blue_1" (GetINIFloat_Cached "Color:iFriendlyBlue" "Stentorious\ModernMinimap.ini" 0)
+SetUIFloatAlt "HUDMainMenu\_Minimap+Systemcolor_2" (GetINIFloat_Cached "Color:iHostileSystemcolor" "Stentorious\ModernMinimap.ini" 2)
+SetUIFloatAlt "HUDMainMenu\_Minimap+Red_2" (GetINIFloat_Cached "Color:iHostileRed" "Stentorious\ModernMinimap.ini" 0)
+SetUIFloatAlt "HUDMainMenu\_Minimap+Green_2" (GetINIFloat_Cached "Color:iHostileGreen" "Stentorious\ModernMinimap.ini" 0)
+SetUIFloatAlt "HUDMainMenu\_Minimap+Blue_2" (GetINIFloat_Cached "Color:iHostileBlue" "Stentorious\ModernMinimap.ini" 0)
+SetUIFloatAlt "HUDMainMenu\_Minimap+Systemcolor_3" (GetINIFloat_Cached "Color:iFollowerSystemcolor" "Stentorious\ModernMinimap.ini" 0)
+SetUIFloatAlt "HUDMainMenu\_Minimap+Red_3" (GetINIFloat_Cached "Color:iFollowerRed" "Stentorious\ModernMinimap.ini" 46)
+SetUIFloatAlt "HUDMainMenu\_Minimap+Green_3" (GetINIFloat_Cached "Color:iFollowerGreen" "Stentorious\ModernMinimap.ini" 206)
+SetUIFloatAlt "HUDMainMenu\_Minimap+Blue_3" (GetINIFloat_Cached "Color:iFollowerBlue" "Stentorious\ModernMinimap.ini" 255)
 
 ; Radiation Meter
 if eval GetINIFloat_Cached "Map:bRadiationIndicator" "Stentorious\ModernMinimap.ini" 1
@@ -125,12 +138,6 @@ SetOnActorValueChangeEventHandler 1 ({int iAVCode, float fOldValue, float fNewVa
 Goo1.AuxVarSetFlt "*Minimap_INI" (eval GetINIFloat_Cached "Actors:bNPC" "Stentorious\ModernMinimap.ini" 1) 2
 Goo1.AuxVarSetFlt "*Minimap_INI" (eval GetINIFloat_Cached "Actors:bCreature" "Stentorious\ModernMinimap.ini" 1) 3
 Goo1.AuxVarSetFlt "*Minimap_INI" (Clamp (GetINIFloat_Cached "Actors:iCorpse" "Stentorious\ModernMinimap.ini" 1) 0 2) 4
-
-; Teammate color
-SetUIFloatAlt "HUDMainMenu\ModernMinimap\_systemcolor_2" (GetINIFloat_Cached "Companions:iSystemcolor" "Stentorious\ModernMinimap.ini" 0)
-SetUIFloatAlt "HUDMainMenu\ModernMinimap\_red_2" (GetINIFloat_Cached "Companions:iRed" "Stentorious\ModernMinimap.ini" 46)
-SetUIFloatAlt "HUDMainMenu\ModernMinimap\_green_2" (GetINIFloat_Cached "Companions:iGreen" "Stentorious\ModernMinimap.ini" 206)
-SetUIFloatAlt "HUDMainMenu\ModernMinimap\_blue_2" (GetINIFloat_Cached "Companions:iBlue" "Stentorious\ModernMinimap.ini" 255)
 
 ; JIP CCC avatar support
 if eval FileExists "textures\jazzisparis\ccc\avatar_male.dds"

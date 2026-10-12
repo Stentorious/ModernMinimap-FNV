@@ -4,15 +4,15 @@
 <_PosZ> <copy src="grandparent()" trait="_PlrZ" /> </_PosZ>
 <_Deg> -1 </_Deg>
 <_Dist> 0 </_Dist>
-<_Hostile> -1 </_Hostile>
+<_IconState> 0 </_IconState>
 <_DepthMod> 0 </_DepthMod>
 
 <visible>
 	<copy src="grandparent()" trait="_DistCalc" />
 	<gte src="me()" trait="_Dist" />
 	<and>
-		<copy src="me()" trait="_Hostile" />
-		<gt> -2 </gt>
+		<copy src="me()" trait="_IconState" />
+		<gte> 0 </gte>
 	</and>
 </visible>
 <alpha> 0 </alpha>
@@ -134,24 +134,20 @@
 	<width> <copy src="parent()" trait="width" /> </width>
 	<zoom> &scale; </zoom>
 	<systemcolor>
-		<copy src="io()" trait="_MCMExt+Systemcolor" />
-		<onlyifnot src="io()" trait="_Minimap+HostileColor" />
-		<add>
-			<copy> &hudalt; </copy>
-			<onlyif src="io()" trait="_Minimap+HostileColor" />
-		</add>
+		<copy src="parent()" trait="_IconState" />
+		<copy src="io()" trait="_Minimap+Systemcolor_" />
 	</systemcolor>
 	<red>
-		<copy src="parent()" trait="_Hostile" />
-		<copy src="ModernMinimap" trait="_red_" />
+		<copy src="parent()" trait="_IconState" />
+		<copy src="io()" trait="_Minimap+Red_" />
 	</red>
 	<green>
-		<copy src="parent()" trait="_Hostile" />
-		<copy src="ModernMinimap" trait="_green_" />
+		<copy src="parent()" trait="_IconState" />
+		<copy src="io()" trait="_Minimap+Green_" />
 	</green>
 	<blue>
-		<copy src="parent()" trait="_Hostile" />
-		<copy src="ModernMinimap" trait="_blue_" />
+		<copy src="parent()" trait="_IconState" />
+		<copy src="io()" trait="_Minimap+Blue_" />
 	</blue>
 	<brightness> 255 </brightness>
 	<filename> <copy src="parent()" trait="filename" /> </filename>
@@ -231,7 +227,7 @@
 	</height>
 	<width> <copy src="me()" trait="height" /> </width>
 	<zoom> &scale; </zoom>
-	<systemcolor> <copy src="ModernMinimap" trait="_systemcolor_0" /> </systemcolor>
+	<systemcolor> <copy src="io()" trait="_Minimap+Systemcolor_Default" /> </systemcolor>
 	<brightness> <copy src="sibling(Icon)" trait="brightness" /> </brightness>
 	<filename> Interface\Stentorious\ModernMinimap\HeightIndicator.dds </filename>
 </image>
