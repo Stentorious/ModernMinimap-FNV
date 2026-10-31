@@ -78,6 +78,7 @@ begin Function {}
 	Goo1.AuxVarErase "*Minimap_Basic"
 	Goo1.AuxVarErase "*Minimap_Actors"
 	Goo1.AuxVarErase "*Minimap_Followers"
+	Goo1.AuxVarErase "*Minimap_Interact"
 
 	; Get global settings
 	iDist = GetUIFloatAlt "HUDMainMenu\ModernMinimap\_Dist"
@@ -142,7 +143,7 @@ begin Function {}
 			while (iSize -= 1) > -1
 				rIcon = aRefs[iSize]
 				if eval IsReference rIcon && rIcon.GetDisabled == 0 && rIcon.HasLoaded3D
-					Goo1.AuxVarSetRef "*Minimap_Basic" rIcon -1
+					Goo1.AuxVarSetRef "*Minimap_Interact" rIcon -1
 				endif
 			loop
 		endif
@@ -215,6 +216,21 @@ begin Function {}
 	elseif iSize < 0
 		while (iSize += 1) < 1
 			UnloadUIComponent "HUDMainMenu\ModernMinimap\Doors\Icon:0"
+		loop
+	endif
+
+	; Update basic icon tiles
+	iIndex = GetMaxOf 0 (GetUIFloatAlt "HUDMainMenu\ModernMinimap\Interact\childcount")
+	iSize = (Goo1.AuxVarSize "*Minimap_Interact") - iIndex
+	iIndex += 25
+	if iSize > 0
+		while (iSize -= 1) > -1
+			AddTileFromTemplate "HUDMainMenu\ModernMinimap\Interact|Minimap_Icon_Local_Template|Icon"
+			SetUIFloatAlt "HUDMainMenu\ModernMinimap\Interact\Icon:0\_DepthMod" (iIndex += 1)
+		loop
+	elseif iSize < 0
+		while (iSize += 1) < 1
+			UnloadUIComponent "HUDMainMenu\ModernMinimap\Interact\Icon:0"
 		loop
 	endif
 

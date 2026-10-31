@@ -119,6 +119,30 @@ begin Function {}
 	endif
 
 
+	; Update interaction tracked icons
+	if eval (iSize = Goo1.AuxVarSize "*Minimap_Interact") > 0
+		iState = Goo1.AuxVarGetFlt "*Minimap_ySI" 14
+		while (iSize -= 1) > -1
+			if eval IsReference (rIcon = Goo1.AuxVarGetRef "*Minimap_Interact" iSize) == 0
+				continue
+			endif
+			sUIPath = Sv_Construct "HUDMainMenu\ModernMinimap\Interact\Icon:%g\" iSize
+			SetUIFloatAlt (sUIPath + "_PosX") (rIcon.GetPos X)
+			SetUIFloatAlt (sUIPath + "_PosY") (rIcon.GetPos Y)
+			SetUIFloatAlt (sUIPath + "_PosZ") (rIcon.GetPos Z)
+			SetUIFloatAlt (sUIPath + "_Dist") (Player.GetDistance3D rIcon)
+			SetUIStringAlt (sUIPath + "filename") (rIcon.ySIGetTrait "filename")
+
+			; Check if terminal has been opened before
+			if eval iState && rIcon.GetType == 23 && ABS ((FMod (rIcon.GetScale) 0.01) - 0.00555) < 0.0000001
+				SetUIFloatAlt (sUIPath + "_IconState") 2
+			else
+				SetUIFloatAlt (sUIPath + "_IconState") 0
+			endif
+		loop
+	endif
+
+
 	; Update actor icons
 	if eval (iSize = Goo1.AuxVarSize "*Minimap_Actors") > 0
 

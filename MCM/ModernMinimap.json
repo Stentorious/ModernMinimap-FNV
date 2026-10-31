@@ -449,16 +449,16 @@
 					"type": 1,
 					"enable": 1,
 					"mouse": "$ColorFriendlyMouse",
-					"vars": [{ "uiTrait": "HUDMainMenu/_Minimap+Systemcolor_1", "configINI": "Color:iFriendlySystemcolor", "default": 1 }],
-					"strings": [ "$Custom", "$HUD", "$HUDAlt", "$Terminal", "$PipBoy", "$PauseMenu"]
+					"vars": [{ "uiTrait": "HUDMainMenu/_Minimap+ColorFriendly", "configINI": "Color:iFriendlySystemcolor", "default": 0 }],
+					"strings": [ "$Minimap", "$Custom", "$HUD", "$HUDAlt", "$Terminal", "$PipBoy", "$PauseMenu"]
 				},
 				"12": {
 					"title": "$ColorHostile",
 					"type": 1,
 					"enable": 1,
 					"mouse": "$ColorHostileMouse",
-					"vars": [{ "uiTrait": "HUDMainMenu/_Minimap+Systemcolor_2", "configINI": "Color:iHostileSystemcolor", "default": 2 }],
-					"strings": [ "$Custom", "$HUD", "$HUDAlt", "$Terminal", "$PipBoy", "$PauseMenu"],
+					"vars": [{ "uiTrait": "HUDMainMenu/_Minimap+ColorHostile", "configINI": "Color:iHostileSystemcolor", "default": 3 }],
+					"strings": [ "$Minimap", "$Custom", "$HUD", "$HUDAlt", "$Terminal", "$PipBoy", "$PauseMenu"],
 					"call": { "type": "file", "value": "ModernMinimap/MCMExtender/UpdateOption.gek" }
 				},
 				"14": {
@@ -466,13 +466,13 @@
 					"type": 1,
 					"enable": 1,
 					"mouse": "$ColorFollowerMouse",
-					"vars": [{ "uiTrait": "HUDMainMenu/_Minimap+Systemcolor_3", "configINI": "Color:iFollowerSystemcolor", "default": 0 }],
-					"strings": [ "$Custom", "$HUD", "$HUDAlt", "$Terminal", "$PipBoy", "$PauseMenu"]
+					"vars": [{ "uiTrait": "HUDMainMenu/_Minimap+ColorFollower", "configINI": "Color:iFollowerSystemcolor", "default": 1 }],
+					"strings": [ "$Minimap", "$Custom", "$HUD", "$HUDAlt", "$Terminal", "$PipBoy", "$PauseMenu"]
 				},
 				"16": {
 					"title": "$CustomColorFriendly",
 					"type": 9,
-					"state": { "uiTrait": "HUDMainMenu/_Minimap+Systemcolor_1", "value": 0, "disable": 1 },
+					"state": { "uiTrait": "HUDMainMenu/_Minimap+ColorFriendly", "value": 1, "disable": 1 },
 					"mouse": "$CustomColorFriendlyMouse",
 					"vars": [
 						{ "uiTrait": "HUDMainMenu/_Minimap+Red_1", "configINI": "Color:iFriendlyRed", "default": 0 },
@@ -483,7 +483,7 @@
 				"18": {
 					"title": "$CustomColorHostile",
 					"type": 9,
-					"state": { "uiTrait": "HUDMainMenu/_Minimap+Systemcolor_2", "value": 0, "disable": 1 },
+					"state": { "uiTrait": "HUDMainMenu/_Minimap+ColorHostile", "value": 1, "disable": 1 },
 					"mouse": "$CustomColorHostileMouse",
 					"vars": [
 						{ "uiTrait": "HUDMainMenu/_Minimap+Red_2", "configINI": "Color:iHostileRed", "default": 0 },
@@ -495,7 +495,7 @@
 				"20": {
 					"title": "$CustomColorFollower",
 					"type": 9,
-					"state": { "uiTrait": "HUDMainMenu/_Minimap+Systemcolor_3", "value": 0, "disable": 1 },
+					"state": { "uiTrait": "HUDMainMenu/_Minimap+ColorFollower", "value": 1, "disable": 1 },
 					"mouse": "$CustomColorFollowerMouse",
 					"vars": [
 						{ "uiTrait": "HUDMainMenu/_Minimap+Red_3", "configINI": "Color:iFollowerRed", "default": 46 },
@@ -626,6 +626,19 @@
 					"enable": 1,
 					"mouse": "$TrapMouse",
 					"vars": [ { "form": "Goo1", "auxVar": "*Minimap_ySI", "key": 13, "configINI": "Objects:bTrap", "default": 1 }]
+				},
+
+				"20": {
+					"title": "$Interactions",
+					"enable": 1,
+					"type": 0
+				},
+				"22": {
+					"title": "$Terminal",
+					"type": 5,
+					"enable": 1,
+					"mouse": "$TerminalInteractionsMouse",
+					"vars": [ { "form": "Goo1", "auxVar": "*Minimap_ySI", "key": 14, "configINI": "Interactions:bTerminal", "default": 0 }]
 				}
 			}
 		}

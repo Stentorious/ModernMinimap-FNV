@@ -7,6 +7,7 @@ Goo1.AuxVarErase "*Minimap_Doors"
 Goo1.AuxVarErase "*Minimap_Basic"
 Goo1.AuxVarErase "*Minimap_Actors"
 Goo1.AuxVarErase "*Minimap_Followers"
+Goo1.AuxVarErase "*Minimap_Interact"
 Goo1.AuxVarErase "*Minimap_Markers"
 
 ; Reset Minimap rect
@@ -14,6 +15,7 @@ UnloadUIComponent "HUDMainMenu\ModernMinimap\Doors"
 UnloadUIComponent "HUDMainMenu\ModernMinimap\Basic"
 UnloadUIComponent "HUDMainMenu\ModernMinimap\Actors"
 UnloadUIComponent "HUDMainMenu\ModernMinimap\Followers"
+UnloadUIComponent "HUDMainMenu\ModernMinimap\Interact"
 UnloadUIComponent "HUDMainMenu\ModernMinimap\QuestLocal"
 UnloadUIComponent "HUDMainMenu\ModernMinimap\PlayerPath"
 UnloadUIComponent "HUDMainMenu\ModernMinimap\WorldMarkers"
@@ -22,6 +24,7 @@ AddTileFromTemplate "HUDMainMenu\ModernMinimap|Minimap_Icon_Rect|Doors"
 AddTileFromTemplate "HUDMainMenu\ModernMinimap|Minimap_Icon_Rect|Basic"
 AddTileFromTemplate "HUDMainMenu\ModernMinimap|Minimap_Icon_Rect|Actors"
 AddTileFromTemplate "HUDMainMenu\ModernMinimap|Minimap_Icon_Rect|Followers"
+AddTileFromTemplate "HUDMainMenu\ModernMinimap|Minimap_Icon_Rect|Interact"
 AddTileFromTemplate "HUDMainMenu\ModernMinimap|Minimap_Quest_Rect|QuestLocal"
 AddTileFromTemplate "HUDMainMenu\ModernMinimap|Minimap_Path_Rect|PlayerPath"
 AddTileFromTemplate "HUDMainMenu\ModernMinimap|WorldMap_Icon_Rect|WorldMarkers"
@@ -101,15 +104,15 @@ SetUIFloatAlt "HUDMainMenu\_Minimap+PlayerPath" (eval GetINIFloat_Cached "Map:bP
 SetUIFloatAlt "HUDMainMenu\_Minimap+ColorTintWorld" (eval GetINIFloat_Cached "Map:bColorTintWorld" "Stentorious\ModernMinimap.ini" 1)
 
 ; Color
-SetUIFloatAlt "HUDMainMenu\_Minimap+Systemcolor_1" (GetINIFloat_Cached "Color:iFriendlySystemcolor" "Stentorious\ModernMinimap.ini" 1)
+SetUIFloatAlt "HUDMainMenu\_Minimap+ColorFriendly" (GetINIFloat_Cached "Color:iFriendlySystemcolor" "Stentorious\ModernMinimap.ini" 0)
 SetUIFloatAlt "HUDMainMenu\_Minimap+Red_1" (GetINIFloat_Cached "Color:iFriendlyRed" "Stentorious\ModernMinimap.ini" 0)
 SetUIFloatAlt "HUDMainMenu\_Minimap+Green_1" (GetINIFloat_Cached "Color:iFriendlyGreen" "Stentorious\ModernMinimap.ini" 0)
 SetUIFloatAlt "HUDMainMenu\_Minimap+Blue_1" (GetINIFloat_Cached "Color:iFriendlyBlue" "Stentorious\ModernMinimap.ini" 0)
-SetUIFloatAlt "HUDMainMenu\_Minimap+Systemcolor_2" (GetINIFloat_Cached "Color:iHostileSystemcolor" "Stentorious\ModernMinimap.ini" 2)
+SetUIFloatAlt "HUDMainMenu\_Minimap+ColorHostile" (GetINIFloat_Cached "Color:iHostileSystemcolor" "Stentorious\ModernMinimap.ini" 3)
 SetUIFloatAlt "HUDMainMenu\_Minimap+Red_2" (GetINIFloat_Cached "Color:iHostileRed" "Stentorious\ModernMinimap.ini" 0)
 SetUIFloatAlt "HUDMainMenu\_Minimap+Green_2" (GetINIFloat_Cached "Color:iHostileGreen" "Stentorious\ModernMinimap.ini" 0)
 SetUIFloatAlt "HUDMainMenu\_Minimap+Blue_2" (GetINIFloat_Cached "Color:iHostileBlue" "Stentorious\ModernMinimap.ini" 0)
-SetUIFloatAlt "HUDMainMenu\_Minimap+Systemcolor_3" (GetINIFloat_Cached "Color:iFollowerSystemcolor" "Stentorious\ModernMinimap.ini" 0)
+SetUIFloatAlt "HUDMainMenu\_Minimap+ColorFollower" (GetINIFloat_Cached "Color:iFollowerSystemcolor" "Stentorious\ModernMinimap.ini" 1)
 SetUIFloatAlt "HUDMainMenu\_Minimap+Red_3" (GetINIFloat_Cached "Color:iFollowerRed" "Stentorious\ModernMinimap.ini" 46)
 SetUIFloatAlt "HUDMainMenu\_Minimap+Green_3" (GetINIFloat_Cached "Color:iFollowerGreen" "Stentorious\ModernMinimap.ini" 206)
 SetUIFloatAlt "HUDMainMenu\_Minimap+Blue_3" (GetINIFloat_Cached "Color:iFollowerBlue" "Stentorious\ModernMinimap.ini" 255)
@@ -188,6 +191,9 @@ SetOnFastTravelEventHandler (begin Function {ref rTemp}
 	Goo1.AuxVarSetFlt "*Minimap_Travel" 1
 	CallAfterFrames 0 (CompileScript "ModernMinimap\FastTravel.gek") 0 (Player.GPC)
 end) 1
+if eval FileExists "NVSE\user_defined_functions\LocalMapOverhaul\TerminalMenuOpen.gek" == 0
+	SetOnMenuOpenEventHandler (CompileScript "ModernMinimap\TerminalMenuOpen.gek") 1 1057
+endif
 
 ; Build world map marker aux vars
 CallAfterFrames 0 (CompileScript "ModernMinimap\WorldMap\BuildMarkerArray.gek")
@@ -244,6 +250,7 @@ Goo1.AuxVarSetFlt "*Minimap_ySI" (eval GetINIFloat_Cached "Objects:bTerminal" "S
 Goo1.AuxVarSetFlt "*Minimap_ySI" (eval GetINIFloat_Cached "Objects:bCrafting" "Stentorious\ModernMinimap.ini" 1) 11
 Goo1.AuxVarSetFlt "*Minimap_ySI" (eval GetINIFloat_Cached "Objects:bMine" "Stentorious\ModernMinimap.ini" 1) 12
 Goo1.AuxVarSetFlt "*Minimap_ySI" (eval GetINIFloat_Cached "Objects:bTrap" "Stentorious\ModernMinimap.ini" 1) 13
+Goo1.AuxVarSetFlt "*Minimap_ySI" (eval GetINIFloat_Cached "Interactions:bTerminal" "Stentorious\ModernMinimap.ini" 0) 14
 
 Call (CompileScript "ModernMinimap\UpdateForms.gek")
 

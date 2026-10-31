@@ -35,13 +35,40 @@
 3 = Actor (Companion)
 -->
 <_Minimap+Systemcolor_Default> &hudmain; </_Minimap+Systemcolor_Default>
+<_Minimap+ColorFriendly> &hudmain; </_Minimap+ColorFriendly>
+<_Minimap+ColorHostile> &hudalt; </_Minimap+ColorHostile>
+<_Minimap+ColorFollower> 0 </_Minimap+ColorFollower>
 <_Minimap+Systemcolor_0>
 	<copy src="io()" trait="_Minimap+Systemcolor_Default" />
 	<onlyifnot src="io()" trait="_ySIColorFulIconsFix" />
 </_Minimap+Systemcolor_0>
-<_Minimap+Systemcolor_1> &hudmain; </_Minimap+Systemcolor_1>
-<_Minimap+Systemcolor_2> &hudalt; </_Minimap+Systemcolor_2>
-<_Minimap+Systemcolor_3> 0 </_Minimap+Systemcolor_3>
+<_Minimap+Systemcolor_1>
+	<copy src="io()" trait="_Minimap+Systemcolor_Default" />
+	<onlyifnot src="io()" trait="_Minimap+ColorFriendly" />
+	<add>
+		<copy src="io()" trait="_Minimap+ColorFriendly" />
+		<sub> 1 </sub>
+		<onlyif src="io()" trait="_Minimap+ColorFriendly" />
+	</add>
+</_Minimap+Systemcolor_1>
+<_Minimap+Systemcolor_2>
+	<copy src="io()" trait="_Minimap+Systemcolor_Default" />
+	<onlyifnot src="io()" trait="_Minimap+ColorHostile" />
+	<add>
+		<copy src="io()" trait="_Minimap+ColorHostile" />
+		<sub> 1 </sub>
+		<onlyif src="io()" trait="_Minimap+ColorHostile" />
+	</add>
+</_Minimap+Systemcolor_2>
+<_Minimap+Systemcolor_3>
+	<copy src="io()" trait="_Minimap+Systemcolor_Default" />
+	<onlyifnot src="io()" trait="_Minimap+ColorFollower" />
+	<add>
+		<copy src="io()" trait="_Minimap+ColorFollower" />
+		<sub> 1 </sub>
+		<onlyif src="io()" trait="_Minimap+ColorFollower" />
+	</add>
+</_Minimap+Systemcolor_3>
 <_Minimap+Red_0> 255 </_Minimap+Red_0>
 <_Minimap+Red_1> 255 </_Minimap+Red_1>
 <_Minimap+Red_2> 255 </_Minimap+Red_2>
