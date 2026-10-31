@@ -19,8 +19,8 @@
 <_Minimap+DistanceMode> <copy src="sibling(HUDMainMenu)" trait="_Minimap+DistanceMode" /> </_Minimap+DistanceMode>
 
 <!-- ### Other Traits ### -->
-<_Minimap+ScanAnim> <copy src="sibling(HUDMainMenu)" trait="_Minimap+ScanAnim" />  </_Minimap+ScanAnim>
-<_Minimap+ScanBrightness> <copy src="sibling(HUDMainMenu)" trait="_Minimap+ScanBrightness" />  </_Minimap+ScanBrightness>
+<_Minimap+ScanAnim> <copy src="sibling(HUDMainMenu)" trait="_Minimap+ScanAnim" /> </_Minimap+ScanAnim>
+<_Minimap+ScanBrightness> <copy src="sibling(HUDMainMenu)" trait="_Minimap+ScanBrightness" /> </_Minimap+ScanBrightness>
 <_Minimap+RadPulse> <copy src="sibling(HUDMainMenu)" trait="_Minimap+RadPulse" /> </_Minimap+RadPulse>
 
 <!-- ### Icon Traits ### -->
@@ -931,7 +931,7 @@
 		<height> <copy src="me()" trait="width" /> </height>
 		<zoom> &scale; </zoom>
 		<systemcolor> 2 </systemcolor>
-		<filename> Interface\Stentorious\ModernMinimap\Radiation.dds  </filename>
+		<filename> Interface\Stentorious\ModernMinimap\Radiation.dds </filename>
 		<image name="DropShadow">
 			<visible> 1 </visible>
 			<alpha>

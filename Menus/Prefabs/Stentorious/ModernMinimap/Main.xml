@@ -993,7 +993,7 @@
 		<height> <copy src="me()" trait="width" /> </height>
 		<zoom> &scale; </zoom>
 		<systemcolor> 2 </systemcolor>
-		<filename> Interface\Stentorious\ModernMinimap\Radiation.dds  </filename>
+		<filename> Interface\Stentorious\ModernMinimap\Radiation.dds </filename>
 		<image name="DropShadow">
 			<visible> 1 </visible>
 			<alpha>
