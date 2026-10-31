@@ -28,6 +28,11 @@
 <_Minimap+IconHeight> 1 </_Minimap+IconHeight>					<!-- Icon height indicator -->
 <_Minimap+QuestHeight> 0 </_Minimap+QuestHeight>				<!-- Marker height indicator -->
 
+<!-- Menu Traits -->
+<_Menu+ScreenWidth> <copy src="screen()" trait="width" /> </_Menu+ScreenWidth>
+<_Menu+ScreenHeight> <copy src="screen()" trait="height" /> </_Menu+ScreenHeight>
+
+<!-- ### Color Traits ### -->
 <!-- Colors
 0 = Default Icon
 1 = Actor (Friendly)
@@ -252,7 +257,8 @@
 
 	<!-- Map window size -->
 	<_width>
-		<copy> 256 </copy>
+		<copy src="io()" trait="_Menu+ScreenWidth" />
+		<mul> 0.15 </mul>
 		<mul src="me()" trait="_TileScale" />
 	</_width>
 
@@ -402,7 +408,7 @@
 		<copy src="me()" trait="_x" />
 		<onlyifnot src="io()" trait="_Minimap+AnchorX" />
 		<add>
-			<copy src="screen()" trait="width" />
+			<copy src="io()" trait="_Menu+ScreenWidth" />
 			<sub src="child(Background)" trait="width" />
 			<div> 2 </div>
 			<add src="me()" trait="_x" />
@@ -412,7 +418,7 @@
 			</onlyif>
 		</add>
 		<add>
-			<copy src="screen()" trait="width" />
+			<copy src="io()" trait="_Menu+ScreenWidth" />
 			<sub src="child(Background)" trait="width" />
 			<sub src="me()" trait="_x" />
 			<onlyif>
@@ -426,7 +432,7 @@
 		<copy src="me()" trait="_y" />
 		<onlyifnot src="io()" trait="_Minimap+AnchorY" />
 		<add>
-			<copy src="screen()" trait="height" />
+			<copy src="io()" trait="_Menu+ScreenHeight" />
 			<sub src="child(Background)" trait="height" />
 			<div> 2 </div>
 			<add src="me()" trait="_y" />
@@ -436,7 +442,7 @@
 			</onlyif>
 		</add>
 		<add>
-			<copy src="screen()" trait="height" />
+			<copy src="io()" trait="_Menu+ScreenHeight" />
 			<sub src="child(Background)" trait="height" />
 			<sub src="me()" trait="_y" />
 			<onlyif>

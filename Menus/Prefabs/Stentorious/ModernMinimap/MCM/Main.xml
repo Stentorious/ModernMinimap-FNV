@@ -28,6 +28,10 @@
 <_Minimap+IconHeight> <copy src="sibling(HUDMainMenu)" trait="_Minimap+IconHeight" /> </_Minimap+IconHeight>
 <_Minimap+QuestHeight> <copy src="sibling(HUDMainMenu)" trait="_Minimap+QuestHeight" /> </_Minimap+QuestHeight>
 
+<!-- Menu Traits -->
+<_Menu+ScreenWidth> <copy src="screen()" trait="width" /> </_Menu+ScreenWidth>
+<_Menu+ScreenHeight> <copy src="screen()" trait="height" /> </_Menu+ScreenHeight>
+
 <!-- ### Color Traits ### -->
 <_Minimap+Systemcolor_Default> <copy src="io()" trait="_MCMExt+Systemcolor" /> </_Minimap+Systemcolor_Default>
 <_Minimap+Systemcolor_0> <copy src="sibling(HUDMainMenu)" trait="_Minimap+Systemcolor_0" /> </_Minimap+Systemcolor_0>
@@ -216,7 +220,8 @@
 
 	<!-- Map window size -->
 	<_width>
-		<copy> 256 </copy>
+		<copy src="io()" trait="_Menu+ScreenWidth" />
+		<mul> 0.15 </mul>
 		<mul src="me()" trait="_TileScale" />
 	</_width>
 
@@ -353,7 +358,7 @@
 				</onlyif>
 			</add>
 			<add>
-				<copy src="screen()" trait="width" />
+				<copy src="io()" trait="_Menu+ScreenWidth" />
 				<sub src="child(Background)" trait="width" />
 				<div> 2 </div>
 				<add src="me()" trait="_x" />
@@ -363,7 +368,7 @@
 				</onlyif>
 			</add>
 			<add>
-				<copy src="screen()" trait="width" />
+				<copy src="io()" trait="_Menu+ScreenWidth" />
 				<sub src="child(Background)" trait="width" />
 				<sub src="me()" trait="_x" />
 				<onlyif>
@@ -393,7 +398,7 @@
 				</onlyif>
 			</add>
 			<add>
-				<copy src="screen()" trait="height" />
+				<copy src="io()" trait="_Menu+ScreenHeight" />
 				<sub src="child(Background)" trait="height" />
 				<div> 2 </div>
 				<add src="me()" trait="_y" />
@@ -403,7 +408,7 @@
 				</onlyif>
 			</add>
 			<add>
-				<copy src="screen()" trait="height" />
+				<copy src="io()" trait="_Menu+ScreenHeight" />
 				<sub src="child(Background)" trait="height" />
 				<sub src="me()" trait="_y" />
 				<onlyif>
