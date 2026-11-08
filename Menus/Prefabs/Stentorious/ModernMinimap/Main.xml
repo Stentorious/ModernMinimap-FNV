@@ -74,18 +74,22 @@
 		<onlyif src="io()" trait="_Minimap+ColorFollower" />
 	</add>
 </_Minimap+Systemcolor_3>
+<_Minimap+Systemcolor_4> 0 </_Minimap+Systemcolor_4>
 <_Minimap+Red_0> 255 </_Minimap+Red_0>
 <_Minimap+Red_1> 255 </_Minimap+Red_1>
 <_Minimap+Red_2> 255 </_Minimap+Red_2>
 <_Minimap+Red_3> 46 </_Minimap+Red_3>
+<_Minimap+Red_4> 255 </_Minimap+Red_4>
 <_Minimap+Green_0> 255 </_Minimap+Green_0>
 <_Minimap+Green_1> 255 </_Minimap+Green_1>
 <_Minimap+Green_2> 255 </_Minimap+Green_2>
 <_Minimap+Green_3> 206 </_Minimap+Green_3>
+<_Minimap+Green_4> 255 </_Minimap+Green_4>
 <_Minimap+Blue_0> 255 </_Minimap+Blue_0>
 <_Minimap+Blue_1> 255 </_Minimap+Blue_1>
 <_Minimap+Blue_2> 255 </_Minimap+Blue_2>
 <_Minimap+Blue_3> 255 </_Minimap+Blue_3>
+<_Minimap+Blue_4> 255 </_Minimap+Blue_4>
 
 <rect name="ModernMinimap">
 
